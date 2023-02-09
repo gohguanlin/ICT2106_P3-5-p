@@ -24,6 +24,7 @@ import VolunteerWork from './Pages/Volunteer/VolunteerWork';
 import Project from './Pages/Project/Project';
 import Expense from './Pages/Expense/Expense';
 import Request from './Pages/Request/Request';
+import Feedback from './Pages/Feedback/Feedback';
 import Permissions from './Pages/Admin/Permissions';
 
 import Home  from "./Pages/Home"
@@ -101,6 +102,7 @@ export default function App() {
                 <DrawerItem label="Expense" to={"/Expense"} logo={userImg} currentActive = {active} setActive={setActive}></DrawerItem>
                 <DrawerItem label="Permissions" to={"/Permissions"} logo={userImg} currentActive = {active} setActive={setActive}></DrawerItem>
                 <DrawerItem label="Request" to={"/Request"} logo={userImg} currentActive = {active} setActive={setActive}></DrawerItem>
+                <DrawerItem label="Feedback" to={"/Feedback"} logo={userImg} currentActive = {active} setActive={setActive}></DrawerItem>
                 <DrawerItem label="Logout" to={"/Logout"} logo={logoutImg}></DrawerItem>
               </DrawerSection>
             </SlideDrawer>
@@ -118,6 +120,7 @@ export default function App() {
               <Route path="/Expense" element={<Expense user={token} permissions = {JSON.parse(perms)}/>}/>
               <Route path="/Permissions" element={<Permissions user={token} permissions = {JSON.parse(perms)}/>}/>
               <Route path="/Request" element={<Request user={token} permissions = {JSON.parse(perms)}/>}/>
+              <Route path="/Feedback" element={<Feedback user={token} permissions = {JSON.parse(perms)}/>}/>
               <Route path="/Logout" element={<Logout logout={logout} clearPerms={clearPerms}></Logout>}/>
 
             </Routes>
