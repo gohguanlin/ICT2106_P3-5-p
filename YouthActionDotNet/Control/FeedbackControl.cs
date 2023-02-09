@@ -50,8 +50,8 @@ namespace YouthActionDotNet.Control
         public async Task<ActionResult<string>> Create(Feedback template)
         {
             await FeedbackRepositoryIn.InsertAsync(template);
-            var createdFeedback = await FeedbackRepositoryOut.GetByIDAsync(template.FeedbackId);
-            return JsonConvert.SerializeObject(new { success = true, data = createdFeedback }, settings);
+            var createdFeedback = await FeedbackRepositoryIn.InsertAsync(template);
+            return JsonConvert.SerializeObject(new { success = true, message = "Feedback Created", data = createdFeedback }, settings);
         }
 
         public async Task<ActionResult<string>> Delete(string id)
