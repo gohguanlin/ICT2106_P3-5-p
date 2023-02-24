@@ -12,7 +12,7 @@ using YouthActionDotNet.Controllers;
 
 namespace YouthActionDotNet.Control
 {
-    public class RequestControl: IUserInterfaceCRUD<Request>
+    public class RequestControl : IUserInterfaceCRUD<Request>
     {
 
         private GenericRepositoryIn<Request> RequestRepositoryIn;
@@ -178,8 +178,8 @@ namespace YouthActionDotNet.Control
             });
 
             settings.FieldSettings.Add("DateOfRequest", new InputType { type = "datetime", displayLabel = "Date of Request", editable = true, primaryKey = false });
-            settings.FieldSettings.Add("DateOfApproval", new InputType { type = "datetime", displayLabel = "Date of Submission", editable = true, primaryKey = false });
-            settings.FieldSettings.Add("DateOfReimbursement", new InputType { type = "datetime", displayLabel = "Date of Reimbursement", editable = true, primaryKey = false });
+            //settings.FieldSettings.Add("DateOfApproval", new InputType { type = "datetime", displayLabel = "Date of Submission", editable = true, primaryKey = false });
+            //settings.FieldSettings.Add("DateOfReimbursement", new InputType { type = "datetime", displayLabel = "Date of Reimbursement", editable = true, primaryKey = false });
 
             var employee = EmployeeRepository.GetAll();
             settings.FieldSettings.Add("RequesterId", new DropdownInputType
