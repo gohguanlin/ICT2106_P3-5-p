@@ -257,6 +257,7 @@ export default class DatapageLayout extends React.Component {
                                 setExpansionContent={this.setExpansionContent} 
                                 handleSeeMore={this.handleSeeMore} 
                                 handleClose={this.handleClose} 
+                                hasFields={this.props.hasFields}
                                 popUpContent={this.state.popUpContent}
                                 perms={this.state.perms}>
                                     {this.props.children? 

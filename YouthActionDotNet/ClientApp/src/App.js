@@ -34,6 +34,8 @@ import Permissions from './Pages/Admin/Permissions';
 import Home  from "./Pages/Home"
 import VolunteerHome from "./Pages/Volunteer/volunteerHome"
 
+import Sample from './Pages/Sample';
+
 
 /* function getToken() {  
   const tokenString = sessionStorage.getItem('token');
@@ -112,19 +114,56 @@ export default function App() {
             </SlideDrawer>
             
             <Routes>
-              <Route path="/" element={<Users user={token} permissions = {JSON.parse(perms)}/>}/>
-              <Route path="/Employees" element={<Employees user={token} permissions = {JSON.parse(perms)}/>}/>
-              <Route path="/Volunteers" element={<Volunteer user={token} permissions = {JSON.parse(perms)}/>}/>
-              <Route path="/volunteer-registration" element={<VolunteerRegistration user={token} permissions = {JSON.parse(perms)}/>}/>
-              <Route path="/Donors" element={<Donors user={token} permissions = {JSON.parse(perms)}></Donors>}/>
-              <Route path="/Donations" element={<Donations user={token} permissions = {JSON.parse(perms)}></Donations>}/>
-              <Route path="/VolunteerWork" element={<VolunteerWork user={token} permissions = {JSON.parse(perms)}/>}/>
-              <Route path="/ServiceCenters" element={<ServiceCenters user={token} permissions = {JSON.parse(perms)}/>}/>
-              <Route path="/Project" element={<Project user={token} permissions = {JSON.parse(perms)}/>}/>
-              <Route path="/Expense" element={<Expense user={token} permissions = {JSON.parse(perms)}/>}/>
-              <Route path="/Permissions" element={<Permissions user={token} permissions = {JSON.parse(perms)}/>}/>
+              {token.data.Role == "Admin" &&
+                <Route path="/" element={<Home user={token} permissions = {parsedPerms}/>}/>
+              }
+              {token.data.Role == "Donor" &&
+                <Route path="/" element={<Home user={token} permissions = {parsedPerms}/>}/>
+              }
+              {token.data.Role == "Volunteer" &&
+                <Route path="/" element={<VolunteerHome user={token} permissions = {parsedPerms}/>}/>
+              }
+              {token.data.Role == "Employee" ?
+                
+              token.data.EmployeeRole == "Regional Director" ?
+                <Route path="/" element={<Home user={token} permissions = {parsedPerms}/>}/>
+              :
+              token.data.EmployeeRole == "Service Center Manager" ?
+                <Route path="/" element={<Home user={token} permissions = {parsedPerms}/>}/>
+              :
+              token.data.EmployeeRole == "Chief Executive" ?
+                <Route path="/" element={<Home user={token} permissions = {parsedPerms}/>}/>
+              :
+              token.data.EmployeeRole == "Finance Director" ?
+                <Route path="/" element={<Home user={token} permissions = {parsedPerms}/>}/>
+              :
+              token.data.EmployeeRole == "Operating Manager" ?
+                <Route path="/" element={<Home user={token} permissions = {parsedPerms}/>}/>
+              :
+              token.data.EmployeeRole == "Marketing Manager" ?
+                <Route path="/" element={<Home user={token} permissions = {parsedPerms}/>}/>
+              :
+              token.data.EmployeeRole == "Director Of New Business" ?
+                <Route path="/" element={<Home user={token} permissions = {parsedPerms}/>}/>
+              :
+              ""
+              :
+              ""
+              }
+              <Route path="/Users" element={<Users user={token} permissions = {parsedPerms}/>}/>  
+              <Route path="/Employees" element={<Employees user={token} permissions = {parsedPerms}/>}/>
+              <Route path="/Volunteers" element={<Volunteer user={token} permissions = {parsedPerms}/>}/>
+              <Route path="/volunteer-Registration" element={<VolunteerRegistration user={token} permissions = {parsedPerms}/>}/>
+              <Route path="/Donors" element={<Donors user={token} permissions = {parsedPerms}></Donors>}/>
+              <Route path="/Donations" element={<Donations user={token} permissions = {parsedPerms}></Donations>}/>
+              <Route path="/Volunteer-Work" element={<VolunteerWork user={token} permissions = {parsedPerms}/>}/>
+              <Route path="/Service-Center" element={<ServiceCenters user={token} permissions = {parsedPerms}/>}/>
+              <Route path="/Project" element={<Project user={token} permissions = {parsedPerms}/>}/>
+              <Route path="/Expenses" element={<Expense user={token} permissions = {parsedPerms}/>}/>
+              <Route path="/Permissions" element={<Permissions user={token} permissions = {parsedPerms}/>}/>
               <Route path="/Request" element={<Request user={token} permissions = {JSON.parse(perms)}/>}/>
               <Route path="/Feedback" element={<Feedback user={token} permissions = {JSON.parse(perms)}/>}/>
+              <Route path="/Sample" element={<Sample user={token} permissions = {parsedPerms}/>}/>
               <Route path="/Logout" element={<Logout logout={logout} clearPerms={clearPerms}></Logout>}/>
 
             </Routes>

@@ -84,14 +84,7 @@
     "Delete": true
   },
   {
-    "Module": "DonorAvailableProjects",
-    "Create": true,
-    "Read": true,
-    "Update": true,
-    "Delete": true
-  },
-  {
-    "Module": "DonorHistory",
+    "Module": "Sample",
     "Create": true,
     "Read": true,
     "Update": true,
