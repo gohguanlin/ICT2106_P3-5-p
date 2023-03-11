@@ -2,6 +2,15 @@
 import React from "react"
 import { Loading } from "../../Components/appCommon"
 import DatapageLayout from "../PageLayout"
+import { Box } from '@chakra-ui/react'
+import { Checkbox, CheckboxGroup } from "@chakra-ui/react"
+import { Input } from "@chakra-ui/react"
+import { Textarea } from "@chakra-ui/react"
+import { Button, ButtonGroup } from "@chakra-ui/react"
+import { SimpleGrid } from '@chakra-ui/react'
+import { ChakraProvider } from "@chakra-ui/react";
+import { Heading } from "@chakra-ui/react"
+import { Select } from '@chakra-ui/react'
 
 export default class Request extends React.Component {
     state={
@@ -168,25 +177,90 @@ export default class Request extends React.Component {
         })
     }
 
-    render(){
-        if(this.state.loading){
-            return <Loading></Loading>
-        }else{
+
+    render() {
+        return (
             
-        return(
-            <DatapageLayout 
-                settings={this.settings}
-                fieldSettings={this.state.settings.data.FieldSettings} 
-                headers={this.state.settings.data.ColumnSettings} 
-                data={this.state.content.data}
-                updateHandle = {this.handleUpdate}
-                requestRefresh = {this.requestRefresh}
-                error={this.state.error}
-                requestError = {this.requestError}
-                permissions={this.props.permissions}
-                >
-            </DatapageLayout>
+
+            <ChakraProvider>
+
+            <div style={{ marginTop: '80px', marginBottom: '30px', width: '90%' }}> 
+
+
+            <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                Request Form
+            </Heading>
+
+    
+            <SimpleGrid columns={2} spacing={20}>
+            <Box height='200px'>
+                <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                    Time
+                </Checkbox>
+                <Input placeholder="Enter a Time" size="sm" style={{ marginLeft: '20px', width: '80%'}} />
+                <br/><br/>
+                <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                    Space
+                </Checkbox>
+                <Input placeholder="Enter a Space" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                <br/><br/>
+                <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                    Money
+                </Checkbox>
+                <Input placeholder="Enter an Amount (Money)" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                <br/><br/>
+                <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                    Donor
+                </Checkbox>
+                <Input placeholder="Enter an Amount (Donor)" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                <br/><br/>
+                <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                    Volunteer
+                </Checkbox>
+                <Input placeholder="Enter an Amount (Volunteer)" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                <br/><br/><br/>
+            </Box>
+            <Box height='200px'>
+                Description:
+                <br/><br/>
+                <Textarea placeholder="Enter your reason here . . ." />
+                <br/><br/><br/><br/>
+                <Button colorScheme="blue">Submit</Button>
+            </Box>
+        </SimpleGrid>
+
+
+
+            </div>
+            </ChakraProvider>
+
+          
+
+
             )
         }
-    }
+
+
+
+    // render(){
+    //     if(this.state.loading){
+    //         return <Loading></Loading>
+    //     }else{
+            
+    //     return(
+    //         <DatapageLayout 
+    //             settings={this.settings}
+    //             fieldSettings={this.state.settings.data.FieldSettings} 
+    //             headers={this.state.settings.data.ColumnSettings} 
+    //             data={this.state.content.data}
+    //             updateHandle = {this.handleUpdate}
+    //             requestRefresh = {this.requestRefresh}
+    //             error={this.state.error}
+    //             requestError = {this.requestError}
+    //             permissions={this.props.permissions}
+    //             >
+    //         </DatapageLayout>
+    //         )
+    //     }
+    // }
 }
