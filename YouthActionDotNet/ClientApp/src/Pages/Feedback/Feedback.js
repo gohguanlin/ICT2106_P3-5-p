@@ -10,6 +10,7 @@ import { SimpleGrid } from '@chakra-ui/react'
 import { ChakraProvider } from "@chakra-ui/react";
 import { Heading } from "@chakra-ui/react"
 import { Select } from '@chakra-ui/react'
+import { Link } from 'react-router-dom';
 
 
 
@@ -200,7 +201,9 @@ export default class Feedback extends React.Component {
                 
 
                 <br/><br/><br/><br/>
+                <Link to = "/Request">
                 <Button colorScheme="blue">Submit</Button>
+                </Link>
             </Box>
         </SimpleGrid>
 
