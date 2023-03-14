@@ -12,7 +12,15 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { Heading } from "@chakra-ui/react"
 import { Select } from '@chakra-ui/react'
 
+
+
+
+
+
+
 export default class Request extends React.Component {
+
+
     state={
         content:null,
         headers:[],
@@ -177,8 +185,12 @@ export default class Request extends React.Component {
         })
     }
 
+    
+
 
     render() {
+
+
         return (
             
 
@@ -191,7 +203,7 @@ export default class Request extends React.Component {
                 Request Form
             </Heading>
 
-    
+
             <SimpleGrid columns={2} spacing={20}>
             <Box height='200px'>
                 <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
@@ -240,27 +252,6 @@ export default class Request extends React.Component {
             )
         }
 
+        
 
-
-    // render(){
-    //     if(this.state.loading){
-    //         return <Loading></Loading>
-    //     }else{
-            
-    //     return(
-    //         <DatapageLayout 
-    //             settings={this.settings}
-    //             fieldSettings={this.state.settings.data.FieldSettings} 
-    //             headers={this.state.settings.data.ColumnSettings} 
-    //             data={this.state.content.data}
-    //             updateHandle = {this.handleUpdate}
-    //             requestRefresh = {this.requestRefresh}
-    //             error={this.state.error}
-    //             requestError = {this.requestError}
-    //             permissions={this.props.permissions}
-    //             >
-    //         </DatapageLayout>
-    //         )
-    //     }
-    // }
 }
