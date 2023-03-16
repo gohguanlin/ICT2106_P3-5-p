@@ -10,10 +10,203 @@ import { SimpleGrid } from '@chakra-ui/react'
 import { ChakraProvider } from "@chakra-ui/react";
 import { Heading } from "@chakra-ui/react"
 import { Select } from '@chakra-ui/react'
+import { Link } from "react-router-dom"
+import { useState } from "react";
+import { Collapse } from "@chakra-ui/react";
 
+
+
+
+// class SearchBar extends React.Component {
+//     constructor(props) {
+//         super(props);
+//         this.state = {
+//             expanded: false,
+//             inputClasses: "SearchFieldGroup",
+//             showToolTip: false,
+//             searchQuery: "",
+//             selectedTag: "",
+//             tagType: "",
+//             suggestions: this.props.suggestions,
+//             macrosSuggestion: this.props.suggestions.filter(suggestion => suggestion.type === "macro"),
+//             specificSuggestion: this.props.suggestions.filter(suggestion => suggestion.type === "specific"),
+//             multipleSuggestion: this.props.suggestions.filter(suggestion => suggestion.type === "multiple"),
+//             placeholder: "",
+//         }
+//         this.searchInput = React.createRef();
+//         this.toggle = this.toggle.bind(this);
+//         this.focus = this.focus.bind(this);
+//         this.toggleToolTip = this.toggleToolTip.bind(this);
+//         this.searchCallBack = this.searchCallBack.bind(this);
+//         this.onCancelClick = this.onCancelClick.bind(this);
+//         this.handleKeydown = this.handleKeydown.bind(this);
+//         this.state.expanded = this.props.persist ? true : false;
+//         this.state.inputClasses = this.props.persist ? "SearchFieldGroup if-active" : "SearchFieldGroup";
+//     }
+
+//     componentDidUpdate(prevProps) {
+//         if (prevProps.persist !== this.props.persist) {
+//             this.updateAndNotify();
+//         }
+//     }
+
+//     focus() {
+//         if (!this.props.persist) {
+//             this.searchInput.current.focus()
+//         }
+//     }
+
+//     updateAndNotify() {
+//         this.setState({
+//             expanded: true,
+//             inputClasses: "SearchFieldGroup if-active"
+//         })
+//     }
+
+//     toggleToolTip = (e) => {
+//         e.stopPropagation()
+//         this.setState({
+//             showToolTip: !this.state.showToolTip
+//         })
+//     }
+//     toggle() {
+//         this.props.onClick();
+
+//         if (this.props.persist) {
+//             this.searchInput.current.focus();
+//             return;
+//         } else {
+
+//             if (this.state.expanded) {
+//                 this.setState({
+//                     expanded: false,
+//                     inputClasses: "SearchFieldGroup"
+//                 })
+//             } else {
+//                 this.setState({
+//                     expanded: true,
+//                     inputClasses: "SearchFieldGroup if-active"
+//                 })
+//                 this.searchInput.current.focus();
+//             }
+//         }
+
+//     }
+
+//     setSearch(option) {
+//         this.searchInput.current.value = option;
+//     }
+
+//     setPrimaryInput(tag) {
+//         this.setState({
+//             selectedTag: tag.value,
+//             tagType: tag.type,
+//         })
+//         this.searchInput.current.value = ""
+
+//         if (tag.value.slice(1) === "gender") {
+//             this.setState({
+//                 suggestions: [{ value: "Male", label: "Male", type: "" }, { value: "Female", label: "Female", type: "" }],
+//                 placeholder: "Enter a gender",
+//             })
+//         }
+//         this.searchInput.current.focus();
+//     }
+
+//     handleSearchQueryChange = (e) => {
+//         this.setState({
+//             searchQuery: e.target.value
+//         })
+//     }
+
+//     handleKeydown = (e,tag) => {
+//         if (e.key === "Enter") {
+//             this.searchCallBack(tag);
+//         }
+//     }
+
+//     searchCallBack(tag) {
+//         this.setState({
+//             selectedTag: "",
+//             tagType: "",
+//             suggestions: searchSuggestions,
+//             placeholder: "",
+//         })
+//         this.searchInput.current.value = ""
+//         this.searchInput.current.focus();
+//         this.props.searchCallBack(tag);
+//     }
+
+//     onCancelClick() {
+//         this.setState({
+//             selectedTag: "",
+//             tagType: "",
+//             suggestions: searchSuggestions,
+//             placeholder: "",
+//         })
+//         this.searchInput.current.value = "";
+//     }
+
+//     render() {
+
+//         return (
+//             <div className={this.props.className}>
+//                 <div className={" justify-content-end d-flex align-items-center"}>
+//                     <div className="searchBar">
+//                         <SearchButton onClick={this.toggle} className={this.props.invert ? "invert" : ""} icon={<i className="bi bi-search"></i>} toolTip={this.props.toolTip} showToolTip={this.state.showToolTip} onMouseEnter={this.toggleToolTip} onMouseLeave={
+//                             this.toggleToolTip}></SearchButton>
+
+//                     </div>{this.state.selectedTag !== "" &&
+//                         <SearchTags showEdit={false} onCancelClick={this.onCancelClick} type={this.state.tagType}>{this.state.selectedTag}</SearchTags>
+//                     }
+//                     <div className={"d-flex align-items-center " + this.state.inputClasses} onAnimationEnd={this.focus}>
+//                         <input type={"text"} className={"SearchField"} placeholder={this.state.placeholder} ref={this.searchInput} onChange={this.handleSearchQueryChange} onKeyDown={(e) => this.handleKeydown(e, this.state.searchQuery)}></input>
+//                     </div>
+//                 </div>
+//             </div>
+//         )
+//     }
+// }
+// SearchBar.defaultProps = {
+//     invert: false,
+//     suggestions: searchSuggestions,
+// }
+
+function MyComponent() {
+    const [showContent, setShowContent] = useState(false);
+  
+    const handleButtonClick = () => {
+      setShowContent(!showContent);
+    };
+  
+    return (
+      <div>
+        <Button onClick={handleButtonClick}>
+          {showContent ? "Hide" : "Show"} Content
+        </Button>
+        <Collapse in={showContent}>
+          <div>
+            {/* Content to be hidden or shown */}
+            Performance
+                <br/><br/>
+                <Select placeholder='- Select a Performance Level -' size='sm'>
+                <option value='option1'>Excellent</option>
+                <option value='option2'>Good</option>
+                <option value='option3'>Fair</option>
+                <option value='option4'>Poor</option>
+                <option value='option5'>Bad</option>
+                </Select>
+          </div>
+        </Collapse>
+      </div>
+    );
+  }
 
 
 export default class Feedback extends React.Component {
+
+    
+
     state={
         content:null,
         headers:[],
@@ -130,13 +323,14 @@ export default class Feedback extends React.Component {
         return (
             
 
+
             <ChakraProvider>
 
             <div style={{ marginTop: '80px', marginBottom: '30px', width: '90%' }}> 
 
 
             <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
-                Feedback Form
+                Performance Evaluation Form
             </Heading>
 
     
@@ -200,13 +394,20 @@ export default class Feedback extends React.Component {
                 
 
                 <br/><br/><br/><br/>
-                <Button colorScheme="blue">Submit</Button>
+                <Link to="/ViewFeedback">
+                    <Button colorScheme="blue">Submit</Button>
+                </Link>
             </Box>
         </SimpleGrid>
 
 
-        
 
+                {/* testing */}
+                <br/><br/><br/><br/>
+                <br/><br/><br/><br/>
+                <div className="App">
+                    <MyComponent />
+                </div>
 
 
             </div>

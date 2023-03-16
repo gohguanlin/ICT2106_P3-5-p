@@ -215,7 +215,7 @@ export default class ViewRequest extends React.Component {
                                 <Box height='200px'>
                                     Description:
                                     <br/><br/>
-                                    <Textarea placeholder="Enter your reason here . . ." />
+                                    <Textarea placeholder="This project requires more time as there has been a delay of importing the materials in, thus the workers is not able to start it." />
                                     <br/><br/><br/><br/>
                                     
                                 </Box>
@@ -1154,7 +1154,7 @@ export default class ViewRequest extends React.Component {
                                 <Box height='200px'>
                                     Description:
                                     <br/><br/>
-                                    <Textarea placeholder="Enter your reason here . . ." />
+                                    <Textarea placeholder="This project requires more time as there has been a delay of importing the materials in, thus the workers is not able to start it." />
                                     <br/><br/><br/><br/>
                                     
                                 </Box>
