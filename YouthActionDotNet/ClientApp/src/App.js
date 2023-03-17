@@ -29,6 +29,7 @@ import Project from './Pages/Project/Project';
 import Expense from './Pages/Expense/Expense';
 import Request from './Pages/Request/Request';
 import Feedback from './Pages/Feedback/Feedback';
+import QuarterlyReport from './Pages/QuarterlyReport/QuarterlyReport';
 import Permissions from './Pages/Admin/Permissions';
 
 import Home  from "./Pages/Home"
@@ -109,6 +110,7 @@ export default function App() {
                 <DrawerItem label="Permissions" to={"/Permissions"} logo={userImg} currentActive = {active} setActive={setActive}></DrawerItem>
                 <DrawerItem label="Request" to={"/Request"} logo={userImg} currentActive = {active} setActive={setActive}></DrawerItem>
                 <DrawerItem label="Feedback" to={"/Feedback"} logo={userImg} currentActive = {active} setActive={setActive}></DrawerItem>
+                <DrawerItem label="QuarterlyReport" to={"/QuarterlyReport"} logo={userImg} currentActive = {active} setActive={setActive}></DrawerItem>
                 <DrawerItem label="Logout" to={"/Logout"} logo={logoutImg}></DrawerItem>
               </DrawerSection>
             </SlideDrawer>
@@ -163,6 +165,7 @@ export default function App() {
               <Route path="/Permissions" element={<Permissions user={token} permissions = {parsedPerms}/>}/>
               <Route path="/Request" element={<Request user={token} permissions = {JSON.parse(perms)}/>}/>
               <Route path="/Feedback" element={<Feedback user={token} permissions = {JSON.parse(perms)}/>}/>
+              <Route path="/QuarterlyReport" element={<QuarterlyReport user={token} permissions = {JSON.parse(perms)}/>}/>
               <Route path="/Sample" element={<Sample user={token} permissions = {parsedPerms}/>}/>
               <Route path="/Logout" element={<Logout logout={logout} clearPerms={clearPerms}></Logout>}/>
 
