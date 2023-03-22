@@ -15,8 +15,51 @@ import { Pie } from 'react-chartjs-2'
 import { Bar } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
 import html2pdf from 'html2pdf.js'
+import DatapageLayoutEmpty from "../PageLayoutEmpty"
+import { useState } from "react";
+import { Collapse } from "@chakra-ui/react";
 
 
+
+
+function MyComponent() {
+    const [showContent, setShowContent] = useState(false);
+  
+    const handleButtonClick = () => {
+      setShowContent(!showContent);
+    };
+  
+    return (
+      <div>
+        <Button onClick={handleButtonClick} style={{ width:'100%', marginTop: '20px', marginBottom: '30px' }}>
+          Generate Graph
+        </Button>
+        <Collapse in={showContent}>
+          <div>
+            
+            {/* Content to be hidden or shown */}
+            <SimpleGrid columns={4} spacing={10}>
+                  <Box height='300px'>
+                    <Pie data={data} options={options} width={300} height={300}/>
+                  </Box>
+                    <Box height='300px'></Box>
+                    <Box height='300px'>
+                        <Bar data={data33} options={options33} width={300} height={300}/>
+                    </Box>
+                    <Box height='300px'></Box>
+
+
+                        <Button colorScheme="blue" onClick={downloadPDF} style={{ width:'100%' }}>Download Report</Button>
+
+
+            </SimpleGrid>
+
+            
+          </div>
+        </Collapse>
+      </div>
+    );
+  }
 
 
 
@@ -122,7 +165,7 @@ export default class QuarterlyReport extends React.Component {
     }
 
     settings ={
-        title:"QuarterlyReport",
+        title:"Request",
         primaryColor: "#a6192e",
         accentColor: "#94795d",
         textColor: "#ffffff",
@@ -234,7 +277,16 @@ export default class QuarterlyReport extends React.Component {
 
             <ChakraProvider>
 
-            <div id="report-container" style={{ marginTop: '80px', marginBottom: '150px', marginLeft: '50px', marginRight: '50px', width: '90%' }}> 
+            <div id="report-container" style={{ marginTop: '40px', marginBottom: '150px', marginLeft: '50px', marginRight: '50px', width: '90%' }}> 
+
+
+            <DatapageLayoutEmpty 
+                settings={this.settings}
+                //fieldSettings={this.state.settings.data.FieldSettings} 
+                requestRefresh = {this.requestRefresh}
+                error={this.state.error}
+                permissions={this.props.permissions}
+                handleSearchCallBack={this.searchCallBack}>
 
 
             <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '40px' }}>
@@ -282,32 +334,15 @@ export default class QuarterlyReport extends React.Component {
 
                   
                       
+                  <div className="App">
+                    <MyComponent />
+                </div>
+
+
                   
-
-
-                  <SimpleGrid columns={4} spacing={10}>
-                  <Box height='300px'>
-                  <Pie data={data} options={options} width={300} height={300}/>
-                  </Box>
-            <Box height='300px'>
-            
-                
-            </Box>
-            <Box height='300px'>
-            <Bar data={data33} options={options33} width={300} height={300}/>
-            </Box>
-            <Box height='300px'>
-            
-            </Box>
-            
-            <Button colorScheme="blue" style={{ width:'100%' }}>Generate</Button>
-            <Button colorScheme="blue" onClick={downloadPDF} style={{ width:'100%' }}>Download Report</Button>
-
-
-        </SimpleGrid>
                   
                     
-                    
+            </DatapageLayoutEmpty>
 
             </div>
             </ChakraProvider>

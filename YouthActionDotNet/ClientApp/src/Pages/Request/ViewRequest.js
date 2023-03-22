@@ -30,6 +30,7 @@ useDisclosure
 
 import { useState } from "react";
 import { Text } from "@chakra-ui/react";
+import DatapageLayoutEmpty from "../PageLayoutEmpty"
 
 
 
@@ -101,9 +102,6 @@ function DrawerExample({ selectedOption, onOptionChange }) {
     </>
   );
 }
-
-
-
 
 
 
@@ -1462,7 +1460,8 @@ export default class ViewRequest extends React.Component {
             headers: [],
             loading: true,
             settings: {},
-            error: ""
+            error: "",
+            activeButton: null
         }
         this.settings = {
             title: "ViewRequest",
@@ -1474,7 +1473,15 @@ export default class ViewRequest extends React.Component {
             apiDonor: "/api/Donor/",
             apiVolunteer: "/api/Volunteer/"
         }
+        this.handleButtonClick = this.handleButtonClick.bind(this);
     }
+
+    handleButtonClick(buttonName) {
+        this.setState(prevState => ({
+          activeButton: prevState.activeButton === buttonName ? null : buttonName
+        }));
+      }
+
 
 
 
@@ -1570,12 +1577,24 @@ export default class ViewRequest extends React.Component {
 
     render() {
 
+        const { activeButton } = this.state;
+
+
         return (
             
 
             <ChakraProvider>
 
             <div style={{ marginTop: '80px', marginBottom: '30px' }}> 
+
+
+            <DatapageLayoutEmpty 
+                settings={this.settings}
+                //fieldSettings={this.state.settings.data.FieldSettings} 
+                requestRefresh = {this.requestRefresh}
+                error={this.state.error}
+                permissions={this.props.permissions}
+                handleSearchCallBack={this.searchCallBack}>
 
 
             <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
@@ -1598,13 +1617,377 @@ export default class ViewRequest extends React.Component {
         </div>
 
 
+
+
+
+                <Accordion allowToggle>
+                    <AccordionItem>
+                    <h2>
+                    <AccordionButton style={{ backgroundColor: '#E8E8E8'}}>
+                        <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', textColor: 'black', fontWeight: 'bold' , backgroundColor: '#E8E8E8' }}>
+                            <SimpleGrid columns={6} spacing={0}>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Resource ID</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Project Name</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Resource Type</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Date Time</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Submitted By</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Status</Box>
+                            </SimpleGrid>
+                        </Box>
+                    </AccordionButton>
+                    </h2>
+                    </AccordionItem>
+                    
+                    <AccordionItem>
+                        <h2>
+                        <AccordionButton style={{
+                            backgroundColor: activeButton === 'button1' ? '#1c2c5b' : 'white',
+                            color: activeButton === 'button1' ? 'white' : 'black',
+                        }}
+                        onClick={() => this.handleButtonClick('button1')}>
+                            
+                            
+                            <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: activeButton === 'button1' ? '#1c2c5b' : 'white' }}>
+                                <SimpleGrid columns={6} spacing={0}>
+                                    <Box>83ec00e3-3b3e-4a56-b7c9</Box>
+                                    <Box>Island Innovation</Box>
+                                    <Box>Time</Box>
+                                    <Box>13/03/2023 21:30:11</Box>
+                                    <Box>Ai Xin</Box>
+                                    <Box>Read</Box>
+                                </SimpleGrid>
+                            </Box>
+                        </AccordionButton>
+                        </h2>
+                        <AccordionPanel style={{ backgroundColor: 'white' , padding: '20px', border: '1px solid #E8E8E8' }}>
+                        
+                        Project Name: Island Innovation
+                        <br/><br/><br/>
+                        Type
+                        <br/><br/>
+                        <SimpleGrid columns={2} spacing={20}>
+                                <Box height='200px'>
+                                    <Checkbox colorScheme="green" defaultChecked style={{ marginTop: '5px' }}>
+                                        Time
+                                    </Checkbox>
+                                    <Input placeholder="Need 1 week more" size="sm" style={{ marginLeft: '20px', width: '80%'}} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Space
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Money
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Donor
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Volunteer
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/><br/>
+                                </Box>
+                                <Box height='200px'>
+                                    Description:
+                                    <br/><br/>
+                                    <Textarea placeholder="Due to unforseen circumstances, half of the construction workers had food poisioning so we were not able to start work." />
+                                    <br/><br/><br/><br/>
+                                    
+                                </Box>
+                            </SimpleGrid>
+                        </AccordionPanel>
+                    </AccordionItem>
+
+                    <AccordionItem>
+                        <h2>
+                        <AccordionButton style={{
+                            backgroundColor: activeButton === 'button2' ? '#1c2c5b' : 'white',
+                            color: activeButton === 'button2' ? 'white' : 'black',
+                        }}
+                        onClick={() => this.handleButtonClick('button2')}>
+                            
+                            
+                            <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: activeButton === 'button2' ? '#1c2c5b' : 'white' }}>
+                                <SimpleGrid columns={6} spacing={0}>
+                                    <Box>83ec00e3-3b3e-4a56-b7c9</Box>
+                                    <Box>Garden State Growth</Box>
+                                    <Box>Space</Box>
+                                    <Box>14/03/2023 21:30:11</Box>
+                                    <Box>Yi Kiat</Box>
+                                    <Box>Read</Box>
+                                </SimpleGrid>
+                            </Box>
+                        </AccordionButton>
+                        </h2>
+                        <AccordionPanel style={{ backgroundColor: 'white' , padding: '20px', border: '1px solid #E8E8E8' }}>
+                        
+                        Project Name: Garden State Growth
+                        <br/><br/><br/>
+                        Type
+                        <br/><br/>
+                        <SimpleGrid columns={2} spacing={20}>
+                                <Box height='200px'>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Time
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%'}} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultChecked style={{ marginTop: '5px' }}>
+                                        Space
+                                    </Checkbox>
+                                    <Input placeholder="3" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Money
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Donor
+                                    </Checkbox>
+                                    <Input placeholder="$5500 more is needed" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Volunteer
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/><br/>
+                                </Box>
+                                <Box height='200px'>
+                                    Description:
+                                    <br/><br/>
+                                    <Textarea placeholder="Need more room as it is too small, alot of guests." />
+                                    <br/><br/><br/><br/>
+                                    
+                                </Box>
+                            </SimpleGrid>
+                        </AccordionPanel>
+                    </AccordionItem>
+
+                    <AccordionItem>
+                        <h2>
+                        <AccordionButton style={{
+                            backgroundColor: activeButton === 'button3' ? '#1c2c5b' : 'white',
+                            color: activeButton === 'button3' ? 'white' : 'black',
+                        }}
+                        onClick={() => this.handleButtonClick('button3')}>
+                            
+                            
+                            <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: activeButton === 'button3' ? '#1c2c5b' : 'white' }}>
+                                <SimpleGrid columns={6} spacing={0}>
+                                    <Box>83ec00e3-3b3e-4a56-b7c9</Box>
+                                    <Box>Lion City Leap</Box>
+                                    <Box>Money</Box>
+                                    <Box>15/03/2023 21:30:11</Box>
+                                    <Box>Guan Lin</Box>
+                                    <Box>Pending</Box>
+                                </SimpleGrid>
+                            </Box>
+                        </AccordionButton>
+                        </h2>
+                        <AccordionPanel style={{ backgroundColor: 'white' , padding: '20px', border: '1px solid #E8E8E8' }}>
+                        
+                        Project Name: Lion City Leap
+                        <br/><br/><br/>
+                        Type
+                        <br/><br/>
+                        <SimpleGrid columns={2} spacing={20}>
+                                <Box height='200px'>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Time
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%'}} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Space
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultChecked style={{ marginTop: '5px' }}>
+                                        Money
+                                    </Checkbox>
+                                    <Input placeholder="$5500 more is needed" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Donor
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Volunteer
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/><br/>
+                                </Box>
+                                <Box height='200px'>
+                                    Description:
+                                    <br/><br/>
+                                    <Textarea placeholder="There is not enough allowance to purchase more materials" />
+                                    <br/><br/><br/><br/>
+                                    
+                                </Box>
+                            </SimpleGrid>
+                        </AccordionPanel>
+                    </AccordionItem>
+
+                    <AccordionItem>
+                        <h2>
+                        <AccordionButton style={{
+                            backgroundColor: activeButton === 'button4' ? '#1c2c5b' : 'white',
+                            color: activeButton === 'button4' ? 'white' : 'black',
+                        }}
+                        onClick={() => this.handleButtonClick('button4')}>
+                            
+                            
+                            <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: activeButton === 'button4' ? '#1c2c5b' : 'white' }}>
+                                <SimpleGrid columns={6} spacing={0}>
+                                    <Box>83ec00e3-3b3e-4a56-b7c9</Box>
+                                    <Box>Marina Milestone</Box>
+                                    <Box>Donor</Box>
+                                    <Box>16/03/2023 21:30:11</Box>
+                                    <Box>Jia Xin</Box>
+                                    <Box>Pending</Box>
+                                </SimpleGrid>
+                            </Box>
+                        </AccordionButton>
+                        </h2>
+                        <AccordionPanel style={{ backgroundColor: 'white' , padding: '20px', border: '1px solid #E8E8E8' }}>
+                        
+                        Project Name: Marina Milestone
+                        <br/><br/><br/>
+                        Type
+                        <br/><br/>
+                        <SimpleGrid columns={2} spacing={20}>
+                                <Box height='200px'>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Time
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%'}} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Space
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Money
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultChecked style={{ marginTop: '5px' }}>
+                                        Donor
+                                    </Checkbox>
+                                    <Input placeholder="2" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Volunteer
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/><br/>
+                                </Box>
+                                <Box height='200px'>
+                                    Description:
+                                    <br/><br/>
+                                    <Textarea placeholder="Require more donor so that we can have more sponsers to make this event successful!" />
+                                    <br/><br/><br/><br/>
+                                    
+                                </Box>
+                            </SimpleGrid>
+                        </AccordionPanel>
+                    </AccordionItem>
+
+                    <AccordionItem>
+                        <h2>
+                        <AccordionButton style={{
+                            backgroundColor: activeButton === 'button5' ? '#1c2c5b' : 'white',
+                            color: activeButton === 'button5' ? 'white' : 'black',
+                        }}
+                        onClick={() => this.handleButtonClick('button5')}>
+                            
+                            
+                            <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: activeButton === 'button5' ? '#1c2c5b' : 'white' }}>
+                                <SimpleGrid columns={6} spacing={0}>
+                                    <Box>83ec00e3-3b3e-4a56-b7c9</Box>
+                                    <Box>Merlion Momentum</Box>
+                                    <Box>Volunteer</Box>
+                                    <Box>17/03/2023 21:30:11</Box>
+                                    <Box>Jing Yi</Box>
+                                    <Box>Pending</Box>
+                                </SimpleGrid>
+                            </Box>
+                        </AccordionButton>
+                        </h2>
+                        <AccordionPanel style={{ backgroundColor: 'white' , padding: '20px', border: '1px solid #E8E8E8' }}>
+                        
+                        Project Name: Merlion Momentum
+                        <br/><br/><br/>
+                        Type
+                        <br/><br/>
+                        <SimpleGrid columns={2} spacing={20}>
+                                <Box height='200px'>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Time
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%'}} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Space
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Money
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Donor
+                                    </Checkbox>
+                                    <Input placeholder="$5500 more is needed" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultChecked style={{ marginTop: '5px' }}>
+                                        Volunteer
+                                    </Checkbox>
+                                    <Input placeholder="18" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/><br/>
+                                </Box>
+                                <Box height='200px'>
+                                    Description:
+                                    <br/><br/>
+                                    <Textarea placeholder="There are many places which contains litter and we require more help to clean the area" />
+                                    <br/><br/><br/><br/>
+                                    
+                                </Box>
+                            </SimpleGrid>
+                        </AccordionPanel>
+                    </AccordionItem>
+                    
+                </Accordion>
+
+
+
+
         
         <br/><br/><br/><br/>
         {this.renderTextbox()}
         <br/><br/><br/><br/>
+
+
+
+
         
 
 
+        
+
+
+        </DatapageLayoutEmpty>
 
             </div>
             </ChakraProvider>

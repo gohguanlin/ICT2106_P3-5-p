@@ -13,10 +13,7 @@ import { Heading } from "@chakra-ui/react"
 import { Select } from '@chakra-ui/react'
 import { Link } from "react-router-dom"
 
-
-
-
-
+import DatapageLayoutEmpty from "../PageLayoutEmpty"
 
 
 
@@ -194,11 +191,24 @@ export default class Request extends React.Component {
 
 
         return (
+        
+
             
 
             <ChakraProvider>
 
-            <div style={{ marginTop: '80px', marginBottom: '30px', width: '90%' }}> 
+            <div style={{ marginTop: '40px', marginBottom: '30px', width: '90%' }}> 
+
+
+
+            <DatapageLayoutEmpty 
+                settings={this.settings}
+                //fieldSettings={this.state.settings.data.FieldSettings} 
+                requestRefresh = {this.requestRefresh}
+                error={this.state.error}
+                permissions={this.props.permissions}
+                handleSearchCallBack={this.searchCallBack}>
+            
 
 
             <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
@@ -239,13 +249,15 @@ export default class Request extends React.Component {
                 <br/><br/>
                 <Textarea placeholder="Enter your reason here . . ." />
                 <br/><br/><br/><br/>
-                <Link to="/ViewFeedback">
+                <Link to="/ViewRequest">
                     <Button colorScheme="blue">Submit</Button>
                 </Link>
             </Box>
         </SimpleGrid>
 
+                
 
+        </DatapageLayoutEmpty>
 
             </div>
             </ChakraProvider>
