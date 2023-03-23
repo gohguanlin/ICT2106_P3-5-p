@@ -32,102 +32,76 @@ import {
         AccordionIcon,
       } from '@chakra-ui/react'
         import { Text } from "@chakra-ui/react";
+        import DatapageLayoutEmpty from "../PageLayoutEmpty"
 
 
 
-function DrawerExample({ selectedOption, onOptionChange }) {
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const btnRef = React.useRef();
-  
-    const reset = () => {
-      onOptionChange({ target: { value: '' } });
-      onClose();
-    }
-  
-    return (
-      <>
-        <Button ref={btnRef} onClick={onOpen} colorScheme="blue" style={{ marginLeft: '20px'}}>Filter</Button>
-        <Drawer
-          isOpen={isOpen}
-          placement="right"
-          onClose={onClose}
-          finalFocusRef={btnRef}
-        >
-          <DrawerOverlay />
-          <DrawerContent>
-            <DrawerCloseButton />
-            <DrawerHeader>Filter Option</DrawerHeader>
-  
-            <DrawerBody>
-              
-              Choose a Filter Option:
-              <br/><br/><br/><br/>
-  
-              Service Center
-              <br/><br/>
-              <Select placeholder='- Select a Service Center -' size='sm' value={selectedOption} onChange={onOptionChange}>
-                  <option value='sc1'>1</option>
-                  <option value='sc2'>2</option>
-                  <option value='sc3'>3</option>
-                  <option value='sc4'>4</option>
-                  <option value='sc5'>5</option>
-                  <option value='sc6'>6</option>
-                  <option value='sc7'>7</option>
-                  <option value='sc8'>8</option>
-              </Select>
-                  
-                  <br/><br/>
-  
-              Performance
-              <br/><br/>
-              <Select placeholder='- Select a Performance -' size='sm' value={selectedOption} onChange={onOptionChange}>
-                  <option value='Excellent'>Excellent</option>
-                  <option value='Good'>Good</option>
-                  <option value='Fair'>Fair</option>
-                  <option value='Poor'>Poor</option>
-                  <option value='Bad'>Bad</option>
-                  </Select>
 
-                  <br/><br/>
-  
-              Quater
-              <br/><br/>
-              <Select placeholder='- Select a Quater -' size='sm' value={selectedOption} onChange={onOptionChange}>
-                  <option value='Q1'>Q1</option>
-                  <option value='Q2'>Q2</option>
-                  <option value='Q3'>Q3</option>
-                  <option value='Q4'>Q4</option>
-                  </Select>
-
-
-                  <br/><br/>
-  
-              Year
-              <br/><br/>
-              <Select placeholder='- Select a Year -' size='sm' value={selectedOption} onChange={onOptionChange}>
-                  <option value='2021'>2021</option>
-                  <option value='2022'>2022</option>
-                  <option value='2023'>2023</option>
-                  </Select>
-  
-            </DrawerBody>
-  
-            <DrawerFooter>
-            <Button variant='outline' mr={3} onClick={onClose}>
-                Close
-              </Button>
-              <Button colorScheme="blue" onClick={() => {
+        function DrawerExample({ selectedOption, onOptionChange }) {
+            const { isOpen, onOpen, onClose } = useDisclosure();
+            const btnRef = React.useRef();
+          
+            const reset = () => {
+              onOptionChange({ target: { value: '' } });
               onClose();
-              reset();
-              }}>
-              Reset
-              </Button>
-            </DrawerFooter>
-          </DrawerContent>
-        </Drawer>
-      </>
-    );
-  }
+            }
+          
+            return (
+              <>
+                <Button ref={btnRef} onClick={onOpen} colorScheme="blue" style={{ marginLeft: '20px'}}>Filter</Button>
+                <Drawer
+                  isOpen={isOpen}
+                  placement="right"
+                  onClose={onClose}
+                  finalFocusRef={btnRef}
+                >
+                  <DrawerOverlay />
+                  <DrawerContent>
+                    <DrawerCloseButton />
+                    <DrawerHeader>Filter Option</DrawerHeader>
+          
+                    <DrawerBody>
+                      
+                      Choose a Filter Option:
+                      <br/><br/><br/><br/>
+          
+                      Resource Type
+                      <br/><br/>
+                      <Select placeholder='- Select a Resource Type -' size='sm' value={selectedOption} onChange={onOptionChange}>
+                          <option value='option1'>Time</option>
+                          <option value='option2'>Space</option>
+                          <option value='option3'>Money</option>
+                          <option value='option4'>Donor</option>
+                          <option value='option5'>Volunteer</option>
+                      </Select>
+                          
+                          <br/><br/>
+          
+                      Status
+                      <br/><br/>
+                      <Select placeholder='- Select a Status -' size='sm' value={selectedOption} onChange={onOptionChange}>
+                          <option value='option1_pending'>Pending</option>
+                          <option value='option2_read'>Read</option>
+                          </Select>
+          
+                    </DrawerBody>
+          
+                    <DrawerFooter>
+                    <Button variant='outline' mr={3} onClick={onClose}>
+                        Close
+                      </Button>
+                      <Button colorScheme="blue" onClick={() => {
+                      onClose();
+                      reset();
+                      }}>
+                      Reset
+                      </Button>
+                    </DrawerFooter>
+                  </DrawerContent>
+                </Drawer>
+              </>
+            );
+          }
 
 
 export default class Feedback extends React.Component {
@@ -143,32 +117,33 @@ export default class Feedback extends React.Component {
         selectedOption: "",
 
         columnSettings: {
-            FormID: {displayHeader: 'Form ID'},
-            ServiceCenter: {displayHeader: 'Service Center'},
-            Performance: {displayHeader: 'Performance'},
-            Quater: {displayHeader: 'Quater'},
-            Year: {displayHeader: 'Year'},
-            DateTimeSubmitted: {displayHeader: 'DateTime Submitted'}
+            RequestID: {displayHeader: 'Request ID'},
+            ProjectName: {displayHeader: 'Project Name'},
+            ResourceType: {displayHeader: 'Resource Type'},
+            DateTime: {displayHeader: 'Date Time'},
+            SubmittedBy: {displayHeader: 'Submitted By'},
+            Status: {displayHeader: 'Status'},
         },
         data: [
-            {FormID: '4e2f413a-7c9b-4609-b789-184d2dfda8af', ServiceCenter: '2', Performance: 'Good', Quater: 'Q1', Year: '2023', DateTimeSubmitted: '13/03/2023 08:45:23', AreaDoneWell: 'Completed all task on time.', AreaOfImprovement: 'Exceeded Budget', ExpenseOut: '$3000', DonationIn: '$500', ManHour: '30h', Progression: '40% - 45%'},
-            {FormID: '2e2f413a-7c9b-4609-b789-184d2dfda8aa', ServiceCenter: '3', Performance: 'Fair', Quater: 'Q2', Year: '2021', DateTimeSubmitted: '14/03/2023 08:45:23', AreaDoneWell: 'Completed all task on time.', AreaOfImprovement: 'Exceeded Budget', ExpenseOut: '$3500', DonationIn: '$1500', ManHour: '33h', Progression: '50% - 55%'},
-            {FormID: 'te2f413a-7c9b-4609-b789-184d2dfda8as', ServiceCenter: '5', Performance: 'Bad', Quater: 'Q3', Year: '2022', DateTimeSubmitted: '15/03/2023 08:45:23', AreaDoneWell: 'Completed all task on time.', AreaOfImprovement: 'Exceeded Budget', ExpenseOut: '$4000', DonationIn: '$800', ManHour: '40h', Progression: '60% - 65%'},
-            {FormID: 'ye2f413a-7c9b-4609-b789-184d2dfda8ad', ServiceCenter: '8', Performance: 'Good', Quater: 'Q4', Year: '2023', DateTimeSubmitted: '16/03/2023 08:45:23', AreaDoneWell: 'Completed all task on time.', AreaOfImprovement: 'Exceeded Budget', ExpenseOut: '$4500', DonationIn: '$9200', ManHour: '130h', Progression: '90% - 95%'},
+            {RequestID: '83ec00e3-3b3e-4a56-b7c9', ProjectName: 'Lion City Leap', ResourceType: 'Time', DateTime: '13/03/2023 08:45:23', SubmittedBy: 'Guan Lin', Status: 'Pending', TimeAmount: '3 More Days', SpaceAmount: 'Enter an Amount', MoneyAmount: 'Enter an Amount', DonorAmount: 'Enter an Amount', VolunteerAmount: 'Enter an Amount', Description: 'This project requires more time as there has been a delay of importing the materials in, thus the workers is not able to start it.'},
+            {RequestID: '83ec00e3-3b3e-4a56-b7c9', ProjectName: 'Garden State Growth', ResourceType: 'Space', DateTime: '14/03/2023 08:45:23', SubmittedBy: 'Yi Kiat', Status: 'Pending', TimeAmount: 'Enter an Amount', SpaceAmount: 'Need 2 more Room', MoneyAmount: 'Enter an Amount', DonorAmount: 'Enter an Amount', VolunteerAmount: 'Enter an Amount', Description: 'This project requires more space as there has been a delay of importing the materials in, thus the workers is not able to start it.'},
+            {RequestID: '83ec00e3-3b3e-4a56-b7c9', ProjectName: 'Marina Milestone', ResourceType: 'Donor', DateTime: '15/03/2023 08:45:23', SubmittedBy: 'Jia Xin', Status: 'Pending', TimeAmount: 'Enter an Amount', SpaceAmount: 'Enter an Amount', MoneyAmount: 'Enter an Amount', DonorAmount: '4 more is needed', VolunteerAmount: 'Enter an Amount', Description: 'This project requires more donor as there has been a delay of importing the materials in, thus the workers is not able to start it.'},
+            {RequestID: '83ec00e3-3b3e-4a56-b7c9', ProjectName: 'Island Innovation', ResourceType: 'Money', DateTime: '16/03/2023 08:45:23', SubmittedBy: 'Ai Xin', Status: 'Read', TimeAmount: 'Enter an Amount', SpaceAmount: 'Enter an Amount', MoneyAmount: '$5500 more is needed', DonorAmount: 'Enter an Amount', VolunteerAmount: 'Enter an Amount', Description: 'This project requires more money as there has been a delay of importing the materials in, thus the workers is not able to start it.'},
+            {RequestID: '83ec00e3-3b3e-4a56-b7c9', ProjectName: 'Merlion Momentum', ResourceType: 'Volunteer', DateTime: '17/03/2023 08:45:23', SubmittedBy: 'Jing Yi', Status: 'Read', TimeAmount: 'Enter an Amount', SpaceAmount: 'Enter an Amount', MoneyAmount: 'Enter an Amount', DonorAmount: 'Enter an Amount', VolunteerAmount: '10 more volunteers is needed', Description: 'This project requires more volunteer as there has been a delay of importing the materials in, thus the workers is not able to start it.'},
         ],
         fieldSettings: {
-            FormID: {type: "text", displayLabel: "Form ID", editable: "false", primaryKey: "false", tooltip: "null"},
-            ServiceCenter: {type: "text", displayLabel: "Service Center", editable: "false", primaryKey: "false", tooltip: "null"},
-            Performance: {type: "text", displayLabel: "Performance", editable: "false", primaryKey: "false", tooltip: "null"},
-            Quater: {type: "text", displayLabel: "Quater", editable: "false", primaryKey: "false", tooltip: "null"},
-            Year: {type: "text", displayLabel: "Year", editable: "false", primaryKey: "false", tooltip: "null"},
-            DateTimeSubmitted: {type: "text", displayLabel: "DateTime Submitted", editable: "false", primaryKey: "false", tooltip: "null"},
-            AreaDoneWell: {type: "text", displayLabel: "Area Done Well: ", editable: "false", primaryKey: "false", tooltip: "null"},
-            AreaOfImprovement: {type: "text", displayLabel: "Area of Improvement: ", editable: "false", primaryKey: "false", tooltip: "null"},
-            ExpenseOut: {type: "text", displayLabel: "Expense Out: ", editable: "false", primaryKey: "false", tooltip: "null"},
-            DonationIn: {type: "text", displayLabel: "Donation In: ", editable: "false", primaryKey: "false", tooltip: "null"},
-            ManHour: {type: "text", displayLabel: "Man Hour: ", editable: "false", primaryKey: "false", tooltip: "null"},
-            Progression: {type: "text", displayLabel: "Progression: ", editable: "false", primaryKey: "false", tooltip: "null"}
+            RequestID: {type: "text", displayLabel: "RequestID", editable: "false", primaryKey: "false", tooltip: "null"},
+            ProjectName: {type: "text", displayLabel: "ProjectName", editable: "false", primaryKey: "false", tooltip: "null"},
+            ResourceType: {type: "text", displayLabel: "ResourceType", editable: "false", primaryKey: "false", tooltip: "null"},
+            DateTime: {type: "text", displayLabel: "DateTime", editable: "false", primaryKey: "false", tooltip: "null"},
+            SubmittedBy: {type: "text", displayLabel: "SubmittedBy", editable: "false", primaryKey: "false", tooltip: "null"},
+            Status: {type: "text", displayLabel: "Status", editable: "false", primaryKey: "false", tooltip: "null"},
+            TimeAmount: {type: "text", displayLabel: "TimeAmount", editable: "false", primaryKey: "false", tooltip: "null"},
+            SpaceAmount: {type: "text", displayLabel: "SpaceAmount", editable: "false", primaryKey: "false", tooltip: "null"},
+            MoneyAmount: {type: "text", displayLabel: "MoneyAmount", editable: "false", primaryKey: "false", tooltip: "null"},
+            DonorAmount: {type: "text", displayLabel: "DonorAmount", editable: "false", primaryKey: "false", tooltip: "null"},
+            VolunteerAmount: {type: "text", displayLabel: "VolunteerAmount", editable: "false", primaryKey: "false", tooltip: "null"},
+            Description: {type: "text", displayLabel: "Description", editable: "false", primaryKey: "false", tooltip: "null"},
         }
     }
 
@@ -178,7 +153,7 @@ export default class Feedback extends React.Component {
       };
     
       renderTextbox = () => {
-        const {columnSettings, data, fieldSettings} = this.state
+        const {activeButton, columnSettings, data, fieldSettings} = this.state
         if (this.state.loading)
         {
             return <loading></loading>
@@ -186,221 +161,1017 @@ export default class Feedback extends React.Component {
         else
         {
             switch (this.state.selectedOption) {
-            case "sc1":
+            
+            case "option1":
             return (
                 <>
-                <Text>SC1: Nothing</Text>
-                <br/><br/>
-                </>
-            )
-            case "sc2":
-            return (
-                <>
-                <Text>SC2</Text>
-                </>
-            )
-            case "sc3":
-            return (
-                <>
-                <Text>SC3</Text>
-                </>
-            )
-            case "sc4":
-            return (
-                <>
-                <Text>SC4: Nothing</Text>
-                <br/><br/>
-                </>
-            )
-            case "sc5":
-            return (
-                <>
-                <Text>SC5</Text>
-                </>
-            )
-            case "sc6":
-            return (
-                <>
-                <Text>SC6: Nothing</Text>
-                <br/><br/>
-                </>
-            )
-            case "sc7":
-            return (
-                <>
-                <Text>SC7: Nothing</Text>
-                <br/><br/>
-                </>
-            )
-            case "sc8":
-            return (
-                <>
-                <Text>SC8</Text>
-                </>
-            )
+                <Text>Time</Text>
+
+                <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                View All Request Form
+                    <DrawerExample
+                    style={{ position: 'absolute', right: 0 }}
+              selectedOption={this.state.selectedOption}
+              onOptionChange={this.handleOptionChange}
+            />     
+            </Heading>
+
+                <DatapageLayoutEmpty 
+                settings={this.settings}
+                //fieldSettings={this.state.settings.data.FieldSettings} 
+                requestRefresh = {this.requestRefresh}
+                error={this.state.error}
+                permissions={this.props.permissions}
+                handleSearchCallBack={this.searchCallBack}>
 
 
-            case "Excellent":
-            return (
-                <>
-                <Text>Excellent: Nothing</Text>
-                <br/><br/>
-                </>
-            )
-            case "Good":
-            return (
-                <>
-                <Text>Good</Text>
-                </>
-            )
-            case "Fair":
-            return (
-                <>
-                <Text>Fair</Text>
-                </>
-            )
-            case "Poor":
-            return (
-                <>
-                <Text>Poor: Nothing</Text>
-                <br/><br/>
-                </>
-            )
-            case "Bad":
-            return (
-                <>
-                <Text>Bad</Text>
-                </>
-            )
-
-
-            case "Q1":
-            return (
-                <>
-                <Text>Q1</Text>
-                </>
-            )
-            case "Q2":
-            return (
-                <>
-                <Text>Q2</Text>
-                </>
-            )
-            case "Q3":
-            return (
-                <>
-                <Text>Q3</Text>
-                </>
-            )
-            case "Q4":
-            return (
-                <>
-                <Text>Q4</Text>
-                </>
-            )
-
-
-
-            case "2021":
-            return (
-                <>
-                <Text>2021</Text>
-                </>
-            )
-            case "2022":
-            return (
-                <>
-                <Text>2022</Text>
-                </>
-            )
-            case "2023":
-
-                    return (
-                        <>
-                        <Text>2023</Text>
-                        <DatapageLayout 
-                        settings={this.settings}
-                        fieldSettings={fieldSettings} 
-                        headers={columnSettings} 
-                        data={data}
-                        hasFields = {false}
-
-                        updateHandle = {this.handleUpdate}
-                        requestRefresh = {this.requestRefresh}
-                        error={this.state.error}
-                        permissions={this.props.permissions}
-                        requestError={this.requestError}
-                        >       
-
-                        {[0, 3].map((index) => { 
-                            return(
-                                <div className="volunteer-extended">
+                <Accordion allowToggle>
+                    <AccordionItem>
+                    <h2>
+                    <AccordionButton style={{ backgroundColor: '#E8E8E8'}}>
+                        <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', textColor: 'black', fontWeight: 'bold' , backgroundColor: '#E8E8E8' }}>
+                            <SimpleGrid columns={6} spacing={0}>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Request ID</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Project Name</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Resource Type</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Date Time</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Submitted By</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Status</Box>
+                            </SimpleGrid>
+                        </Box>
+                    </AccordionButton>
+                    </h2>
+                    </AccordionItem>
+                    
+                    <AccordionItem>
+                        <h2>
+                        <AccordionButton style={{
+                            backgroundColor: activeButton === 'button1' ? '#1c2c5b' : 'white',
+                            color: activeButton === 'button1' ? 'white' : 'black',
+                        }}
+                        onClick={() => this.handleButtonClick('button1')}>
+                            
+                            
+                            <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: activeButton === 'button1' ? '#1c2c5b' : 'white' }}>
+                                <SimpleGrid columns={6} spacing={0}>
+                                    <Box>83ec00e3-3b3e-4a56-b7c9</Box>
+                                    <Box>Lion City Leap</Box>
+                                    <Box>Time</Box>
+                                    <Box>13/03/2023 08:45:23</Box>
+                                    <Box>Guan Lin</Box>
+                                    <Box>Pending</Box>
+                                </SimpleGrid>
+                            </Box>
+                        </AccordionButton>
+                        </h2>
+                        <AccordionPanel style={{ backgroundColor: 'white' , padding: '20px', border: '1px solid #E8E8E8' }}>
+                        
+                        Project Name: Lion City Leap
+                        <br/><br/><br/>
+                        Type
+                        <br/><br/>
+                        <SimpleGrid columns={2} spacing={20}>
+                                <Box height='200px'>
+                                    <Checkbox colorScheme="green" defaultChecked style={{ marginTop: '5px' }}>
+                                        Time
+                                    </Checkbox>
+                                    <Input placeholder="3 More Days" size="sm" style={{ marginLeft: '20px', width: '80%'}} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Space
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Money
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Donor
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Volunteer
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/><br/>
+                                </Box>
+                                <Box height='200px'>
+                                    Description:
+                                    <br/><br/>
+                                    <Textarea placeholder="This project requires more time as there has been a delay of importing the materials in, thus the workers is not able to start it." />
+                                    <br/><br/><br/><br/>
                                     
-                                    <SimpleGrid columns={2} spacing={20}>
-                                    <Box height='500px'>
+                                </Box>
+                            </SimpleGrid>
+                        
+                        </AccordionPanel>
+                    </AccordionItem>
 
+                    
+                </Accordion>
+
+        </DatapageLayoutEmpty>
+                </>
+            )
+            
+            case "option2":
+            return (
+                <>
+                <Text>Space</Text>
+                <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                View All Request Form
+                    <DrawerExample
+                    style={{ position: 'absolute', right: 0 }}
+              selectedOption={this.state.selectedOption}
+              onOptionChange={this.handleOptionChange}
+            />     
+            </Heading>
+
+                <DatapageLayoutEmpty 
+                settings={this.settings}
+                //fieldSettings={this.state.settings.data.FieldSettings} 
+                requestRefresh = {this.requestRefresh}
+                error={this.state.error}
+                permissions={this.props.permissions}
+                handleSearchCallBack={this.searchCallBack}>
+
+
+                <Accordion allowToggle>
+                    <AccordionItem>
+                    <h2>
+                    <AccordionButton style={{ backgroundColor: '#E8E8E8'}}>
+                        <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', textColor: 'black', fontWeight: 'bold' , backgroundColor: '#E8E8E8' }}>
+                            <SimpleGrid columns={6} spacing={0}>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Request ID</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Project Name</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Resource Type</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Date Time</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Submitted By</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Status</Box>
+                            </SimpleGrid>
+                        </Box>
+                    </AccordionButton>
+                    </h2>
+                    </AccordionItem>
+                    
+                    <AccordionItem>
+                        <h2>
+                        <AccordionButton style={{
+                            backgroundColor: activeButton === 'button1' ? '#1c2c5b' : 'white',
+                            color: activeButton === 'button1' ? 'white' : 'black',
+                        }}
+                        onClick={() => this.handleButtonClick('button1')}>
+                            
+                            
+                            <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: activeButton === 'button1' ? '#1c2c5b' : 'white' }}>
+                                <SimpleGrid columns={6} spacing={0}>
+                                    <Box>83ec00e3-3b3e-4a56-b7c9</Box>
+                                    <Box>Garden State Growth</Box>
+                                    <Box>Space</Box>
+                                    <Box>14/03/2023 08:45:23</Box>
+                                    <Box>Yi Kiat</Box>
+                                    <Box>Pending</Box>
+                                </SimpleGrid>
+                            </Box>
+                        </AccordionButton>
+                        </h2>
+                        <AccordionPanel style={{ backgroundColor: 'white' , padding: '20px', border: '1px solid #E8E8E8' }}>
+                        
+                        Project Name: Garden State Growth
+                        <br/><br/><br/>
+                        Type
+                        <br/><br/>
+                        <SimpleGrid columns={2} spacing={20}>
+                                <Box height='200px'>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Time
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%'}} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultChecked style={{ marginTop: '5px' }}>
+                                        Space
+                                    </Checkbox>
+                                    <Input placeholder="Need 2 more Room" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Money
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Donor
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Volunteer
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/><br/>
+                                </Box>
+                                <Box height='200px'>
+                                    Description:
+                                    <br/><br/>
+                                    <Textarea placeholder="This project requires more space as there has been a delay of importing the materials in, thus the workers is not able to start it." />
+                                    <br/><br/><br/><br/>
                                     
-                                            <b>Service Center:</b>
-                                            <br/><br/>
-                                            <Select placeholder={data[index].ServiceCenter} size='sm'>
-                                            </Select>
-                                            <br/><br/><br/>
-                                            <b>Performance:</b>
-                                            <br/><br/>
-                                            <Select placeholder={data[index].Performance} size='sm'>
-                                            </Select>
-                                            <br/><br/><br/>
-                                            <b>Areas Done Well:</b>
-                                            <br/><br/>
-                                            <Textarea placeholder={data[index].AreaDoneWell} />
-                                            <br/><br/><br/>
-                                            <b>Areas of Improve:</b>
-                                            <br/><br/>
-                                            <Textarea placeholder={data[index].AreaOfImprovement} />
-                                        
+                                </Box>
+                            </SimpleGrid>
+                        
+                        </AccordionPanel>
+                    </AccordionItem>
+
+                    
+                </Accordion>
+
+        </DatapageLayoutEmpty>
+                </>
+            )
+
+            case "option3":
+                return (
+                    <>
+                    <Text>Money</Text>
+                    <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                    View All Request Form
+                        <DrawerExample
+                        style={{ position: 'absolute', right: 0 }}
+                  selectedOption={this.state.selectedOption}
+                  onOptionChange={this.handleOptionChange}
+                />     
+                </Heading>
+    
+                    <DatapageLayoutEmpty 
+                    settings={this.settings}
+                    //fieldSettings={this.state.settings.data.FieldSettings} 
+                    requestRefresh = {this.requestRefresh}
+                    error={this.state.error}
+                    permissions={this.props.permissions}
+                    handleSearchCallBack={this.searchCallBack}>
+    
+    
+                    <Accordion allowToggle>
+                        <AccordionItem>
+                        <h2>
+                        <AccordionButton style={{ backgroundColor: '#E8E8E8'}}>
+                            <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', textColor: 'black', fontWeight: 'bold' , backgroundColor: '#E8E8E8' }}>
+                                <SimpleGrid columns={6} spacing={0}>
+                                    <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Request ID</Box>
+                                    <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Project Name</Box>
+                                    <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Resource Type</Box>
+                                    <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Date Time</Box>
+                                    <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Submitted By</Box>
+                                    <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Status</Box>
+                                </SimpleGrid>
+                            </Box>
+                        </AccordionButton>
+                        </h2>
+                        </AccordionItem>
+                        
+                        <AccordionItem>
+                            <h2>
+                            <AccordionButton style={{
+                                backgroundColor: activeButton === 'button1' ? '#1c2c5b' : 'white',
+                                color: activeButton === 'button1' ? 'white' : 'black',
+                            }}
+                            onClick={() => this.handleButtonClick('button1')}>
+                                
+                                
+                                <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: activeButton === 'button1' ? '#1c2c5b' : 'white' }}>
+                                    <SimpleGrid columns={6} spacing={0}>
+                                        <Box>83ec00e3-3b3e-4a56-b7c9</Box>
+                                        <Box>Island Innovation</Box>
+                                        <Box>Money</Box>
+                                        <Box>16/03/2023 08:45:23</Box>
+                                        <Box>Ai Xin</Box>
+                                        <Box>Read</Box>
+                                    </SimpleGrid>
+                                </Box>
+                            </AccordionButton>
+                            </h2>
+                            <AccordionPanel style={{ backgroundColor: 'white' , padding: '20px', border: '1px solid #E8E8E8' }}>
+                            
+                            Project Name: Island Innovation
+                        <br/><br/><br/>
+                        Type
+                        <br/><br/>
+                        <SimpleGrid columns={2} spacing={20}>
+                                <Box height='200px'>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Time
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%'}} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Space
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Money
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultChecked style={{ marginTop: '5px' }}>
+                                        Donor
+                                    </Checkbox>
+                                    <Input placeholder="$5500 more is needed" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Volunteer
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/><br/>
+                                </Box>
+                                <Box height='200px'>
+                                    Description:
+                                    <br/><br/>
+                                    <Textarea placeholder="This project requires more money as there has been a delay of importing the materials in, thus the workers is not able to start it." />
+                                    <br/><br/><br/><br/>
+                                    
+                                </Box>
+                            </SimpleGrid>
+                            
+                            </AccordionPanel>
+                        </AccordionItem>
+    
+                        
+                    </Accordion>
+    
+            </DatapageLayoutEmpty>
+                    </>
+                )
+            
+            case "option4":
+                return (
+                    <>
+                    <Text>Donor</Text>
+                    <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                    View All Request Form
+                        <DrawerExample
+                        style={{ position: 'absolute', right: 0 }}
+                  selectedOption={this.state.selectedOption}
+                  onOptionChange={this.handleOptionChange}
+                />     
+                </Heading>
+    
+                    <DatapageLayoutEmpty 
+                    settings={this.settings}
+                    //fieldSettings={this.state.settings.data.FieldSettings} 
+                    requestRefresh = {this.requestRefresh}
+                    error={this.state.error}
+                    permissions={this.props.permissions}
+                    handleSearchCallBack={this.searchCallBack}>
+    
+    
+                    <Accordion allowToggle>
+                        <AccordionItem>
+                        <h2>
+                        <AccordionButton style={{ backgroundColor: '#E8E8E8'}}>
+                            <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', textColor: 'black', fontWeight: 'bold' , backgroundColor: '#E8E8E8' }}>
+                                <SimpleGrid columns={6} spacing={0}>
+                                    <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Request ID</Box>
+                                    <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Project Name</Box>
+                                    <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Resource Type</Box>
+                                    <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Date Time</Box>
+                                    <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Submitted By</Box>
+                                    <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Status</Box>
+                                </SimpleGrid>
+                            </Box>
+                        </AccordionButton>
+                        </h2>
+                        </AccordionItem>
+                        
+                        <AccordionItem>
+                            <h2>
+                            <AccordionButton style={{
+                                backgroundColor: activeButton === 'button1' ? '#1c2c5b' : 'white',
+                                color: activeButton === 'button1' ? 'white' : 'black',
+                            }}
+                            onClick={() => this.handleButtonClick('button1')}>
+                                
+                                
+                                <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: activeButton === 'button1' ? '#1c2c5b' : 'white' }}>
+                                    <SimpleGrid columns={6} spacing={0}>
+                                        <Box>83ec00e3-3b3e-4a56-b7c9</Box>
+                                        <Box>Marina Milestone</Box>
+                                        <Box>Donor</Box>
+                                        <Box>15/03/2023 08:45:23</Box>
+                                        <Box>Jia Xin</Box>
+                                        <Box>Pending</Box>
+                                    </SimpleGrid>
+                                </Box>
+                            </AccordionButton>
+                            </h2>
+                            <AccordionPanel style={{ backgroundColor: 'white' , padding: '20px', border: '1px solid #E8E8E8' }}>
+                            
+                            Project Name: Marina Milestone
+                            <br/><br/><br/>
+                            Type
+                            <br/><br/>
+                                <SimpleGrid columns={2} spacing={20}>
+                                    <Box height='200px'>
+                                        <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                            Time
+                                        </Checkbox>
+                                        <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%'}} />
+                                        <br/><br/>
+                                        <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                            Space
+                                        </Checkbox>
+                                        <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                        <br/><br/>
+                                        <Checkbox colorScheme="green" defaultChecked style={{ marginTop: '5px' }}>
+                                            Money
+                                        </Checkbox>
+                                        <Input placeholder="4 more is needed" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                        <br/><br/>
+                                        <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                            Donor
+                                        </Checkbox>
+                                        <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                        <br/><br/>
+                                        <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                            Volunteer
+                                        </Checkbox>
+                                        <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                        <br/><br/><br/>
                                     </Box>
-                                    <Box height='500px'>
-                                        
-                                        <div style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
-
-                                        <Heading as="h6" size="md" style={{ marginTop: '10px', marginBottom: '20px' }}>
-                                        Status
-                                        </Heading>
-                                        
-                                        Expenses (Out): {data[index].ExpenseOut}
-
+                                    <Box height='200px'>
+                                        Description:
                                         <br/><br/>
-
-                                        Donation (In): {data[index].DonationIn}
-
-                                        <br/><br/>
-
-                                        Man Hour: {data[index].ManHour}
-
-                                        <br/><br/>
-
-                                        Progress: {data[index].Progression}
-
-                                        </div>
+                                        <Textarea placeholder="This project requires more donor as there has been a delay of importing the materials in, thus the workers is not able to start it." />
                                         <br/><br/><br/><br/>
+                                        
                                     </Box>
                                 </SimpleGrid>
+                            
+                            </AccordionPanel>
+                        </AccordionItem>
+    
+                        
+                    </Accordion>
+    
+            </DatapageLayoutEmpty>
+                    </>
+                )
 
+            case "option5":
+            return (
+                <>
+                <Text>Volunteer</Text>
+                <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                    View All Request Form
+                        <DrawerExample
+                        style={{ position: 'absolute', right: 0 }}
+                  selectedOption={this.state.selectedOption}
+                  onOptionChange={this.handleOptionChange}
+                />     
+                </Heading>
+    
+                    <DatapageLayoutEmpty 
+                    settings={this.settings}
+                    //fieldSettings={this.state.settings.data.FieldSettings} 
+                    requestRefresh = {this.requestRefresh}
+                    error={this.state.error}
+                    permissions={this.props.permissions}
+                    handleSearchCallBack={this.searchCallBack}>
+    
+    
+                    <Accordion allowToggle>
+                        <AccordionItem>
+                        <h2>
+                        <AccordionButton style={{ backgroundColor: '#E8E8E8'}}>
+                            <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', textColor: 'black', fontWeight: 'bold' , backgroundColor: '#E8E8E8' }}>
+                                <SimpleGrid columns={6} spacing={0}>
+                                    <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Request ID</Box>
+                                    <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Project Name</Box>
+                                    <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Resource Type</Box>
+                                    <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Date Time</Box>
+                                    <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Submitted By</Box>
+                                    <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Status</Box>
+                                </SimpleGrid>
+                            </Box>
+                        </AccordionButton>
+                        </h2>
+                        </AccordionItem>
+                        
+                        <AccordionItem>
+                            <h2>
+                            <AccordionButton style={{
+                                backgroundColor: activeButton === 'button1' ? '#1c2c5b' : 'white',
+                                color: activeButton === 'button1' ? 'white' : 'black',
+                            }}
+                            onClick={() => this.handleButtonClick('button1')}>
                                 
-                                </div>
-                            )
-                        })}
+                                
+                                <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: activeButton === 'button1' ? '#1c2c5b' : 'white' }}>
+                                    <SimpleGrid columns={6} spacing={0}>
+                                        <Box>83ec00e3-3b3e-4a56-b7c9</Box>
+                                        <Box>Merlion Momentum</Box>
+                                        <Box>Volunteer</Box>
+                                        <Box>17/03/2023 08:45:23</Box>
+                                        <Box>Jing Yi</Box>
+                                        <Box>Read</Box>
+                                    </SimpleGrid>
+                                </Box>
+                            </AccordionButton>
+                            </h2>
+                            <AccordionPanel style={{ backgroundColor: 'white' , padding: '20px', border: '1px solid #E8E8E8' }}>
+                            
+                            Project Name: Merlion Momentum
+                        <br/><br/><br/>
+                        Type
+                        <br/><br/>
+                        <SimpleGrid columns={2} spacing={20}>
+                                <Box height='200px'>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Time
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%'}} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Space
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Money
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Donor
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultChecked style={{ marginTop: '5px' }}>
+                                        Volunteer
+                                    </Checkbox>
+                                    <Input placeholder="10 more volunteers is needed" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/><br/>
+                                </Box>
+                                <Box height='200px'>
+                                    Description:
+                                    <br/><br/>
+                                    <Textarea placeholder="This project requires more volunteer as there has been a delay of importing the materials in, thus the workers is not able to start it." />
+                                    <br/><br/><br/><br/>
+                                    
+                                </Box>
+                            </SimpleGrid>
+                            
+                            </AccordionPanel>
+                        </AccordionItem>
+    
+                    </Accordion>
+    
+            </DatapageLayoutEmpty>
+                </>
+            )
 
-                        </DatapageLayout>
-                        </>
-                    )
+            case "option1_pending":
+            return (
+                <>
+                <Text>Pending</Text>
+                <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                    View All Request Form
+                        <DrawerExample
+                        style={{ position: 'absolute', right: 0 }}
+                  selectedOption={this.state.selectedOption}
+                  onOptionChange={this.handleOptionChange}
+                />     
+                </Heading>
+                <DatapageLayoutEmpty 
+                settings={this.settings}
+                //fieldSettings={this.state.settings.data.FieldSettings} 
+                requestRefresh = {this.requestRefresh}
+                error={this.state.error}
+                permissions={this.props.permissions}
+                handleSearchCallBack={this.searchCallBack}>
+
+
+                <Accordion allowToggle>
+                    <AccordionItem>
+                    <h2>
+                    <AccordionButton style={{ backgroundColor: '#E8E8E8'}}>
+                        <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', textColor: 'black', fontWeight: 'bold' , backgroundColor: '#E8E8E8' }}>
+                            <SimpleGrid columns={6} spacing={0}>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Request ID</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Project Name</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Resource Type</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Date Time</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Submitted By</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Status</Box>
+                            </SimpleGrid>
+                        </Box>
+                    </AccordionButton>
+                    </h2>
+                    </AccordionItem>
+                    
+                    <AccordionItem>
+                        <h2>
+                        <AccordionButton style={{
+                            backgroundColor: activeButton === 'button1' ? '#1c2c5b' : 'white',
+                            color: activeButton === 'button1' ? 'white' : 'black',
+                        }}
+                        onClick={() => this.handleButtonClick('button1')}>
+                            
+                            
+                            <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: activeButton === 'button1' ? '#1c2c5b' : 'white' }}>
+                                <SimpleGrid columns={6} spacing={0}>
+                                    <Box>83ec00e3-3b3e-4a56-b7c9</Box>
+                                    <Box>Lion City Leap</Box>
+                                    <Box>Time</Box>
+                                    <Box>13/03/2023 08:45:23</Box>
+                                    <Box>Guan Lin</Box>
+                                    <Box>Pending</Box>
+                                </SimpleGrid>
+                            </Box>
+                        </AccordionButton>
+                        </h2>
+                        <AccordionPanel style={{ backgroundColor: 'white' , padding: '20px', border: '1px solid #E8E8E8' }}>
+                        
+                        Project Name: Lion City Leap
+                        <br/><br/><br/>
+                        Type
+                        <br/><br/>
+                        <SimpleGrid columns={2} spacing={20}>
+                                <Box height='200px'>
+                                    <Checkbox colorScheme="green" defaultChecked style={{ marginTop: '5px' }}>
+                                        Time
+                                    </Checkbox>
+                                    <Input placeholder="3 More Days" size="sm" style={{ marginLeft: '20px', width: '80%'}} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Space
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Money
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Donor
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Volunteer
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/><br/>
+                                </Box>
+                                <Box height='200px'>
+                                    Description:
+                                    <br/><br/>
+                                    <Textarea placeholder="This project requires more time as there has been a delay of importing the materials in, thus the workers is not able to start it." />
+                                    <br/><br/><br/><br/>
+                                    
+                                </Box>
+                            </SimpleGrid>
+                        
+                        </AccordionPanel>
+                    </AccordionItem>
+
+                    <AccordionItem>
+                        <h2>
+                        <AccordionButton style={{
+                            backgroundColor: activeButton === 'button2' ? '#1c2c5b' : 'white',
+                            color: activeButton === 'button2' ? 'white' : 'black',
+                        }}
+                        onClick={() => this.handleButtonClick('button2')}>
+                            
+                            
+                            <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: activeButton === 'button2' ? '#1c2c5b' : 'white' }}>
+                                <SimpleGrid columns={6} spacing={0}>
+                                    <Box>83ec00e3-3b3e-4a56-b7c9</Box>
+                                    <Box>Garden State Growth</Box>
+                                    <Box>Space</Box>
+                                    <Box>14/03/2023 08:45:23</Box>
+                                    <Box>Yi Kiat</Box>
+                                    <Box>Pending</Box>
+                                </SimpleGrid>
+                            </Box>
+                        </AccordionButton>
+                        </h2>
+                        <AccordionPanel style={{ backgroundColor: 'white' , padding: '20px', border: '1px solid #E8E8E8' }}>
+                        
+                        Project Name: Garden State Growth
+                        <br/><br/><br/>
+                        Type
+                        <br/><br/>
+                        <SimpleGrid columns={2} spacing={20}>
+                                <Box height='200px'>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Time
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%'}} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultChecked style={{ marginTop: '5px' }}>
+                                        Space
+                                    </Checkbox>
+                                    <Input placeholder="Need 2 more Room" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Money
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Donor
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Volunteer
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/><br/>
+                                </Box>
+                                <Box height='200px'>
+                                    Description:
+                                    <br/><br/>
+                                    <Textarea placeholder="This project requires more space as there has been a delay of importing the materials in, thus the workers is not able to start it." />
+                                    <br/><br/><br/><br/>
+                                    
+                                </Box>
+                            </SimpleGrid>
+                        
+                        </AccordionPanel>
+                    </AccordionItem>
+
+                    <AccordionItem>
+                            <h2>
+                            <AccordionButton style={{
+                                backgroundColor: activeButton === 'button3' ? '#1c2c5b' : 'white',
+                                color: activeButton === 'button3' ? 'white' : 'black',
+                            }}
+                            onClick={() => this.handleButtonClick('button3')}>
+                                
+                                
+                                <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: activeButton === 'button3' ? '#1c2c5b' : 'white' }}>
+                                    <SimpleGrid columns={6} spacing={0}>
+                                        <Box>83ec00e3-3b3e-4a56-b7c9</Box>
+                                        <Box>Marina Milestone</Box>
+                                        <Box>Donor</Box>
+                                        <Box>15/03/2023 08:45:23</Box>
+                                        <Box>Jia Xin</Box>
+                                        <Box>Pending</Box>
+                                    </SimpleGrid>
+                                </Box>
+                            </AccordionButton>
+                            </h2>
+                            <AccordionPanel style={{ backgroundColor: 'white' , padding: '20px', border: '1px solid #E8E8E8' }}>
+                            
+                            Project Name: Marina Milestone
+                            <br/><br/><br/>
+                            Type
+                            <br/><br/>
+                                <SimpleGrid columns={2} spacing={20}>
+                                    <Box height='200px'>
+                                        <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                            Time
+                                        </Checkbox>
+                                        <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%'}} />
+                                        <br/><br/>
+                                        <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                            Space
+                                        </Checkbox>
+                                        <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                        <br/><br/>
+                                        <Checkbox colorScheme="green" defaultChecked style={{ marginTop: '5px' }}>
+                                            Money
+                                        </Checkbox>
+                                        <Input placeholder="4 more is needed" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                        <br/><br/>
+                                        <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                            Donor
+                                        </Checkbox>
+                                        <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                        <br/><br/>
+                                        <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                            Volunteer
+                                        </Checkbox>
+                                        <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                        <br/><br/><br/>
+                                    </Box>
+                                    <Box height='200px'>
+                                        Description:
+                                        <br/><br/>
+                                        <Textarea placeholder="This project requires more donor as there has been a delay of importing the materials in, thus the workers is not able to start it." />
+                                        <br/><br/><br/><br/>
+                                        
+                                    </Box>
+                                </SimpleGrid>
+                            
+                            </AccordionPanel>
+                        </AccordionItem>
+                    
+                </Accordion>
+
+        </DatapageLayoutEmpty>
+                </>
+            )
                 
+            case "option2_read":
+            return (
+                <>
+                <Text>Read</Text>
+                <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                    View All Request Form
+                        <DrawerExample
+                        style={{ position: 'absolute', right: 0 }}
+                  selectedOption={this.state.selectedOption}
+                  onOptionChange={this.handleOptionChange}
+                />     
+                </Heading>
+                <DatapageLayoutEmpty 
+                    settings={this.settings}
+                    //fieldSettings={this.state.settings.data.FieldSettings} 
+                    requestRefresh = {this.requestRefresh}
+                    error={this.state.error}
+                    permissions={this.props.permissions}
+                    handleSearchCallBack={this.searchCallBack}>
+    
+    
+                    <Accordion allowToggle>
+                        <AccordionItem>
+                        <h2>
+                        <AccordionButton style={{ backgroundColor: '#E8E8E8'}}>
+                            <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', textColor: 'black', fontWeight: 'bold' , backgroundColor: '#E8E8E8' }}>
+                                <SimpleGrid columns={6} spacing={0}>
+                                    <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Request ID</Box>
+                                    <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Project Name</Box>
+                                    <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Resource Type</Box>
+                                    <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Date Time</Box>
+                                    <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Submitted By</Box>
+                                    <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Status</Box>
+                                </SimpleGrid>
+                            </Box>
+                        </AccordionButton>
+                        </h2>
+                        </AccordionItem>
+                        
+                        <AccordionItem>
+                            <h2>
+                            <AccordionButton style={{
+                                backgroundColor: activeButton === 'button1' ? '#1c2c5b' : 'white',
+                                color: activeButton === 'button1' ? 'white' : 'black',
+                            }}
+                            onClick={() => this.handleButtonClick('button1')}>
+                                
+                                
+                                <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: activeButton === 'button1' ? '#1c2c5b' : 'white' }}>
+                                    <SimpleGrid columns={6} spacing={0}>
+                                        <Box>83ec00e3-3b3e-4a56-b7c9</Box>
+                                        <Box>Island Innovation</Box>
+                                        <Box>Money</Box>
+                                        <Box>16/03/2023 08:45:23</Box>
+                                        <Box>Ai Xin</Box>
+                                        <Box>Read</Box>
+                                    </SimpleGrid>
+                                </Box>
+                            </AccordionButton>
+                            </h2>
+                            <AccordionPanel style={{ backgroundColor: 'white' , padding: '20px', border: '1px solid #E8E8E8' }}>
+                            
+                            Project Name: Island Innovation
+                        <br/><br/><br/>
+                        Type
+                        <br/><br/>
+                        <SimpleGrid columns={2} spacing={20}>
+                                <Box height='200px'>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Time
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%'}} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Space
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Money
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultChecked style={{ marginTop: '5px' }}>
+                                        Donor
+                                    </Checkbox>
+                                    <Input placeholder="$5500 more is needed" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Volunteer
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/><br/>
+                                </Box>
+                                <Box height='200px'>
+                                    Description:
+                                    <br/><br/>
+                                    <Textarea placeholder="This project requires more money as there has been a delay of importing the materials in, thus the workers is not able to start it." />
+                                    <br/><br/><br/><br/>
+                                    
+                                </Box>
+                            </SimpleGrid>
+                            
+                            </AccordionPanel>
+                        </AccordionItem>
+    
+                        <AccordionItem>
+                            <h2>
+                            <AccordionButton style={{
+                                backgroundColor: activeButton === 'button2' ? '#1c2c5b' : 'white',
+                                color: activeButton === 'button2' ? 'white' : 'black',
+                            }}
+                            onClick={() => this.handleButtonClick('button2')}>
+                                
+                                
+                                <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: activeButton === 'button2' ? '#1c2c5b' : 'white' }}>
+                                    <SimpleGrid columns={6} spacing={0}>
+                                        <Box>83ec00e3-3b3e-4a56-b7c9</Box>
+                                        <Box>Merlion Momentum</Box>
+                                        <Box>Volunteer</Box>
+                                        <Box>17/03/2023 08:45:23</Box>
+                                        <Box>Jing Yi</Box>
+                                        <Box>Read</Box>
+                                    </SimpleGrid>
+                                </Box>
+                            </AccordionButton>
+                            </h2>
+                            <AccordionPanel style={{ backgroundColor: 'white' , padding: '20px', border: '1px solid #E8E8E8' }}>
+                            
+                            Project Name: Merlion Momentum
+                        <br/><br/><br/>
+                        Type
+                        <br/><br/>
+                        <SimpleGrid columns={2} spacing={20}>
+                                <Box height='200px'>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Time
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%'}} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Space
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Money
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                        Donor
+                                    </Checkbox>
+                                    <Input placeholder="Enter an Amount" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/>
+                                    <Checkbox colorScheme="green" defaultChecked style={{ marginTop: '5px' }}>
+                                        Volunteer
+                                    </Checkbox>
+                                    <Input placeholder="10 more volunteers is needed" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                                    <br/><br/><br/>
+                                </Box>
+                                <Box height='200px'>
+                                    Description:
+                                    <br/><br/>
+                                    <Textarea placeholder="This project requires more volunteer as there has been a delay of importing the materials in, thus the workers is not able to start it." />
+                                    <br/><br/><br/><br/>
+                                    
+                                </Box>
+                            </SimpleGrid>
+                            
+                            </AccordionPanel>
+                        </AccordionItem>
+                        
+                    </Accordion>
+    
+            </DatapageLayoutEmpty>
+                </>
+            )
 
             default:
                     return (
                         <>
                         
                         <Text>default</Text>
+                        <Text>USELESSSSSSSSSSSSSSSSSSSSSSSSSSSSSS</Text>
+
+                        <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                                View All Request Form
+                                    <DrawerExample
+                                    style={{ position: 'absolute', right: 0 }}
+                            selectedOption={this.state.selectedOption}
+                            onOptionChange={this.handleOptionChange}
+                            />     
+                            </Heading>
 
                         <DatapageLayout 
                         settings={this.settings}
@@ -416,64 +1187,54 @@ export default class Feedback extends React.Component {
                         requestError={this.requestError}
                         >       
 
+                
 
                         {this.state.content.data.map((item, index) => {
 
 
                             return(
+
                                 <div className="volunteer-extended">
-                                    
+                                    Project Name: {data[index].ProjectName}
+                                    <br/><br/><br/>
+                                    Type
+                                    <br/><br/>
                                     <SimpleGrid columns={2} spacing={20}>
-                                    <Box height='500px'>
-
-                                    
-                                            <b>Service Center:</b>
+                                        <Box height='200px'>
+                                            <Checkbox colorScheme="green" defaultChecked style={{ marginTop: '5px' }}>
+                                                Time
+                                            </Checkbox>
+                                            <Input placeholder={data[index].TimeAmount} size="sm" style={{ marginLeft: '20px', width: '75%'}} />
                                             <br/><br/>
-                                            <Select placeholder={data[index].ServiceCenter} size='sm'>
-                                            </Select>
+                                            <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                                Space
+                                            </Checkbox>
+                                            <Input placeholder={data[index].SpaceAmount} size="sm" style={{ marginLeft: '20px', width: '75%' }} />
+                                            <br/><br/>
+                                            <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                                Money
+                                            </Checkbox>
+                                            <Input placeholder={data[index].MoneyAmount} size="sm" style={{ marginLeft: '20px', width: '75%' }} />
+                                            <br/><br/>
+                                            <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                                Donor
+                                            </Checkbox>
+                                            <Input placeholder={data[index].DonorAmount} size="sm" style={{ marginLeft: '20px', width: '75%' }} />
+                                            <br/><br/>
+                                            <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                                                Volunteer
+                                            </Checkbox>
+                                            <Input placeholder={data[index].VolunteerAmount} size="sm" style={{ marginLeft: '20px', width: '75%' }} />
                                             <br/><br/><br/>
-                                            <b>Performance:</b>
+                                        </Box>
+                                        <Box height='200px'>
+                                            Description:
                                             <br/><br/>
-                                            <Select placeholder={data[index].Performance} size='sm'>
-                                            </Select>
-                                            <br/><br/><br/>
-                                            <b>Areas Done Well:</b>
-                                            <br/><br/>
-                                            <Textarea placeholder={data[index].AreaDoneWell} />
-                                            <br/><br/><br/>
-                                            <b>Areas of Improve:</b>
-                                            <br/><br/>
-                                            <Textarea placeholder={data[index].AreaOfImprovement} />
-                                        
-                                    </Box>
-                                    <Box height='500px'>
-                                        
-                                        <div style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
-
-                                        <Heading as="h6" size="md" style={{ marginTop: '10px', marginBottom: '20px' }}>
-                                        Status
-                                        </Heading>
-                                        
-                                        Expenses (Out): {data[index].ExpenseOut}
-
-                                        <br/><br/>
-
-                                        Donation (In): {data[index].DonationIn}
-
-                                        <br/><br/>
-
-                                        Man Hour: {data[index].ManHour}
-
-                                        <br/><br/>
-
-                                        Progress: {data[index].Progression}
-
-                                        </div>
-                                        <br/><br/><br/><br/>
-                                    </Box>
-                                </SimpleGrid>
-
-                                
+                                            <Textarea placeholder={data[index].Description} />
+                                            <br/><br/><br/><br/>
+                                            
+                                        </Box>
+                                    </SimpleGrid>                                
                                 </div>
                             )
                         })}
@@ -492,14 +1253,25 @@ export default class Feedback extends React.Component {
       };
 
 
+
     settings ={
-        title:"Feedback",
+        title:"Request",
         primaryColor: "#a6192e",
         accentColor: "#94795d",
         textColor: "#ffffff",
         textColorInvert: "#606060",
-        api: "/api/Feedback/",
+        api: "/api/Request/",
     }
+
+
+
+    // accordian function
+    handleButtonClick(buttonName) {
+        this.setState(prevState => ({
+          activeButton: prevState.activeButton === buttonName ? null : buttonName
+        }));
+      }
+
 
     async componentDidMount(){
         await this.getContent().then((content)=>{
@@ -696,10 +1468,9 @@ export default class Feedback extends React.Component {
                 </DatapageLayout> */}
 
 
-                <DrawerExample
-              selectedOption={this.state.selectedOption}
-              onOptionChange={this.handleOptionChange}
-            />    
+                
+
+
             <br/><br/><br/><br/>
         {this.renderTextbox()}
         <br/><br/><br/><br/>

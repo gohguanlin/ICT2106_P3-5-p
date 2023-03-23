@@ -1,22 +1,20 @@
-
 import React from "react"
+import { Loading } from "../../Components/appCommon"
+import DatapageLayout from "../PageLayout"
+import { Box } from '@chakra-ui/react'
+import { Checkbox, CheckboxGroup } from "@chakra-ui/react"
+import { Input } from "@chakra-ui/react"
+import { Textarea } from "@chakra-ui/react"
+import { Button, ButtonGroup } from "@chakra-ui/react"
+import { SimpleGrid } from '@chakra-ui/react'
+import { ChakraProvider } from "@chakra-ui/react";
+import { Heading } from "@chakra-ui/react"
+import { Select } from '@chakra-ui/react'
+import { Link } from "react-router-dom"
+import { useState } from "react";
+import { Collapse } from "@chakra-ui/react";
+import { StdButton } from "../../Components/common"
 import {
-    Accordion,
-    AccordionItem,
-    AccordionButton,
-    AccordionPanel,
-    AccordionIcon,
-  } from '@chakra-ui/react'
-  import { Box } from '@chakra-ui/react'
-  import { Checkbox, CheckboxGroup } from "@chakra-ui/react"
-  import { Input } from "@chakra-ui/react"
-  import { Textarea } from "@chakra-ui/react"
-  import { Button, ButtonGroup } from "@chakra-ui/react"
-  import { SimpleGrid } from '@chakra-ui/react'
-  import { ChakraProvider } from "@chakra-ui/react";
-  import { Heading } from "@chakra-ui/react"
-  import { Select } from '@chakra-ui/react'
-  import {
     Drawer,
     DrawerBody,
     DrawerCloseButton,
@@ -26,14 +24,17 @@ import {
     DrawerOverlay,
     useDisclosure
     } from "@chakra-ui/react";
-    
-    import { useState } from "react";
-    import { Text } from "@chakra-ui/react";
+    import {
+        Accordion,
+        AccordionItem,
+        AccordionButton,
+        AccordionPanel,
+        AccordionIcon,
+      } from '@chakra-ui/react'
+        import { Text } from "@chakra-ui/react";
+        import DatapageLayoutEmpty from "../PageLayoutEmpty"
 
 
-
-
-// team 5
 
 
 function DrawerExample({ selectedOption, onOptionChange }) {
@@ -132,249 +133,320 @@ function DrawerExample({ selectedOption, onOptionChange }) {
 
 
 export default class ViewFeedback extends React.Component {
+
     
-    state = {
+    // manually added the table
+    state={
+        content:null,
+        headers:[],
+        loading:true,
+        settings: {},
+        error: "",
         selectedOption: "",
-      };
+
+        columnSettings: {
+            FormID: {displayHeader: 'Form ID'},
+            ServiceCenter: {displayHeader: 'Service Center'},
+            Performance: {displayHeader: 'Performance'},
+            Quater: {displayHeader: 'Quater'},
+            Year: {displayHeader: 'Year'},
+            DateTimeSubmitted: {displayHeader: 'DateTime Submitted'}
+        },
+        data: [
+            {FormID: '83ec00e3-3b3e-4a56-b7c9', ServiceCenter: '2', Performance: 'Good', Quater: 'Q1', Year: '2023', DateTimeSubmitted: '13/03/2023 08:45:23', AreaDoneWell: 'Completed all task on time.', AreaOfImprovement: 'Exceeded Budget', ExpenseOut: '$3000', DonationIn: '$500', ManHour: '30h', Progression: '40% - 45%'},
+            {FormID: '83ec00e3-3b3e-4a56-b7c9', ServiceCenter: '3', Performance: 'Fair', Quater: 'Q2', Year: '2021', DateTimeSubmitted: '14/03/2023 08:45:23', AreaDoneWell: 'Completed all task on time.', AreaOfImprovement: 'Exceeded Budget', ExpenseOut: '$3500', DonationIn: '$1500', ManHour: '33h', Progression: '50% - 55%'},
+            {FormID: '83ec00e3-3b3e-4a56-b7c9', ServiceCenter: '5', Performance: 'Bad', Quater: 'Q3', Year: '2022', DateTimeSubmitted: '15/03/2023 08:45:23', AreaDoneWell: 'Completed all task on time.', AreaOfImprovement: 'Exceeded Budget', ExpenseOut: '$4000', DonationIn: '$800', ManHour: '40h', Progression: '60% - 65%'},
+            {FormID: '83ec00e3-3b3e-4a56-b7c9', ServiceCenter: '8', Performance: 'Good', Quater: 'Q4', Year: '2023', DateTimeSubmitted: '16/03/2023 08:45:23', AreaDoneWell: 'Completed all task on time.', AreaOfImprovement: 'Exceeded Budget', ExpenseOut: '$4500', DonationIn: '$9200', ManHour: '130h', Progression: '90% - 95%'},
+        ],
+        fieldSettings: {
+            FormID: {type: "text", displayLabel: "Form ID", editable: "false", primaryKey: "false", tooltip: "null"},
+            ServiceCenter: {type: "text", displayLabel: "Service Center", editable: "false", primaryKey: "false", tooltip: "null"},
+            Performance: {type: "text", displayLabel: "Performance", editable: "false", primaryKey: "false", tooltip: "null"},
+            Quater: {type: "text", displayLabel: "Quater", editable: "false", primaryKey: "false", tooltip: "null"},
+            Year: {type: "text", displayLabel: "Year", editable: "false", primaryKey: "false", tooltip: "null"},
+            DateTimeSubmitted: {type: "text", displayLabel: "DateTime Submitted", editable: "false", primaryKey: "false", tooltip: "null"},
+            AreaDoneWell: {type: "text", displayLabel: "Area Done Well: ", editable: "false", primaryKey: "false", tooltip: "null"},
+            AreaOfImprovement: {type: "text", displayLabel: "Area of Improvement: ", editable: "false", primaryKey: "false", tooltip: "null"},
+            ExpenseOut: {type: "text", displayLabel: "Expense Out: ", editable: "false", primaryKey: "false", tooltip: "null"},
+            DonationIn: {type: "text", displayLabel: "Donation In: ", editable: "false", primaryKey: "false", tooltip: "null"},
+            ManHour: {type: "text", displayLabel: "Man Hour: ", editable: "false", primaryKey: "false", tooltip: "null"},
+            Progression: {type: "text", displayLabel: "Progression: ", editable: "false", primaryKey: "false", tooltip: "null"}
+        }
+    }
+
     
       handleOptionChange = (event) => {
         this.setState({ selectedOption: event.target.value });
       };
     
       renderTextbox = () => {
-        switch (this.state.selectedOption) {
-          case "sc1":
+        const {activeButton, columnSettings, data, fieldSettings} = this.state
+        if (this.state.loading)
+        {
+            return <loading></loading>
+        }
+        else
+        {
+            switch (this.state.selectedOption) {
+            case "sc1":
             return (
                 <>
                 <Text>SC1: Nothing</Text>
                 <br/><br/>
+                <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                View All Personal Evaluation Form
+                    <DrawerExample
+                    style={{ position: 'absolute', right: 0 }}
+              selectedOption={this.state.selectedOption}
+              onOptionChange={this.handleOptionChange}
+            />     
+            </Heading>
+
+            <br/><br/>
+            <Text>You have not filled out any Performance Evaluation Form for Service Center 1, please click the button below to fill in the form.</Text>
+            <br/><br/>
+                <Link to="/Feedback">
+                    <Button colorScheme="blue">Click Here</Button>
+                </Link>
                 </>
             )
             case "sc2":
             return (
                 <>
                 <Text>SC2</Text>
-                <br/><br/>
-                <Accordion allowToggle>
-                <AccordionItem>
-<h2>
-  <AccordionButton style={{ backgroundColor: 'lightblue', border: '1px solid grey' }}>
-    <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'lightblue' }}>
-    <span style={{ margin: '50px', marginRight: '250px' }}>
-    Form ID	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Service Center	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Performance	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Quater	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Year	
-    </span>
-    <span style={{ margin: '50px' }}>
-    DateTime Submitted
-    </span>
-    </Box>
-  </AccordionButton>
-</h2>
-</AccordionItem>
-<AccordionItem>
-<h2>
-  <AccordionButton style={{ backgroundColor: 'white', border: '1px solid grey' }}>
-    <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'white' }}>
-    <span style={{ margin: '50px', marginRight: '80px' }}>
-    4e2f413a-7c9b-4609-b789-184d2dfda8af  
-    </span>
-    <span style={{ margin: '50px', marginRight: '120px' }}>
-    2
-    </span>
-    <span style={{ margin: '50px', marginRight: '90px' }}>
-    Good
-    </span>
-    <span style={{ margin: '40px', marginRight: '70px' }}>
-    Q1
-    </span>
-    <span style={{ margin: '50px' }}>
-    2023
-    </span>
-    <span style={{ margin: '50px' }}>
-    13/03/2023 08:45:23
-    </span>
-    </Box>
-    <AccordionIcon />
-  </AccordionButton>
-</h2>
-<AccordionPanel style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
-  
-  
-  <br/><br/><br/>
-    <SimpleGrid columns={2} spacing={20}>
-        <Box height='500px'>
-            Service Center
-            <br/><br/>
-            <Select placeholder='2' size='sm'>
-            </Select>
-            <br/><br/><br/>
-            Performance
-            <br/><br/>
-            <Select placeholder='Good' size='sm'>
-            </Select>
-            <br/><br/><br/>
-            Areas Done Well:
-            <br/><br/>
-            <Textarea placeholder="Completed all tasks on time" />
-            <br/><br/><br/>
-            Areas of Improve:
-            <br/><br/>
-            <Textarea placeholder="Exceeded Budget" />
-        </Box>
-        <Box height='500px'>
-            
-            <div style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
-
-            <Heading as="h6" size="md" style={{ marginTop: '10px', marginBottom: '20px' }}>
-            Status
+                <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                View All Personal Evaluation Form
+                    <DrawerExample
+                    style={{ position: 'absolute', right: 0 }}
+              selectedOption={this.state.selectedOption}
+              onOptionChange={this.handleOptionChange}
+            />     
             </Heading>
+
+                <DatapageLayoutEmpty 
+                settings={this.settings}
+                //fieldSettings={this.state.settings.data.FieldSettings} 
+                requestRefresh = {this.requestRefresh}
+                error={this.state.error}
+                permissions={this.props.permissions}
+                handleSearchCallBack={this.searchCallBack}>
+
+
+                <Accordion allowToggle>
+                    <AccordionItem>
+                    <h2>
+                    <AccordionButton style={{ backgroundColor: '#E8E8E8'}}>
+                        <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', textColor: 'black', fontWeight: 'bold' , backgroundColor: '#E8E8E8' }}>
+                            <SimpleGrid columns={6} spacing={0}>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Form ID</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Service Center</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Performance</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Quarter</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Year</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Datetime submitted</Box>
+                            </SimpleGrid>
+                        </Box>
+                    </AccordionButton>
+                    </h2>
+                    </AccordionItem>
+                    
+                    <AccordionItem>
+                        <h2>
+                        <AccordionButton style={{
+                            backgroundColor: activeButton === 'button1' ? '#1c2c5b' : 'white',
+                            color: activeButton === 'button1' ? 'white' : 'black',
+                        }}
+                        onClick={() => this.handleButtonClick('button1')}>
+                            
+                            
+                            <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: activeButton === 'button1' ? '#1c2c5b' : 'white' }}>
+                                <SimpleGrid columns={6} spacing={0}>
+                                    <Box>83ec00e3-3b3e-4a56-b7c9</Box>
+                                    <Box>2</Box>
+                                    <Box>Good</Box>
+                                    <Box>Q1</Box>
+                                    <Box>2023</Box>
+                                    <Box>13/03/2023 21:30:11</Box>
+                                </SimpleGrid>
+                            </Box>
+                        </AccordionButton>
+                        </h2>
+                        <AccordionPanel style={{ backgroundColor: 'white' , padding: '20px', border: '1px solid #E8E8E8' }}>
+                        
+                        <SimpleGrid columns={2} spacing={20}>
+            <Box height='500px'>
+                Service Center
+                <br/><br/>
+                <Select placeholder='2' size='sm'>
+                </Select>
+                <br/><br/><br/>
+                Performance
+                <br/><br/>
+                <Select placeholder='Good' size='sm'>
+                </Select>
+                <br/><br/><br/>
+                Areas Done Well:
+                <br/><br/>
+                <Textarea placeholder="Completed all task on time" />
+                <br/><br/><br/>
+                Areas of Improve:
+                <br/><br/>
+                <Textarea placeholder="Exceeded Budget" />
+            </Box>
+            <Box height='500px'>
+                
+                <div style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
+
+                <Heading as="h6" size="md" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                Status
+                </Heading>
+                
+                Expenses (Out): $3000
+
+                <br/><br/>
+
+                Donation (In): $500
+
+                <br/><br/>
+
+                Man Hour: 30h
+
+                <br/><br/>
+
+                Progress: 40% - 45%
+
+                </div>
+                
             
-            Expenses (Out): <u>$1 Million</u>
+            </Box>
+        </SimpleGrid>
+                        
+                        </AccordionPanel>
+                    </AccordionItem>
+                    
+                </Accordion>
 
-            <br/><br/>
-
-            Donation (In): <u>$1.5 Million</u>
-
-            <br/><br/>
-
-            Man Hour: <u>33h</u>
-
-            <br/><br/>
-
-            Progress: 40% - 45%
-
-            </div>
-            <br/><br/><br/><br/>
-        </Box>
-    </SimpleGrid>
-</AccordionPanel>
-</AccordionItem></Accordion>
+        </DatapageLayoutEmpty>
                 </>
             )
             case "sc3":
             return (
                 <>
                 <Text>SC3</Text>
-                <br/><br/>
-                <Accordion allowToggle>
-                <AccordionItem>
-<h2>
-  <AccordionButton style={{ backgroundColor: 'lightblue', border: '1px solid grey' }}>
-    <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'lightblue' }}>
-    <span style={{ margin: '50px', marginRight: '250px' }}>
-    Form ID	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Service Center	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Performance	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Quater	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Year	
-    </span>
-    <span style={{ margin: '50px' }}>
-    DateTime Submitted
-    </span>
-    </Box>
-  </AccordionButton>
-</h2>
-</AccordionItem>
-<AccordionItem>
-<h2>
-  <AccordionButton style={{ backgroundColor: 'white', border: '1px solid grey' }}>
-    <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'white' }}>
-    <span style={{ margin: '50px', marginRight: '80px' }}>
-    4e2f413a-7c9b-4609-b789-184d2dfda8af  
-    </span>
-    <span style={{ margin: '50px', marginRight: '120px' }}>
-    3
-    </span>
-    <span style={{ margin: '50px', marginRight: '90px' }}>
-    Fair
-    </span>
-    <span style={{ margin: '40px', marginRight: '70px' }}>
-    Q2
-    </span>
-    <span style={{ margin: '50px' }}>
-    2021
-    </span>
-    <span style={{ margin: '50px' }}>
-    13/03/2023 08:45:23
-    </span>
-    </Box>
-    <AccordionIcon />
-  </AccordionButton>
-</h2>
-<AccordionPanel style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
-  
-  
-  <br/><br/><br/>
-    <SimpleGrid columns={2} spacing={20}>
-        <Box height='500px'>
-            Service Center
-            <br/><br/>
-            <Select placeholder='3' size='sm'>
-            </Select>
-            <br/><br/><br/>
-            Performance
-            <br/><br/>
-            <Select placeholder='Fair' size='sm'>
-            </Select>
-            <br/><br/><br/>
-            Areas Done Well:
-            <br/><br/>
-            <Textarea placeholder="Enter here . . ." />
-            <br/><br/><br/>
-            Areas of Improve:
-            <br/><br/>
-            <Textarea placeholder="Enter here . . ." />
-        </Box>
-        <Box height='500px'>
-            
-            <div style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
-
-            <Heading as="h6" size="md" style={{ marginTop: '10px', marginBottom: '20px' }}>
-            Status
+                <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                View All Personal Evaluation Form
+                    <DrawerExample
+                    style={{ position: 'absolute', right: 0 }}
+              selectedOption={this.state.selectedOption}
+              onOptionChange={this.handleOptionChange}
+            />     
             </Heading>
+
+                <DatapageLayoutEmpty 
+                settings={this.settings}
+                //fieldSettings={this.state.settings.data.FieldSettings} 
+                requestRefresh = {this.requestRefresh}
+                error={this.state.error}
+                permissions={this.props.permissions}
+                handleSearchCallBack={this.searchCallBack}>
+
+
+                <Accordion allowToggle>
+                    <AccordionItem>
+                    <h2>
+                    <AccordionButton style={{ backgroundColor: '#E8E8E8'}}>
+                        <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', textColor: 'black', fontWeight: 'bold' , backgroundColor: '#E8E8E8' }}>
+                            <SimpleGrid columns={6} spacing={0}>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Form ID</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Service Center</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Performance</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Quarter</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Year</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Datetime submitted</Box>
+                            </SimpleGrid>
+                        </Box>
+                    </AccordionButton>
+                    </h2>
+                    </AccordionItem>
+                    
+                    <AccordionItem>
+                        <h2>
+                        <AccordionButton style={{
+                            backgroundColor: activeButton === 'button1' ? '#1c2c5b' : 'white',
+                            color: activeButton === 'button1' ? 'white' : 'black',
+                        }}
+                        onClick={() => this.handleButtonClick('button1')}>
+                            
+                            
+                            <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: activeButton === 'button1' ? '#1c2c5b' : 'white' }}>
+                                <SimpleGrid columns={6} spacing={0}>
+                                    <Box>83ec00e3-3b3e-4a56-b7c9</Box>
+                                    <Box>3</Box>
+                                    <Box>Fair</Box>
+                                    <Box>Q2</Box>
+                                    <Box>2021</Box>
+                                    <Box>14/03/2023 21:30:11</Box>
+                                </SimpleGrid>
+                            </Box>
+                        </AccordionButton>
+                        </h2>
+                        <AccordionPanel style={{ backgroundColor: 'white' , padding: '20px', border: '1px solid #E8E8E8' }}>
+                        
+                        <SimpleGrid columns={2} spacing={20}>
+            <Box height='500px'>
+                Service Center
+                <br/><br/>
+                <Select placeholder='3' size='sm'>
+                </Select>
+                <br/><br/><br/>
+                Performance
+                <br/><br/>
+                <Select placeholder='Fair' size='sm'>
+                </Select>
+                <br/><br/><br/>
+                Areas Done Well:
+                <br/><br/>
+                <Textarea placeholder="Completed all task on time" />
+                <br/><br/><br/>
+                Areas of Improve:
+                <br/><br/>
+                <Textarea placeholder="Exceeded Budget" />
+            </Box>
+            <Box height='500px'>
+                
+                <div style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
+
+                <Heading as="h6" size="md" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                Status
+                </Heading>
+                
+                Expenses (Out): $3500
+
+                <br/><br/>
+
+                Donation (In): $1500
+
+                <br/><br/>
+
+                Man Hour: 33h
+
+                <br/><br/>
+
+                Progress: 50% - 55%
+
+                </div>
+                
             
-            Expenses (Out): <u>$1 Million</u>
+            </Box>
+        </SimpleGrid>
+                        
+                        </AccordionPanel>
+                    </AccordionItem>
 
-            <br/><br/>
+                    
+                </Accordion>
 
-            Donation (In): <u>$1.5 Million</u>
-
-            <br/><br/>
-
-            Man Hour: <u>33h</u>
-
-            <br/><br/>
-
-            Progress: 40% - 45%
-
-            </div>
-            
-            
-
-            <br/><br/><br/><br/>
-        </Box>
-    </SimpleGrid>
-</AccordionPanel>
-</AccordionItem></Accordion>
+        </DatapageLayoutEmpty>
                 </>
             )
             case "sc4":
@@ -382,121 +454,141 @@ export default class ViewFeedback extends React.Component {
                 <>
                 <Text>SC4: Nothing</Text>
                 <br/><br/>
+                <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                View All Personal Evaluation Form
+                    <DrawerExample
+                    style={{ position: 'absolute', right: 0 }}
+              selectedOption={this.state.selectedOption}
+              onOptionChange={this.handleOptionChange}
+            />     
+            </Heading>
+
+            <br/><br/>
+            <Text>You have not filled out any Performance Evaluation Form for Service Center 1, please click the button below to fill in the form.</Text>
+            <br/><br/>
+                <Link to="/Feedback">
+                    <Button colorScheme="blue">Click Here</Button>
+                </Link>
                 </>
             )
             case "sc5":
             return (
                 <>
                 <Text>SC5</Text>
-                <br/><br/>
-                <Accordion allowToggle>
-                <AccordionItem>
-<h2>
-  <AccordionButton style={{ backgroundColor: 'lightblue', border: '1px solid grey' }}>
-    <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'lightblue' }}>
-    <span style={{ margin: '50px', marginRight: '250px' }}>
-    Form ID	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Service Center	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Performance	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Quater	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Year	
-    </span>
-    <span style={{ margin: '50px' }}>
-    DateTime Submitted
-    </span>
-    </Box>
-  </AccordionButton>
-</h2>
-</AccordionItem>
-<AccordionItem>
-<h2>
-  <AccordionButton style={{ backgroundColor: 'white', border: '1px solid grey' }}>
-    <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'white' }}>
-    <span style={{ margin: '50px', marginRight: '80px' }}>
-    4e2f413a-7c9b-4609-b789-184d2dfda8af  
-    </span>
-    <span style={{ margin: '50px', marginRight: '120px' }}>
-    5
-    </span>
-    <span style={{ margin: '50px', marginRight: '90px' }}>
-    Bad
-    </span>
-    <span style={{ margin: '40px', marginRight: '70px' }}>
-    Q3
-    </span>
-    <span style={{ margin: '50px' }}>
-    2022
-    </span>
-    <span style={{ margin: '50px' }}>
-    13/03/2023 08:45:23
-    </span>
-    </Box>
-    <AccordionIcon />
-  </AccordionButton>
-</h2>
-<AccordionPanel style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
-  
-  
-  <br/><br/><br/>
-    <SimpleGrid columns={2} spacing={20}>
-        <Box height='500px'>
-            Service Center
-            <br/><br/>
-            <Select placeholder='5' size='sm'>
-            </Select>
-            <br/><br/><br/>
-            Performance
-            <br/><br/>
-            <Select placeholder='Bad' size='sm'>
-            </Select>
-            <br/><br/><br/>
-            Areas Done Well:
-            <br/><br/>
-            <Textarea placeholder="Enter here . . ." />
-            <br/><br/><br/>
-            Areas of Improve:
-            <br/><br/>
-            <Textarea placeholder="Enter here . . ." />
-        </Box>
-        <Box height='500px'>
-            
-            <div style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
-
-            <Heading as="h6" size="md" style={{ marginTop: '10px', marginBottom: '20px' }}>
-            Status
+                <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                View All Personal Evaluation Form
+                    <DrawerExample
+                    style={{ position: 'absolute', right: 0 }}
+              selectedOption={this.state.selectedOption}
+              onOptionChange={this.handleOptionChange}
+            />     
             </Heading>
+
+                <DatapageLayoutEmpty 
+                settings={this.settings}
+                //fieldSettings={this.state.settings.data.FieldSettings} 
+                requestRefresh = {this.requestRefresh}
+                error={this.state.error}
+                permissions={this.props.permissions}
+                handleSearchCallBack={this.searchCallBack}>
+
+
+                <Accordion allowToggle>
+                    <AccordionItem>
+                    <h2>
+                    <AccordionButton style={{ backgroundColor: '#E8E8E8'}}>
+                        <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', textColor: 'black', fontWeight: 'bold' , backgroundColor: '#E8E8E8' }}>
+                            <SimpleGrid columns={6} spacing={0}>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Form ID</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Service Center</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Performance</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Quarter</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Year</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Datetime submitted</Box>
+                            </SimpleGrid>
+                        </Box>
+                    </AccordionButton>
+                    </h2>
+                    </AccordionItem>
+                    
+                    <AccordionItem>
+                        <h2>
+                        <AccordionButton style={{
+                            backgroundColor: activeButton === 'button1' ? '#1c2c5b' : 'white',
+                            color: activeButton === 'button1' ? 'white' : 'black',
+                        }}
+                        onClick={() => this.handleButtonClick('button1')}>
+                            
+                            
+                            <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: activeButton === 'button1' ? '#1c2c5b' : 'white' }}>
+                                <SimpleGrid columns={6} spacing={0}>
+                                    <Box>83ec00e3-3b3e-4a56-b7c9</Box>
+                                    <Box>5</Box>
+                                    <Box>Bad</Box>
+                                    <Box>Q3</Box>
+                                    <Box>2022</Box>
+                                    <Box>13/03/2023 21:30:11</Box>
+                                </SimpleGrid>
+                            </Box>
+                        </AccordionButton>
+                        </h2>
+                        <AccordionPanel style={{ backgroundColor: 'white' , padding: '20px', border: '1px solid #E8E8E8' }}>
+                        
+                        <SimpleGrid columns={2} spacing={20}>
+            <Box height='500px'>
+                Service Center
+                <br/><br/>
+                <Select placeholder='5' size='sm'>
+                </Select>
+                <br/><br/><br/>
+                Performance
+                <br/><br/>
+                <Select placeholder='Bad' size='sm'>
+                </Select>
+                <br/><br/><br/>
+                Areas Done Well:
+                <br/><br/>
+                <Textarea placeholder="Completed all task on time" />
+                <br/><br/><br/>
+                Areas of Improve:
+                <br/><br/>
+                <Textarea placeholder="Exceeded Budget" />
+            </Box>
+            <Box height='500px'>
+                
+                <div style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
+
+                <Heading as="h6" size="md" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                Status
+                </Heading>
+                
+                Expenses (Out): $4000
+
+                <br/><br/>
+
+                Donation (In): $800
+
+                <br/><br/>
+
+                Man Hour: 40h
+
+                <br/><br/>
+
+                Progress: 60% - 65%
+
+                </div>
+                
             
-            Expenses (Out): <u>$1 Million</u>
+            </Box>
+        </SimpleGrid>
+                        
+                        </AccordionPanel>
+                    </AccordionItem>
 
-            <br/><br/>
+                    
+                </Accordion>
 
-            Donation (In): <u>$1.5 Million</u>
-
-            <br/><br/>
-
-            Man Hour: <u>33h</u>
-
-            <br/><br/>
-
-            Progress: 40% - 45%
-
-            </div>
-            
-            
-
-            <br/><br/><br/><br/>
-        </Box>
-    </SimpleGrid>
-</AccordionPanel>
-</AccordionItem></Accordion>
+        </DatapageLayoutEmpty>
                 </>
             )
             case "sc6":
@@ -504,6 +596,21 @@ export default class ViewFeedback extends React.Component {
                 <>
                 <Text>SC6: Nothing</Text>
                 <br/><br/>
+                <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                View All Personal Evaluation Form
+                    <DrawerExample
+                    style={{ position: 'absolute', right: 0 }}
+              selectedOption={this.state.selectedOption}
+              onOptionChange={this.handleOptionChange}
+            />     
+            </Heading>
+
+            <br/><br/>
+            <Text>You have not filled out any Performance Evaluation Form for Service Center 1, please click the button below to fill in the form.</Text>
+            <br/><br/>
+                <Link to="/Feedback">
+                    <Button colorScheme="blue">Click Here</Button>
+                </Link>
                 </>
             )
             case "sc7":
@@ -511,121 +618,140 @@ export default class ViewFeedback extends React.Component {
                 <>
                 <Text>SC7: Nothing</Text>
                 <br/><br/>
+                <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                View All Personal Evaluation Form
+                    <DrawerExample
+                    style={{ position: 'absolute', right: 0 }}
+              selectedOption={this.state.selectedOption}
+              onOptionChange={this.handleOptionChange}
+            />     
+            </Heading>
+
+            <br/><br/>
+            <Text>You have not filled out any Performance Evaluation Form for Service Center 1, please click the button below to fill in the form.</Text>
+            <br/><br/>
+                <Link to="/ViewFeedback">
+                    <Button colorScheme="blue">Click Here</Button>
+                </Link>
                 </>
             )
             case "sc8":
             return (
                 <>
                 <Text>SC8</Text>
-                <br/><br/>
-                <Accordion allowToggle>
-                <AccordionItem>
-<h2>
-  <AccordionButton style={{ backgroundColor: 'lightblue', border: '1px solid grey' }}>
-    <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'lightblue' }}>
-    <span style={{ margin: '50px', marginRight: '250px' }}>
-    Form ID	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Service Center	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Performance	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Quater	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Year	
-    </span>
-    <span style={{ margin: '50px' }}>
-    DateTime Submitted
-    </span>
-    </Box>
-  </AccordionButton>
-</h2>
-</AccordionItem>
-<AccordionItem>
-<h2>
-  <AccordionButton style={{ backgroundColor: 'white', border: '1px solid grey' }}>
-    <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'white' }}>
-    <span style={{ margin: '50px', marginRight: '80px' }}>
-    4e2f413a-7c9b-4609-b789-184d2dfda8af  
-    </span>
-    <span style={{ margin: '50px', marginRight: '120px' }}>
-    8
-    </span>
-    <span style={{ margin: '50px', marginRight: '90px' }}>
-    Good
-    </span>
-    <span style={{ margin: '40px', marginRight: '70px' }}>
-    Q4
-    </span>
-    <span style={{ margin: '50px' }}>
-    2023
-    </span>
-    <span style={{ margin: '50px' }}>
-    13/03/2023 08:45:23
-    </span>
-    </Box>
-    <AccordionIcon />
-  </AccordionButton>
-</h2>
-<AccordionPanel style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
-  
-  
-  <br/><br/><br/>
-    <SimpleGrid columns={2} spacing={20}>
-        <Box height='500px'>
-            Service Center
-            <br/><br/>
-            <Select placeholder='8' size='sm'>
-            </Select>
-            <br/><br/><br/>
-            Performance
-            <br/><br/>
-            <Select placeholder='Good' size='sm'>
-            </Select>
-            <br/><br/><br/>
-            Areas Done Well:
-            <br/><br/>
-            <Textarea placeholder="Enter here . . ." />
-            <br/><br/><br/>
-            Areas of Improve:
-            <br/><br/>
-            <Textarea placeholder="Enter here . . ." />
-        </Box>
-        <Box height='500px'>
-            
-            <div style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
-
-            <Heading as="h6" size="md" style={{ marginTop: '10px', marginBottom: '20px' }}>
-            Status
+                <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                View All Personal Evaluation Form
+                    <DrawerExample
+                    style={{ position: 'absolute', right: 0 }}
+              selectedOption={this.state.selectedOption}
+              onOptionChange={this.handleOptionChange}
+            />     
             </Heading>
+
+                <DatapageLayoutEmpty 
+                settings={this.settings}
+                //fieldSettings={this.state.settings.data.FieldSettings} 
+                requestRefresh = {this.requestRefresh}
+                error={this.state.error}
+                permissions={this.props.permissions}
+                handleSearchCallBack={this.searchCallBack}>
+
+
+                <Accordion allowToggle>
+                    <AccordionItem>
+                    <h2>
+                    <AccordionButton style={{ backgroundColor: '#E8E8E8'}}>
+                        <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', textColor: 'black', fontWeight: 'bold' , backgroundColor: '#E8E8E8' }}>
+                            <SimpleGrid columns={6} spacing={0}>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Form ID</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Service Center</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Performance</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Quarter</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Year</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Datetime submitted</Box>
+                            </SimpleGrid>
+                        </Box>
+                    </AccordionButton>
+                    </h2>
+                    </AccordionItem>
+                    
+                    <AccordionItem>
+                        <h2>
+                        <AccordionButton style={{
+                            backgroundColor: activeButton === 'button2' ? '#1c2c5b' : 'white',
+                            color: activeButton === 'button2' ? 'white' : 'black',
+                        }}
+                        onClick={() => this.handleButtonClick('button2')}>
+                            
+                            
+                            <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: activeButton === 'button2' ? '#1c2c5b' : 'white' }}>
+                                <SimpleGrid columns={6} spacing={0}>
+                                    <Box>83ec00e3-3b3e-4a56-b7c9</Box>
+                                    <Box>8</Box>
+                                    <Box>Good</Box>
+                                    <Box>Q4</Box>
+                                    <Box>2023</Box>
+                                    <Box>16/03/2023 21:30:11</Box>
+                                </SimpleGrid>
+                            </Box>
+                        </AccordionButton>
+                        </h2>
+                        <AccordionPanel style={{ backgroundColor: 'white' , padding: '20px', border: '1px solid #E8E8E8' }}>
+                        
+                        <SimpleGrid columns={2} spacing={20}>
+            <Box height='500px'>
+                Service Center
+                <br/><br/>
+                <Select placeholder='8' size='sm'>
+                </Select>
+                <br/><br/><br/>
+                Performance
+                <br/><br/>
+                <Select placeholder='Good' size='sm'>
+                </Select>
+                <br/><br/><br/>
+                Areas Done Well:
+                <br/><br/>
+                <Textarea placeholder="Completed all task on time" />
+                <br/><br/><br/>
+                Areas of Improve:
+                <br/><br/>
+                <Textarea placeholder="Exceeded Budget" />
+            </Box>
+            <Box height='500px'>
+                
+                <div style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
+
+                <Heading as="h6" size="md" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                Status
+                </Heading>
+                
+                Expenses (Out): $4500
+
+                <br/><br/>
+
+                Donation (In): $9200
+
+                <br/><br/>
+
+                Man Hour: 130h
+
+                <br/><br/>
+
+                Progress: 90% - 95%
+
+                </div>
+                
             
-            Expenses (Out): <u>$1 Million</u>
+            </Box>
+        </SimpleGrid>
+                        
+                        </AccordionPanel>
+                    </AccordionItem>
+                    
+                </Accordion>
 
-            <br/><br/>
-
-            Donation (In): <u>$1.5 Million</u>
-
-            <br/><br/>
-
-            Man Hour: <u>33h</u>
-
-            <br/><br/>
-
-            Progress: 40% - 45%
-
-            </div>
-            
-            
-
-            <br/><br/><br/><br/>
-        </Box>
-    </SimpleGrid>
-</AccordionPanel>
-</AccordionItem></Accordion>
+        </DatapageLayoutEmpty>
                 </>
             )
 
@@ -635,314 +761,331 @@ export default class ViewFeedback extends React.Component {
                 <>
                 <Text>Excellent: Nothing</Text>
                 <br/><br/>
+                <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                View All Personal Evaluation Form
+                    <DrawerExample
+                    style={{ position: 'absolute', right: 0 }}
+              selectedOption={this.state.selectedOption}
+              onOptionChange={this.handleOptionChange}
+            />     
+            </Heading>
+
+            <br/><br/>
+            <Text>There is no Excelent Performance Level for any Service Center yet.</Text>
+            
                 </>
             )
             case "Good":
             return (
                 <>
                 <Text>Good</Text>
-                <br/><br/>
+                <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                View All Personal Evaluation Form
+                    <DrawerExample
+                    style={{ position: 'absolute', right: 0 }}
+              selectedOption={this.state.selectedOption}
+              onOptionChange={this.handleOptionChange}
+            />     
+            </Heading>
+
+                <DatapageLayoutEmpty 
+                settings={this.settings}
+                //fieldSettings={this.state.settings.data.FieldSettings} 
+                requestRefresh = {this.requestRefresh}
+                error={this.state.error}
+                permissions={this.props.permissions}
+                handleSearchCallBack={this.searchCallBack}>
+
+
                 <Accordion allowToggle>
-                <AccordionItem>
-<h2>
-  <AccordionButton style={{ backgroundColor: 'lightblue', border: '1px solid grey' }}>
-    <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'lightblue' }}>
-    <span style={{ margin: '50px', marginRight: '250px' }}>
-    Form ID	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Service Center	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Performance	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Quater	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Year	
-    </span>
-    <span style={{ margin: '50px' }}>
-    DateTime Submitted
-    </span>
-    </Box>
-  </AccordionButton>
-</h2>
-</AccordionItem>
-<AccordionItem>
-<h2>
-  <AccordionButton style={{ backgroundColor: 'white', border: '1px solid grey' }}>
-    <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'white' }}>
-    <span style={{ margin: '50px', marginRight: '80px' }}>
-    4e2f413a-7c9b-4609-b789-184d2dfda8af  
-    </span>
-    <span style={{ margin: '50px', marginRight: '120px' }}>
-    2
-    </span>
-    <span style={{ margin: '50px', marginRight: '90px' }}>
-    Good
-    </span>
-    <span style={{ margin: '40px', marginRight: '70px' }}>
-    Q1
-    </span>
-    <span style={{ margin: '50px' }}>
-    2023
-    </span>
-    <span style={{ margin: '50px' }}>
-    13/03/2023 08:45:23
-    </span>
-    </Box>
-    <AccordionIcon />
-  </AccordionButton>
-</h2>
-<AccordionPanel style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
-  
-  
-  <br/><br/><br/>
-    <SimpleGrid columns={2} spacing={20}>
-        <Box height='500px'>
-            Service Center
-            <br/><br/>
-            <Select placeholder='2' size='sm'>
-            </Select>
-            <br/><br/><br/>
-            Performance
-            <br/><br/>
-            <Select placeholder='Good' size='sm'>
-            </Select>
-            <br/><br/><br/>
-            Areas Done Well:
-            <br/><br/>
-            <Textarea placeholder="Completed all tasks on time" />
-            <br/><br/><br/>
-            Areas of Improve:
-            <br/><br/>
-            <Textarea placeholder="Exceeded Budget" />
-        </Box>
-        <Box height='500px'>
+                    <AccordionItem>
+                    <h2>
+                    <AccordionButton style={{ backgroundColor: '#E8E8E8'}}>
+                        <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', textColor: 'black', fontWeight: 'bold' , backgroundColor: '#E8E8E8' }}>
+                            <SimpleGrid columns={6} spacing={0}>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Form ID</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Service Center</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Performance</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Quarter</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Year</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Datetime submitted</Box>
+                            </SimpleGrid>
+                        </Box>
+                    </AccordionButton>
+                    </h2>
+                    </AccordionItem>
+                    
+                    <AccordionItem>
+                        <h2>
+                        <AccordionButton style={{
+                            backgroundColor: activeButton === 'button1' ? '#1c2c5b' : 'white',
+                            color: activeButton === 'button1' ? 'white' : 'black',
+                        }}
+                        onClick={() => this.handleButtonClick('button1')}>
+                            
+                            
+                            <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: activeButton === 'button1' ? '#1c2c5b' : 'white' }}>
+                                <SimpleGrid columns={6} spacing={0}>
+                                    <Box>83ec00e3-3b3e-4a56-b7c9</Box>
+                                    <Box>2</Box>
+                                    <Box>Good</Box>
+                                    <Box>Q1</Box>
+                                    <Box>2023</Box>
+                                    <Box>13/03/2023 21:30:11</Box>
+                                </SimpleGrid>
+                            </Box>
+                        </AccordionButton>
+                        </h2>
+                        <AccordionPanel style={{ backgroundColor: 'white' , padding: '20px', border: '1px solid #E8E8E8' }}>
+                        
+                        <SimpleGrid columns={2} spacing={20}>
+            <Box height='500px'>
+                Service Center
+                <br/><br/>
+                <Select placeholder='2' size='sm'>
+                </Select>
+                <br/><br/><br/>
+                Performance
+                <br/><br/>
+                <Select placeholder='Good' size='sm'>
+                </Select>
+                <br/><br/><br/>
+                Areas Done Well:
+                <br/><br/>
+                <Textarea placeholder="Completed all task on time" />
+                <br/><br/><br/>
+                Areas of Improve:
+                <br/><br/>
+                <Textarea placeholder="Exceeded Budget" />
+            </Box>
+            <Box height='500px'>
+                
+                <div style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
+
+                <Heading as="h6" size="md" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                Status
+                </Heading>
+                
+                Expenses (Out): $3000
+
+                <br/><br/>
+
+                Donation (In): $500
+
+                <br/><br/>
+
+                Man Hour: 30h
+
+                <br/><br/>
+
+                Progress: 40% - 45%
+
+                </div>
+                
             
-            <div style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
+            </Box>
+        </SimpleGrid>
+                        
+                        </AccordionPanel>
+                    </AccordionItem>
 
-            <Heading as="h6" size="md" style={{ marginTop: '10px', marginBottom: '20px' }}>
-            Status
-            </Heading>
+                    <AccordionItem>
+                        <h2>
+                        <AccordionButton style={{
+                            backgroundColor: activeButton === 'button2' ? '#1c2c5b' : 'white',
+                            color: activeButton === 'button2' ? 'white' : 'black',
+                        }}
+                        onClick={() => this.handleButtonClick('button2')}>
+                            
+                            
+                            <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: activeButton === 'button2' ? '#1c2c5b' : 'white' }}>
+                                <SimpleGrid columns={6} spacing={0}>
+                                    <Box>83ec00e3-3b3e-4a56-b7c9</Box>
+                                    <Box>8</Box>
+                                    <Box>Good</Box>
+                                    <Box>Q4</Box>
+                                    <Box>2023</Box>
+                                    <Box>16/03/2023 21:30:11</Box>
+                                </SimpleGrid>
+                            </Box>
+                        </AccordionButton>
+                        </h2>
+                        <AccordionPanel style={{ backgroundColor: 'white' , padding: '20px', border: '1px solid #E8E8E8' }}>
+                        
+                        <SimpleGrid columns={2} spacing={20}>
+            <Box height='500px'>
+                Service Center
+                <br/><br/>
+                <Select placeholder='8' size='sm'>
+                </Select>
+                <br/><br/><br/>
+                Performance
+                <br/><br/>
+                <Select placeholder='Good' size='sm'>
+                </Select>
+                <br/><br/><br/>
+                Areas Done Well:
+                <br/><br/>
+                <Textarea placeholder="Completed all task on time" />
+                <br/><br/><br/>
+                Areas of Improve:
+                <br/><br/>
+                <Textarea placeholder="Exceeded Budget" />
+            </Box>
+            <Box height='500px'>
+                
+                <div style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
+
+                <Heading as="h6" size="md" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                Status
+                </Heading>
+                
+                Expenses (Out): $4500
+
+                <br/><br/>
+
+                Donation (In): $9200
+
+                <br/><br/>
+
+                Man Hour: 130h
+
+                <br/><br/>
+
+                Progress: 90% - 95%
+
+                </div>
+                
             
-            Expenses (Out): <u>$1 Million</u>
+            </Box>
+        </SimpleGrid>
+                        
+                        </AccordionPanel>
+                    </AccordionItem>
+                    
+                </Accordion>
 
-            <br/><br/>
-
-            Donation (In): <u>$1.5 Million</u>
-
-            <br/><br/>
-
-            Man Hour: <u>33h</u>
-
-            <br/><br/>
-
-            Progress: 40% - 45%
-
-            </div>
-            <br/><br/><br/><br/>
-        </Box>
-    </SimpleGrid>
-</AccordionPanel>
-</AccordionItem>
-<AccordionItem>
-<h2>
-  <AccordionButton style={{ backgroundColor: 'white', border: '1px solid grey' }}>
-    <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'white' }}>
-    <span style={{ margin: '50px', marginRight: '80px' }}>
-    4e2f413a-7c9b-4609-b789-184d2dfda8af  
-    </span>
-    <span style={{ margin: '50px', marginRight: '120px' }}>
-    8
-    </span>
-    <span style={{ margin: '50px', marginRight: '90px' }}>
-    Good
-    </span>
-    <span style={{ margin: '40px', marginRight: '70px' }}>
-    Q4
-    </span>
-    <span style={{ margin: '50px' }}>
-    2023
-    </span>
-    <span style={{ margin: '50px' }}>
-    13/03/2023 08:45:23
-    </span>
-    </Box>
-    <AccordionIcon />
-  </AccordionButton>
-</h2>
-<AccordionPanel style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
-  
-  
-  <br/><br/><br/>
-    <SimpleGrid columns={2} spacing={20}>
-        <Box height='500px'>
-            Service Center
-            <br/><br/>
-            <Select placeholder='8' size='sm'>
-            </Select>
-            <br/><br/><br/>
-            Performance
-            <br/><br/>
-            <Select placeholder='Good' size='sm'>
-            </Select>
-            <br/><br/><br/>
-            Areas Done Well:
-            <br/><br/>
-            <Textarea placeholder="Enter here . . ." />
-            <br/><br/><br/>
-            Areas of Improve:
-            <br/><br/>
-            <Textarea placeholder="Enter here . . ." />
-        </Box>
-        <Box height='500px'>
-            
-            <div style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
-
-            <Heading as="h6" size="md" style={{ marginTop: '10px', marginBottom: '20px' }}>
-            Status
-            </Heading>
-            
-            Expenses (Out): <u>$1 Million</u>
-
-            <br/><br/>
-
-            Donation (In): <u>$1.5 Million</u>
-
-            <br/><br/>
-
-            Man Hour: <u>33h</u>
-
-            <br/><br/>
-
-            Progress: 40% - 45%
-
-            </div>
-            
-            
-
-            <br/><br/><br/><br/>
-        </Box>
-    </SimpleGrid>
-</AccordionPanel>
-</AccordionItem></Accordion>
+        </DatapageLayoutEmpty>
                 </>
             )
             case "Fair":
             return (
                 <>
                 <Text>Fair</Text>
-                <br/><br/>
-                <Accordion allowToggle>
-                <AccordionItem>
-<h2>
-  <AccordionButton style={{ backgroundColor: 'lightblue', border: '1px solid grey' }}>
-    <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'lightblue' }}>
-    <span style={{ margin: '50px', marginRight: '250px' }}>
-    Form ID	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Service Center	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Performance	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Quater	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Year	
-    </span>
-    <span style={{ margin: '50px' }}>
-    DateTime Submitted
-    </span>
-    </Box>
-  </AccordionButton>
-</h2>
-</AccordionItem>
-<AccordionItem>
-<h2>
-  <AccordionButton style={{ backgroundColor: 'white', border: '1px solid grey' }}>
-    <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'white' }}>
-    <span style={{ margin: '50px', marginRight: '80px' }}>
-    4e2f413a-7c9b-4609-b789-184d2dfda8af  
-    </span>
-    <span style={{ margin: '50px', marginRight: '120px' }}>
-    3
-    </span>
-    <span style={{ margin: '50px', marginRight: '90px' }}>
-    Fair
-    </span>
-    <span style={{ margin: '40px', marginRight: '70px' }}>
-    Q2
-    </span>
-    <span style={{ margin: '50px' }}>
-    2021
-    </span>
-    <span style={{ margin: '50px' }}>
-    13/03/2023 08:45:23
-    </span>
-    </Box>
-    <AccordionIcon />
-  </AccordionButton>
-</h2>
-<AccordionPanel style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
-  
-  
-  <br/><br/><br/>
-    <SimpleGrid columns={2} spacing={20}>
-        <Box height='500px'>
-            Service Center
-            <br/><br/>
-            <Select placeholder='3' size='sm'>
-            </Select>
-            <br/><br/><br/>
-            Performance
-            <br/><br/>
-            <Select placeholder='Fair' size='sm'>
-            </Select>
-            <br/><br/><br/>
-            Areas Done Well:
-            <br/><br/>
-            <Textarea placeholder="Enter here . . ." />
-            <br/><br/><br/>
-            Areas of Improve:
-            <br/><br/>
-            <Textarea placeholder="Enter here . . ." />
-        </Box>
-        <Box height='500px'>
-            
-            <div style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
-
-            <Heading as="h6" size="md" style={{ marginTop: '10px', marginBottom: '20px' }}>
-            Status
+                <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                View All Personal Evaluation Form
+                    <DrawerExample
+                    style={{ position: 'absolute', right: 0 }}
+              selectedOption={this.state.selectedOption}
+              onOptionChange={this.handleOptionChange}
+            />     
             </Heading>
+
+                <DatapageLayoutEmpty 
+                settings={this.settings}
+                //fieldSettings={this.state.settings.data.FieldSettings} 
+                requestRefresh = {this.requestRefresh}
+                error={this.state.error}
+                permissions={this.props.permissions}
+                handleSearchCallBack={this.searchCallBack}>
+
+
+                <Accordion allowToggle>
+                    <AccordionItem>
+                    <h2>
+                    <AccordionButton style={{ backgroundColor: '#E8E8E8'}}>
+                        <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', textColor: 'black', fontWeight: 'bold' , backgroundColor: '#E8E8E8' }}>
+                            <SimpleGrid columns={6} spacing={0}>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Form ID</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Service Center</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Performance</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Quarter</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Year</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Datetime submitted</Box>
+                            </SimpleGrid>
+                        </Box>
+                    </AccordionButton>
+                    </h2>
+                    </AccordionItem>
+                    
+                    <AccordionItem>
+                        <h2>
+                        <AccordionButton style={{
+                            backgroundColor: activeButton === 'button1' ? '#1c2c5b' : 'white',
+                            color: activeButton === 'button1' ? 'white' : 'black',
+                        }}
+                        onClick={() => this.handleButtonClick('button1')}>
+                            
+                            
+                            <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: activeButton === 'button1' ? '#1c2c5b' : 'white' }}>
+                                <SimpleGrid columns={6} spacing={0}>
+                                    <Box>83ec00e3-3b3e-4a56-b7c9</Box>
+                                    <Box>3</Box>
+                                    <Box>Fair</Box>
+                                    <Box>Q2</Box>
+                                    <Box>2021</Box>
+                                    <Box>14/03/2023 21:30:11</Box>
+                                </SimpleGrid>
+                            </Box>
+                        </AccordionButton>
+                        </h2>
+                        <AccordionPanel style={{ backgroundColor: 'white' , padding: '20px', border: '1px solid #E8E8E8' }}>
+                        
+                        <SimpleGrid columns={2} spacing={20}>
+            <Box height='500px'>
+                Service Center
+                <br/><br/>
+                <Select placeholder='3' size='sm'>
+                </Select>
+                <br/><br/><br/>
+                Performance
+                <br/><br/>
+                <Select placeholder='Fair' size='sm'>
+                </Select>
+                <br/><br/><br/>
+                Areas Done Well:
+                <br/><br/>
+                <Textarea placeholder="Completed all task on time" />
+                <br/><br/><br/>
+                Areas of Improve:
+                <br/><br/>
+                <Textarea placeholder="Exceeded Budget" />
+            </Box>
+            <Box height='500px'>
+                
+                <div style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
+
+                <Heading as="h6" size="md" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                Status
+                </Heading>
+                
+                Expenses (Out): $3500
+
+                <br/><br/>
+
+                Donation (In): $1500
+
+                <br/><br/>
+
+                Man Hour: 33h
+
+                <br/><br/>
+
+                Progress: 50% - 55%
+
+                </div>
+                
             
-            Expenses (Out): <u>$1 Million</u>
+            </Box>
+        </SimpleGrid>
+                        
+                        </AccordionPanel>
+                    </AccordionItem>
 
-            <br/><br/>
+                    
+                </Accordion>
 
-            Donation (In): <u>$1.5 Million</u>
-
-            <br/><br/>
-
-            Man Hour: <u>33h</u>
-
-            <br/><br/>
-
-            Progress: 40% - 45%
-
-            </div>
-            
-            
-
-            <br/><br/><br/><br/>
-        </Box>
-    </SimpleGrid>
-</AccordionPanel>
-</AccordionItem></Accordion>
+        </DatapageLayoutEmpty>
                 </>
             )
             case "Poor":
@@ -950,582 +1093,622 @@ export default class ViewFeedback extends React.Component {
                 <>
                 <Text>Poor: Nothing</Text>
                 <br/><br/>
+                <Text>Excellent: Nothing</Text>
+                <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                View All Personal Evaluation Form
+                    <DrawerExample
+                    style={{ position: 'absolute', right: 0 }}
+              selectedOption={this.state.selectedOption}
+              onOptionChange={this.handleOptionChange}
+            />     
+            </Heading>
+
+            <br/><br/>
+            <Text>There is no Poor Performance Level for any Service Center yet.</Text>
                 </>
             )
             case "Bad":
             return (
                 <>
                 <Text>Bad</Text>
-                <br/><br/>
-                <Accordion allowToggle>
-                <AccordionItem>
-<h2>
-  <AccordionButton style={{ backgroundColor: 'lightblue', border: '1px solid grey' }}>
-    <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'lightblue' }}>
-    <span style={{ margin: '50px', marginRight: '250px' }}>
-    Form ID	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Service Center	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Performance	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Quater	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Year	
-    </span>
-    <span style={{ margin: '50px' }}>
-    DateTime Submitted
-    </span>
-    </Box>
-  </AccordionButton>
-</h2>
-</AccordionItem>
-<AccordionItem>
-<h2>
-  <AccordionButton style={{ backgroundColor: 'white', border: '1px solid grey' }}>
-    <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'white' }}>
-    <span style={{ margin: '50px', marginRight: '80px' }}>
-    4e2f413a-7c9b-4609-b789-184d2dfda8af  
-    </span>
-    <span style={{ margin: '50px', marginRight: '120px' }}>
-    5
-    </span>
-    <span style={{ margin: '50px', marginRight: '90px' }}>
-    Bad
-    </span>
-    <span style={{ margin: '40px', marginRight: '70px' }}>
-    Q3
-    </span>
-    <span style={{ margin: '50px' }}>
-    2022
-    </span>
-    <span style={{ margin: '50px' }}>
-    13/03/2023 08:45:23
-    </span>
-    </Box>
-    <AccordionIcon />
-  </AccordionButton>
-</h2>
-<AccordionPanel style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
-  
-  
-  <br/><br/><br/>
-    <SimpleGrid columns={2} spacing={20}>
-        <Box height='500px'>
-            Service Center
-            <br/><br/>
-            <Select placeholder='5' size='sm'>
-            </Select>
-            <br/><br/><br/>
-            Performance
-            <br/><br/>
-            <Select placeholder='Bad' size='sm'>
-            </Select>
-            <br/><br/><br/>
-            Areas Done Well:
-            <br/><br/>
-            <Textarea placeholder="Enter here . . ." />
-            <br/><br/><br/>
-            Areas of Improve:
-            <br/><br/>
-            <Textarea placeholder="Enter here . . ." />
-        </Box>
-        <Box height='500px'>
-            
-            <div style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
-
-            <Heading as="h6" size="md" style={{ marginTop: '10px', marginBottom: '20px' }}>
-            Status
+                <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                View All Personal Evaluation Form
+                    <DrawerExample
+                    style={{ position: 'absolute', right: 0 }}
+              selectedOption={this.state.selectedOption}
+              onOptionChange={this.handleOptionChange}
+            />     
             </Heading>
+
+                <DatapageLayoutEmpty 
+                settings={this.settings}
+                //fieldSettings={this.state.settings.data.FieldSettings} 
+                requestRefresh = {this.requestRefresh}
+                error={this.state.error}
+                permissions={this.props.permissions}
+                handleSearchCallBack={this.searchCallBack}>
+
+
+                <Accordion allowToggle>
+                    <AccordionItem>
+                    <h2>
+                    <AccordionButton style={{ backgroundColor: '#E8E8E8'}}>
+                        <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', textColor: 'black', fontWeight: 'bold' , backgroundColor: '#E8E8E8' }}>
+                            <SimpleGrid columns={6} spacing={0}>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Form ID</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Service Center</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Performance</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Quarter</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Year</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Datetime submitted</Box>
+                            </SimpleGrid>
+                        </Box>
+                    </AccordionButton>
+                    </h2>
+                    </AccordionItem>
+                    
+                    <AccordionItem>
+                        <h2>
+                        <AccordionButton style={{
+                            backgroundColor: activeButton === 'button1' ? '#1c2c5b' : 'white',
+                            color: activeButton === 'button1' ? 'white' : 'black',
+                        }}
+                        onClick={() => this.handleButtonClick('button1')}>
+                            
+                            
+                            <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: activeButton === 'button1' ? '#1c2c5b' : 'white' }}>
+                                <SimpleGrid columns={6} spacing={0}>
+                                    <Box>83ec00e3-3b3e-4a56-b7c9</Box>
+                                    <Box>5</Box>
+                                    <Box>Bad</Box>
+                                    <Box>Q3</Box>
+                                    <Box>2022</Box>
+                                    <Box>13/03/2023 21:30:11</Box>
+                                </SimpleGrid>
+                            </Box>
+                        </AccordionButton>
+                        </h2>
+                        <AccordionPanel style={{ backgroundColor: 'white' , padding: '20px', border: '1px solid #E8E8E8' }}>
+                        
+                        <SimpleGrid columns={2} spacing={20}>
+            <Box height='500px'>
+                Service Center
+                <br/><br/>
+                <Select placeholder='5' size='sm'>
+                </Select>
+                <br/><br/><br/>
+                Performance
+                <br/><br/>
+                <Select placeholder='Bad' size='sm'>
+                </Select>
+                <br/><br/><br/>
+                Areas Done Well:
+                <br/><br/>
+                <Textarea placeholder="Completed all task on time" />
+                <br/><br/><br/>
+                Areas of Improve:
+                <br/><br/>
+                <Textarea placeholder="Exceeded Budget" />
+            </Box>
+            <Box height='500px'>
+                
+                <div style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
+
+                <Heading as="h6" size="md" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                Status
+                </Heading>
+                
+                Expenses (Out): $4000
+
+                <br/><br/>
+
+                Donation (In): $800
+
+                <br/><br/>
+
+                Man Hour: 40h
+
+                <br/><br/>
+
+                Progress: 60% - 65%
+
+                </div>
+                
             
-            Expenses (Out): <u>$1 Million</u>
+            </Box>
+        </SimpleGrid>
+                        
+                        </AccordionPanel>
+                    </AccordionItem>
 
-            <br/><br/>
+                    
+                </Accordion>
 
-            Donation (In): <u>$1.5 Million</u>
-
-            <br/><br/>
-
-            Man Hour: <u>33h</u>
-
-            <br/><br/>
-
-            Progress: 40% - 45%
-
-            </div>
-            
-            
-
-            <br/><br/><br/><br/>
-        </Box>
-    </SimpleGrid>
-</AccordionPanel>
-</AccordionItem></Accordion>
+        </DatapageLayoutEmpty>
                 </>
             )
+
 
 
             case "Q1":
             return (
                 <>
                 <Text>Q1</Text>
-                <br/><br/>
-                <Accordion allowToggle>
-                <AccordionItem>
-<h2>
-  <AccordionButton style={{ backgroundColor: 'lightblue', border: '1px solid grey' }}>
-    <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'lightblue' }}>
-    <span style={{ margin: '50px', marginRight: '250px' }}>
-    Form ID	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Service Center	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Performance	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Quater	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Year	
-    </span>
-    <span style={{ margin: '50px' }}>
-    DateTime Submitted
-    </span>
-    </Box>
-  </AccordionButton>
-</h2>
-</AccordionItem>
-<AccordionItem>
-<h2>
-  <AccordionButton style={{ backgroundColor: 'white', border: '1px solid grey' }}>
-    <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'white' }}>
-    <span style={{ margin: '50px', marginRight: '80px' }}>
-    4e2f413a-7c9b-4609-b789-184d2dfda8af  
-    </span>
-    <span style={{ margin: '50px', marginRight: '120px' }}>
-    2
-    </span>
-    <span style={{ margin: '50px', marginRight: '90px' }}>
-    Good
-    </span>
-    <span style={{ margin: '40px', marginRight: '70px' }}>
-    Q1
-    </span>
-    <span style={{ margin: '50px' }}>
-    2023
-    </span>
-    <span style={{ margin: '50px' }}>
-    13/03/2023 08:45:23
-    </span>
-    </Box>
-    <AccordionIcon />
-  </AccordionButton>
-</h2>
-<AccordionPanel style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
-  
-  
-  <br/><br/><br/>
-    <SimpleGrid columns={2} spacing={20}>
-        <Box height='500px'>
-            Service Center
-            <br/><br/>
-            <Select placeholder='2' size='sm'>
-            </Select>
-            <br/><br/><br/>
-            Performance
-            <br/><br/>
-            <Select placeholder='Good' size='sm'>
-            </Select>
-            <br/><br/><br/>
-            Areas Done Well:
-            <br/><br/>
-            <Textarea placeholder="Completed all tasks on time" />
-            <br/><br/><br/>
-            Areas of Improve:
-            <br/><br/>
-            <Textarea placeholder="Exceeded Budget" />
-        </Box>
-        <Box height='500px'>
-            
-            <div style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
-
-            <Heading as="h6" size="md" style={{ marginTop: '10px', marginBottom: '20px' }}>
-            Status
+                <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                View All Personal Evaluation Form
+                    <DrawerExample
+                    style={{ position: 'absolute', right: 0 }}
+              selectedOption={this.state.selectedOption}
+              onOptionChange={this.handleOptionChange}
+            />     
             </Heading>
+
+                <DatapageLayoutEmpty 
+                settings={this.settings}
+                //fieldSettings={this.state.settings.data.FieldSettings} 
+                requestRefresh = {this.requestRefresh}
+                error={this.state.error}
+                permissions={this.props.permissions}
+                handleSearchCallBack={this.searchCallBack}>
+
+
+                <Accordion allowToggle>
+                    <AccordionItem>
+                    <h2>
+                    <AccordionButton style={{ backgroundColor: '#E8E8E8'}}>
+                        <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', textColor: 'black', fontWeight: 'bold' , backgroundColor: '#E8E8E8' }}>
+                            <SimpleGrid columns={6} spacing={0}>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Form ID</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Service Center</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Performance</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Quarter</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Year</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Datetime submitted</Box>
+                            </SimpleGrid>
+                        </Box>
+                    </AccordionButton>
+                    </h2>
+                    </AccordionItem>
+                    
+                    <AccordionItem>
+                        <h2>
+                        <AccordionButton style={{
+                            backgroundColor: activeButton === 'button1' ? '#1c2c5b' : 'white',
+                            color: activeButton === 'button1' ? 'white' : 'black',
+                        }}
+                        onClick={() => this.handleButtonClick('button1')}>
+                            
+                            
+                            <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: activeButton === 'button1' ? '#1c2c5b' : 'white' }}>
+                                <SimpleGrid columns={6} spacing={0}>
+                                    <Box>83ec00e3-3b3e-4a56-b7c9</Box>
+                                    <Box>2</Box>
+                                    <Box>Good</Box>
+                                    <Box>Q1</Box>
+                                    <Box>2023</Box>
+                                    <Box>13/03/2023 21:30:11</Box>
+                                </SimpleGrid>
+                            </Box>
+                        </AccordionButton>
+                        </h2>
+                        <AccordionPanel style={{ backgroundColor: 'white' , padding: '20px', border: '1px solid #E8E8E8' }}>
+                        
+                        <SimpleGrid columns={2} spacing={20}>
+            <Box height='500px'>
+                Service Center
+                <br/><br/>
+                <Select placeholder='2' size='sm'>
+                </Select>
+                <br/><br/><br/>
+                Performance
+                <br/><br/>
+                <Select placeholder='Good' size='sm'>
+                </Select>
+                <br/><br/><br/>
+                Areas Done Well:
+                <br/><br/>
+                <Textarea placeholder="Completed all task on time" />
+                <br/><br/><br/>
+                Areas of Improve:
+                <br/><br/>
+                <Textarea placeholder="Exceeded Budget" />
+            </Box>
+            <Box height='500px'>
+                
+                <div style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
+
+                <Heading as="h6" size="md" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                Status
+                </Heading>
+                
+                Expenses (Out): $3000
+
+                <br/><br/>
+
+                Donation (In): $500
+
+                <br/><br/>
+
+                Man Hour: 30h
+
+                <br/><br/>
+
+                Progress: 40% - 45%
+
+                </div>
+                
             
-            Expenses (Out): <u>$1 Million</u>
+            </Box>
+        </SimpleGrid>
+                        
+                        </AccordionPanel>
+                    </AccordionItem>
+                    
+                </Accordion>
 
-            <br/><br/>
-
-            Donation (In): <u>$1.5 Million</u>
-
-            <br/><br/>
-
-            Man Hour: <u>33h</u>
-
-            <br/><br/>
-
-            Progress: 40% - 45%
-
-            </div>
-            <br/><br/><br/><br/>
-        </Box>
-    </SimpleGrid>
-</AccordionPanel>
-</AccordionItem></Accordion>
+        </DatapageLayoutEmpty>
                 </>
             )
             case "Q2":
             return (
                 <>
                 <Text>Q2</Text>
-                <br/><br/>
-                <Accordion allowToggle>
-                <AccordionItem>
-<h2>
-  <AccordionButton style={{ backgroundColor: 'lightblue', border: '1px solid grey' }}>
-    <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'lightblue' }}>
-    <span style={{ margin: '50px', marginRight: '250px' }}>
-    Form ID	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Service Center	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Performance	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Quater	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Year	
-    </span>
-    <span style={{ margin: '50px' }}>
-    DateTime Submitted
-    </span>
-    </Box>
-  </AccordionButton>
-</h2>
-</AccordionItem>
-<AccordionItem>
-<h2>
-  <AccordionButton style={{ backgroundColor: 'white', border: '1px solid grey' }}>
-    <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'white' }}>
-    <span style={{ margin: '50px', marginRight: '80px' }}>
-    4e2f413a-7c9b-4609-b789-184d2dfda8af  
-    </span>
-    <span style={{ margin: '50px', marginRight: '120px' }}>
-    3
-    </span>
-    <span style={{ margin: '50px', marginRight: '90px' }}>
-    Fair
-    </span>
-    <span style={{ margin: '40px', marginRight: '70px' }}>
-    Q2
-    </span>
-    <span style={{ margin: '50px' }}>
-    2021
-    </span>
-    <span style={{ margin: '50px' }}>
-    13/03/2023 08:45:23
-    </span>
-    </Box>
-    <AccordionIcon />
-  </AccordionButton>
-</h2>
-<AccordionPanel style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
-  
-  
-  <br/><br/><br/>
-    <SimpleGrid columns={2} spacing={20}>
-        <Box height='500px'>
-            Service Center
-            <br/><br/>
-            <Select placeholder='3' size='sm'>
-            </Select>
-            <br/><br/><br/>
-            Performance
-            <br/><br/>
-            <Select placeholder='Fair' size='sm'>
-            </Select>
-            <br/><br/><br/>
-            Areas Done Well:
-            <br/><br/>
-            <Textarea placeholder="Enter here . . ." />
-            <br/><br/><br/>
-            Areas of Improve:
-            <br/><br/>
-            <Textarea placeholder="Enter here . . ." />
-        </Box>
-        <Box height='500px'>
-            
-            <div style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
-
-            <Heading as="h6" size="md" style={{ marginTop: '10px', marginBottom: '20px' }}>
-            Status
+                <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                View All Personal Evaluation Form
+                    <DrawerExample
+                    style={{ position: 'absolute', right: 0 }}
+              selectedOption={this.state.selectedOption}
+              onOptionChange={this.handleOptionChange}
+            />     
             </Heading>
+
+                <DatapageLayoutEmpty 
+                settings={this.settings}
+                //fieldSettings={this.state.settings.data.FieldSettings} 
+                requestRefresh = {this.requestRefresh}
+                error={this.state.error}
+                permissions={this.props.permissions}
+                handleSearchCallBack={this.searchCallBack}>
+
+
+                <Accordion allowToggle>
+                    <AccordionItem>
+                    <h2>
+                    <AccordionButton style={{ backgroundColor: '#E8E8E8'}}>
+                        <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', textColor: 'black', fontWeight: 'bold' , backgroundColor: '#E8E8E8' }}>
+                            <SimpleGrid columns={6} spacing={0}>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Form ID</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Service Center</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Performance</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Quarter</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Year</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Datetime submitted</Box>
+                            </SimpleGrid>
+                        </Box>
+                    </AccordionButton>
+                    </h2>
+                    </AccordionItem>
+                    
+                    <AccordionItem>
+                        <h2>
+                        <AccordionButton style={{
+                            backgroundColor: activeButton === 'button1' ? '#1c2c5b' : 'white',
+                            color: activeButton === 'button1' ? 'white' : 'black',
+                        }}
+                        onClick={() => this.handleButtonClick('button1')}>
+                            
+                            
+                            <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: activeButton === 'button1' ? '#1c2c5b' : 'white' }}>
+                                <SimpleGrid columns={6} spacing={0}>
+                                    <Box>83ec00e3-3b3e-4a56-b7c9</Box>
+                                    <Box>3</Box>
+                                    <Box>Fair</Box>
+                                    <Box>Q2</Box>
+                                    <Box>2021</Box>
+                                    <Box>14/03/2023 21:30:11</Box>
+                                </SimpleGrid>
+                            </Box>
+                        </AccordionButton>
+                        </h2>
+                        <AccordionPanel style={{ backgroundColor: 'white' , padding: '20px', border: '1px solid #E8E8E8' }}>
+                        
+                        <SimpleGrid columns={2} spacing={20}>
+            <Box height='500px'>
+                Service Center
+                <br/><br/>
+                <Select placeholder='3' size='sm'>
+                </Select>
+                <br/><br/><br/>
+                Performance
+                <br/><br/>
+                <Select placeholder='Fair' size='sm'>
+                </Select>
+                <br/><br/><br/>
+                Areas Done Well:
+                <br/><br/>
+                <Textarea placeholder="Completed all task on time" />
+                <br/><br/><br/>
+                Areas of Improve:
+                <br/><br/>
+                <Textarea placeholder="Exceeded Budget" />
+            </Box>
+            <Box height='500px'>
+                
+                <div style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
+
+                <Heading as="h6" size="md" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                Status
+                </Heading>
+                
+                Expenses (Out): $3500
+
+                <br/><br/>
+
+                Donation (In): $1500
+
+                <br/><br/>
+
+                Man Hour: 33h
+
+                <br/><br/>
+
+                Progress: 50% - 55%
+
+                </div>
+                
             
-            Expenses (Out): <u>$1 Million</u>
+            </Box>
+        </SimpleGrid>
+                        
+                        </AccordionPanel>
+                    </AccordionItem>
 
-            <br/><br/>
+                    
+                </Accordion>
 
-            Donation (In): <u>$1.5 Million</u>
-
-            <br/><br/>
-
-            Man Hour: <u>33h</u>
-
-            <br/><br/>
-
-            Progress: 40% - 45%
-
-            </div>
-            
-            
-
-            <br/><br/><br/><br/>
-        </Box>
-    </SimpleGrid>
-</AccordionPanel>
-</AccordionItem></Accordion>
+        </DatapageLayoutEmpty>
                 </>
             )
             case "Q3":
             return (
                 <>
                 <Text>Q3</Text>
-                <br/><br/>
-                <Accordion allowToggle>
-                <AccordionItem>
-<h2>
-  <AccordionButton style={{ backgroundColor: 'lightblue', border: '1px solid grey' }}>
-    <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'lightblue' }}>
-    <span style={{ margin: '50px', marginRight: '250px' }}>
-    Form ID	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Service Center	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Performance	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Quater	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Year	
-    </span>
-    <span style={{ margin: '50px' }}>
-    DateTime Submitted
-    </span>
-    </Box>
-  </AccordionButton>
-</h2>
-</AccordionItem>
-<AccordionItem>
-<h2>
-  <AccordionButton style={{ backgroundColor: 'white', border: '1px solid grey' }}>
-    <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'white' }}>
-    <span style={{ margin: '50px', marginRight: '80px' }}>
-    4e2f413a-7c9b-4609-b789-184d2dfda8af  
-    </span>
-    <span style={{ margin: '50px', marginRight: '120px' }}>
-    5
-    </span>
-    <span style={{ margin: '50px', marginRight: '90px' }}>
-    Bad
-    </span>
-    <span style={{ margin: '40px', marginRight: '70px' }}>
-    Q3
-    </span>
-    <span style={{ margin: '50px' }}>
-    2022
-    </span>
-    <span style={{ margin: '50px' }}>
-    13/03/2023 08:45:23
-    </span>
-    </Box>
-    <AccordionIcon />
-  </AccordionButton>
-</h2>
-<AccordionPanel style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
-  
-  
-  <br/><br/><br/>
-    <SimpleGrid columns={2} spacing={20}>
-        <Box height='500px'>
-            Service Center
-            <br/><br/>
-            <Select placeholder='5' size='sm'>
-            </Select>
-            <br/><br/><br/>
-            Performance
-            <br/><br/>
-            <Select placeholder='Bad' size='sm'>
-            </Select>
-            <br/><br/><br/>
-            Areas Done Well:
-            <br/><br/>
-            <Textarea placeholder="Enter here . . ." />
-            <br/><br/><br/>
-            Areas of Improve:
-            <br/><br/>
-            <Textarea placeholder="Enter here . . ." />
-        </Box>
-        <Box height='500px'>
-            
-            <div style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
-
-            <Heading as="h6" size="md" style={{ marginTop: '10px', marginBottom: '20px' }}>
-            Status
+                <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                View All Personal Evaluation Form
+                    <DrawerExample
+                    style={{ position: 'absolute', right: 0 }}
+              selectedOption={this.state.selectedOption}
+              onOptionChange={this.handleOptionChange}
+            />     
             </Heading>
+
+                <DatapageLayoutEmpty 
+                settings={this.settings}
+                //fieldSettings={this.state.settings.data.FieldSettings} 
+                requestRefresh = {this.requestRefresh}
+                error={this.state.error}
+                permissions={this.props.permissions}
+                handleSearchCallBack={this.searchCallBack}>
+
+
+                <Accordion allowToggle>
+                    <AccordionItem>
+                    <h2>
+                    <AccordionButton style={{ backgroundColor: '#E8E8E8'}}>
+                        <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', textColor: 'black', fontWeight: 'bold' , backgroundColor: '#E8E8E8' }}>
+                            <SimpleGrid columns={6} spacing={0}>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Form ID</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Service Center</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Performance</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Quarter</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Year</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Datetime submitted</Box>
+                            </SimpleGrid>
+                        </Box>
+                    </AccordionButton>
+                    </h2>
+                    </AccordionItem>
+                    
+                    <AccordionItem>
+                        <h2>
+                        <AccordionButton style={{
+                            backgroundColor: activeButton === 'button1' ? '#1c2c5b' : 'white',
+                            color: activeButton === 'button1' ? 'white' : 'black',
+                        }}
+                        onClick={() => this.handleButtonClick('button1')}>
+                            
+                            
+                            <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: activeButton === 'button1' ? '#1c2c5b' : 'white' }}>
+                                <SimpleGrid columns={6} spacing={0}>
+                                    <Box>83ec00e3-3b3e-4a56-b7c9</Box>
+                                    <Box>5</Box>
+                                    <Box>Bad</Box>
+                                    <Box>Q3</Box>
+                                    <Box>2022</Box>
+                                    <Box>13/03/2023 21:30:11</Box>
+                                </SimpleGrid>
+                            </Box>
+                        </AccordionButton>
+                        </h2>
+                        <AccordionPanel style={{ backgroundColor: 'white' , padding: '20px', border: '1px solid #E8E8E8' }}>
+                        
+                        <SimpleGrid columns={2} spacing={20}>
+            <Box height='500px'>
+                Service Center
+                <br/><br/>
+                <Select placeholder='5' size='sm'>
+                </Select>
+                <br/><br/><br/>
+                Performance
+                <br/><br/>
+                <Select placeholder='Bad' size='sm'>
+                </Select>
+                <br/><br/><br/>
+                Areas Done Well:
+                <br/><br/>
+                <Textarea placeholder="Completed all task on time" />
+                <br/><br/><br/>
+                Areas of Improve:
+                <br/><br/>
+                <Textarea placeholder="Exceeded Budget" />
+            </Box>
+            <Box height='500px'>
+                
+                <div style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
+
+                <Heading as="h6" size="md" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                Status
+                </Heading>
+                
+                Expenses (Out): $4000
+
+                <br/><br/>
+
+                Donation (In): $800
+
+                <br/><br/>
+
+                Man Hour: 40h
+
+                <br/><br/>
+
+                Progress: 60% - 65%
+
+                </div>
+                
             
-            Expenses (Out): <u>$1 Million</u>
+            </Box>
+        </SimpleGrid>
+                        
+                        </AccordionPanel>
+                    </AccordionItem>
 
-            <br/><br/>
+                    
+                </Accordion>
 
-            Donation (In): <u>$1.5 Million</u>
-
-            <br/><br/>
-
-            Man Hour: <u>33h</u>
-
-            <br/><br/>
-
-            Progress: 40% - 45%
-
-            </div>
-            
-            
-
-            <br/><br/><br/><br/>
-        </Box>
-    </SimpleGrid>
-</AccordionPanel>
-</AccordionItem></Accordion>
+        </DatapageLayoutEmpty>
                 </>
             )
             case "Q4":
             return (
                 <>
                 <Text>Q4</Text>
-                <br/><br/>
-                <Accordion allowToggle>
-                <AccordionItem>
-<h2>
-  <AccordionButton style={{ backgroundColor: 'lightblue', border: '1px solid grey' }}>
-    <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'lightblue' }}>
-    <span style={{ margin: '50px', marginRight: '250px' }}>
-    Form ID	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Service Center	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Performance	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Quater	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Year	
-    </span>
-    <span style={{ margin: '50px' }}>
-    DateTime Submitted
-    </span>
-    </Box>
-  </AccordionButton>
-</h2>
-</AccordionItem>
-<AccordionItem>
-<h2>
-  <AccordionButton style={{ backgroundColor: 'white', border: '1px solid grey' }}>
-    <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'white' }}>
-    <span style={{ margin: '50px', marginRight: '80px' }}>
-    4e2f413a-7c9b-4609-b789-184d2dfda8af  
-    </span>
-    <span style={{ margin: '50px', marginRight: '120px' }}>
-    8
-    </span>
-    <span style={{ margin: '50px', marginRight: '90px' }}>
-    Good
-    </span>
-    <span style={{ margin: '40px', marginRight: '70px' }}>
-    Q4
-    </span>
-    <span style={{ margin: '50px' }}>
-    2023
-    </span>
-    <span style={{ margin: '50px' }}>
-    13/03/2023 08:45:23
-    </span>
-    </Box>
-    <AccordionIcon />
-  </AccordionButton>
-</h2>
-<AccordionPanel style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
-  
-  
-  <br/><br/><br/>
-    <SimpleGrid columns={2} spacing={20}>
-        <Box height='500px'>
-            Service Center
-            <br/><br/>
-            <Select placeholder='8' size='sm'>
-            </Select>
-            <br/><br/><br/>
-            Performance
-            <br/><br/>
-            <Select placeholder='Good' size='sm'>
-            </Select>
-            <br/><br/><br/>
-            Areas Done Well:
-            <br/><br/>
-            <Textarea placeholder="Enter here . . ." />
-            <br/><br/><br/>
-            Areas of Improve:
-            <br/><br/>
-            <Textarea placeholder="Enter here . . ." />
-        </Box>
-        <Box height='500px'>
-            
-            <div style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
-
-            <Heading as="h6" size="md" style={{ marginTop: '10px', marginBottom: '20px' }}>
-            Status
+                <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                View All Personal Evaluation Form
+                    <DrawerExample
+                    style={{ position: 'absolute', right: 0 }}
+              selectedOption={this.state.selectedOption}
+              onOptionChange={this.handleOptionChange}
+            />     
             </Heading>
+
+                <DatapageLayoutEmpty 
+                settings={this.settings}
+                //fieldSettings={this.state.settings.data.FieldSettings} 
+                requestRefresh = {this.requestRefresh}
+                error={this.state.error}
+                permissions={this.props.permissions}
+                handleSearchCallBack={this.searchCallBack}>
+
+
+                <Accordion allowToggle>
+                    <AccordionItem>
+                    <h2>
+                    <AccordionButton style={{ backgroundColor: '#E8E8E8'}}>
+                        <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', textColor: 'black', fontWeight: 'bold' , backgroundColor: '#E8E8E8' }}>
+                            <SimpleGrid columns={6} spacing={0}>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Form ID</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Service Center</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Performance</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Quarter</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Year</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Datetime submitted</Box>
+                            </SimpleGrid>
+                        </Box>
+                    </AccordionButton>
+                    </h2>
+                    </AccordionItem>
+                    
+                    <AccordionItem>
+                        <h2>
+                        <AccordionButton style={{
+                            backgroundColor: activeButton === 'button2' ? '#1c2c5b' : 'white',
+                            color: activeButton === 'button2' ? 'white' : 'black',
+                        }}
+                        onClick={() => this.handleButtonClick('button2')}>
+                            
+                            
+                            <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: activeButton === 'button2' ? '#1c2c5b' : 'white' }}>
+                                <SimpleGrid columns={6} spacing={0}>
+                                    <Box>83ec00e3-3b3e-4a56-b7c9</Box>
+                                    <Box>8</Box>
+                                    <Box>Good</Box>
+                                    <Box>Q4</Box>
+                                    <Box>2023</Box>
+                                    <Box>16/03/2023 21:30:11</Box>
+                                </SimpleGrid>
+                            </Box>
+                        </AccordionButton>
+                        </h2>
+                        <AccordionPanel style={{ backgroundColor: 'white' , padding: '20px', border: '1px solid #E8E8E8' }}>
+                        
+                        <SimpleGrid columns={2} spacing={20}>
+            <Box height='500px'>
+                Service Center
+                <br/><br/>
+                <Select placeholder='8' size='sm'>
+                </Select>
+                <br/><br/><br/>
+                Performance
+                <br/><br/>
+                <Select placeholder='Good' size='sm'>
+                </Select>
+                <br/><br/><br/>
+                Areas Done Well:
+                <br/><br/>
+                <Textarea placeholder="Completed all task on time" />
+                <br/><br/><br/>
+                Areas of Improve:
+                <br/><br/>
+                <Textarea placeholder="Exceeded Budget" />
+            </Box>
+            <Box height='500px'>
+                
+                <div style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
+
+                <Heading as="h6" size="md" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                Status
+                </Heading>
+                
+                Expenses (Out): $4500
+
+                <br/><br/>
+
+                Donation (In): $9200
+
+                <br/><br/>
+
+                Man Hour: 130h
+
+                <br/><br/>
+
+                Progress: 90% - 95%
+
+                </div>
+                
             
-            Expenses (Out): <u>$1 Million</u>
+            </Box>
+        </SimpleGrid>
+                        
+                        </AccordionPanel>
+                    </AccordionItem>
+                    
+                </Accordion>
 
-            <br/><br/>
-
-            Donation (In): <u>$1.5 Million</u>
-
-            <br/><br/>
-
-            Man Hour: <u>33h</u>
-
-            <br/><br/>
-
-            Progress: 40% - 45%
-
-            </div>
-            
-            
-
-            <br/><br/><br/><br/>
-        </Box>
-    </SimpleGrid>
-</AccordionPanel>
-</AccordionItem></Accordion>
+        </DatapageLayoutEmpty>
                 </>
             )
+
 
 
 
@@ -1533,814 +1716,569 @@ export default class ViewFeedback extends React.Component {
             return (
                 <>
                 <Text>2021</Text>
-                <br/><br/>
-                <Accordion allowToggle>
-                <AccordionItem>
-<h2>
-  <AccordionButton style={{ backgroundColor: 'lightblue', border: '1px solid grey' }}>
-    <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'lightblue' }}>
-    <span style={{ margin: '50px', marginRight: '250px' }}>
-    Form ID	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Service Center	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Performance	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Quater	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Year	
-    </span>
-    <span style={{ margin: '50px' }}>
-    DateTime Submitted
-    </span>
-    </Box>
-  </AccordionButton>
-</h2>
-</AccordionItem>
-<AccordionItem>
-<h2>
-  <AccordionButton style={{ backgroundColor: 'white', border: '1px solid grey' }}>
-    <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'white' }}>
-    <span style={{ margin: '50px', marginRight: '80px' }}>
-    4e2f413a-7c9b-4609-b789-184d2dfda8af  
-    </span>
-    <span style={{ margin: '50px', marginRight: '120px' }}>
-    3
-    </span>
-    <span style={{ margin: '50px', marginRight: '90px' }}>
-    Fair
-    </span>
-    <span style={{ margin: '40px', marginRight: '70px' }}>
-    Q2
-    </span>
-    <span style={{ margin: '50px' }}>
-    2021
-    </span>
-    <span style={{ margin: '50px' }}>
-    13/03/2023 08:45:23
-    </span>
-    </Box>
-    <AccordionIcon />
-  </AccordionButton>
-</h2>
-<AccordionPanel style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
-  
-  
-  <br/><br/><br/>
-    <SimpleGrid columns={2} spacing={20}>
-        <Box height='500px'>
-            Service Center
-            <br/><br/>
-            <Select placeholder='3' size='sm'>
-            </Select>
-            <br/><br/><br/>
-            Performance
-            <br/><br/>
-            <Select placeholder='Fair' size='sm'>
-            </Select>
-            <br/><br/><br/>
-            Areas Done Well:
-            <br/><br/>
-            <Textarea placeholder="Enter here . . ." />
-            <br/><br/><br/>
-            Areas of Improve:
-            <br/><br/>
-            <Textarea placeholder="Enter here . . ." />
-        </Box>
-        <Box height='500px'>
-            
-            <div style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
 
-            <Heading as="h6" size="md" style={{ marginTop: '10px', marginBottom: '20px' }}>
-            Status
+                <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                View All Personal Evaluation Form
+                    <DrawerExample
+                    style={{ position: 'absolute', right: 0 }}
+              selectedOption={this.state.selectedOption}
+              onOptionChange={this.handleOptionChange}
+            />     
             </Heading>
+
+                <DatapageLayoutEmpty 
+                settings={this.settings}
+                //fieldSettings={this.state.settings.data.FieldSettings} 
+                requestRefresh = {this.requestRefresh}
+                error={this.state.error}
+                permissions={this.props.permissions}
+                handleSearchCallBack={this.searchCallBack}>
+
+
+                <Accordion allowToggle>
+                    <AccordionItem>
+                    <h2>
+                    <AccordionButton style={{ backgroundColor: '#E8E8E8'}}>
+                        <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', textColor: 'black', fontWeight: 'bold' , backgroundColor: '#E8E8E8' }}>
+                            <SimpleGrid columns={6} spacing={0}>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Form ID</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Service Center</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Performance</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Quarter</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Year</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Datetime submitted</Box>
+                            </SimpleGrid>
+                        </Box>
+                    </AccordionButton>
+                    </h2>
+                    </AccordionItem>
+                    
+                    <AccordionItem>
+                        <h2>
+                        <AccordionButton style={{
+                            backgroundColor: activeButton === 'button1' ? '#1c2c5b' : 'white',
+                            color: activeButton === 'button1' ? 'white' : 'black',
+                        }}
+                        onClick={() => this.handleButtonClick('button1')}>
+                            
+                            
+                            <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: activeButton === 'button1' ? '#1c2c5b' : 'white' }}>
+                                <SimpleGrid columns={6} spacing={0}>
+                                    <Box>83ec00e3-3b3e-4a56-b7c9</Box>
+                                    <Box>3</Box>
+                                    <Box>Fair</Box>
+                                    <Box>Q2</Box>
+                                    <Box>2021</Box>
+                                    <Box>14/03/2023 21:30:11</Box>
+                                </SimpleGrid>
+                            </Box>
+                        </AccordionButton>
+                        </h2>
+                        <AccordionPanel style={{ backgroundColor: 'white' , padding: '20px', border: '1px solid #E8E8E8' }}>
+                        
+                        <SimpleGrid columns={2} spacing={20}>
+            <Box height='500px'>
+                Service Center
+                <br/><br/>
+                <Select placeholder='3' size='sm'>
+                </Select>
+                <br/><br/><br/>
+                Performance
+                <br/><br/>
+                <Select placeholder='Fair' size='sm'>
+                </Select>
+                <br/><br/><br/>
+                Areas Done Well:
+                <br/><br/>
+                <Textarea placeholder="Completed all task on time" />
+                <br/><br/><br/>
+                Areas of Improve:
+                <br/><br/>
+                <Textarea placeholder="Exceeded Budget" />
+            </Box>
+            <Box height='500px'>
+                
+                <div style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
+
+                <Heading as="h6" size="md" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                Status
+                </Heading>
+                
+                Expenses (Out): $3500
+
+                <br/><br/>
+
+                Donation (In): $1500
+
+                <br/><br/>
+
+                Man Hour: 33h
+
+                <br/><br/>
+
+                Progress: 50% - 55%
+
+                </div>
+                
             
-            Expenses (Out): <u>$1 Million</u>
+            </Box>
+        </SimpleGrid>
+                        
+                        </AccordionPanel>
+                    </AccordionItem>
 
-            <br/><br/>
+                    
+                </Accordion>
 
-            Donation (In): <u>$1.5 Million</u>
-
-            <br/><br/>
-
-            Man Hour: <u>33h</u>
-
-            <br/><br/>
-
-            Progress: 40% - 45%
-
-            </div>
-            
-            
-
-            <br/><br/><br/><br/>
-        </Box>
-    </SimpleGrid>
-</AccordionPanel>
-</AccordionItem></Accordion>
+        </DatapageLayoutEmpty>
                 </>
             )
+            
             case "2022":
             return (
                 <>
                 <Text>2022</Text>
-                <br/><br/>
-                <Accordion allowToggle>
-                <AccordionItem>
-<h2>
-  <AccordionButton style={{ backgroundColor: 'lightblue', border: '1px solid grey' }}>
-    <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'lightblue' }}>
-    <span style={{ margin: '50px', marginRight: '250px' }}>
-    Form ID	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Service Center	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Performance	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Quater	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Year	
-    </span>
-    <span style={{ margin: '50px' }}>
-    DateTime Submitted
-    </span>
-    </Box>
-  </AccordionButton>
-</h2>
-</AccordionItem>
-<AccordionItem>
-<h2>
-  <AccordionButton style={{ backgroundColor: 'white', border: '1px solid grey' }}>
-    <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'white' }}>
-    <span style={{ margin: '50px', marginRight: '80px' }}>
-    4e2f413a-7c9b-4609-b789-184d2dfda8af  
-    </span>
-    <span style={{ margin: '50px', marginRight: '120px' }}>
-    5
-    </span>
-    <span style={{ margin: '50px', marginRight: '90px' }}>
-    Bad
-    </span>
-    <span style={{ margin: '40px', marginRight: '70px' }}>
-    Q3
-    </span>
-    <span style={{ margin: '50px' }}>
-    2022
-    </span>
-    <span style={{ margin: '50px' }}>
-    13/03/2023 08:45:23
-    </span>
-    </Box>
-    <AccordionIcon />
-  </AccordionButton>
-</h2>
-<AccordionPanel style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
-  
-  
-  <br/><br/><br/>
-    <SimpleGrid columns={2} spacing={20}>
-        <Box height='500px'>
-            Service Center
-            <br/><br/>
-            <Select placeholder='5' size='sm'>
-            </Select>
-            <br/><br/><br/>
-            Performance
-            <br/><br/>
-            <Select placeholder='Bad' size='sm'>
-            </Select>
-            <br/><br/><br/>
-            Areas Done Well:
-            <br/><br/>
-            <Textarea placeholder="Enter here . . ." />
-            <br/><br/><br/>
-            Areas of Improve:
-            <br/><br/>
-            <Textarea placeholder="Enter here . . ." />
-        </Box>
-        <Box height='500px'>
-            
-            <div style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
 
-            <Heading as="h6" size="md" style={{ marginTop: '10px', marginBottom: '20px' }}>
-            Status
+                <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                View All Personal Evaluation Form
+                    <DrawerExample
+                    style={{ position: 'absolute', right: 0 }}
+              selectedOption={this.state.selectedOption}
+              onOptionChange={this.handleOptionChange}
+            />     
             </Heading>
+
+                <DatapageLayoutEmpty 
+                settings={this.settings}
+                //fieldSettings={this.state.settings.data.FieldSettings} 
+                requestRefresh = {this.requestRefresh}
+                error={this.state.error}
+                permissions={this.props.permissions}
+                handleSearchCallBack={this.searchCallBack}>
+
+
+                <Accordion allowToggle>
+                    <AccordionItem>
+                    <h2>
+                    <AccordionButton style={{ backgroundColor: '#E8E8E8'}}>
+                        <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', textColor: 'black', fontWeight: 'bold' , backgroundColor: '#E8E8E8' }}>
+                            <SimpleGrid columns={6} spacing={0}>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Form ID</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Service Center</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Performance</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Quarter</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Year</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Datetime submitted</Box>
+                            </SimpleGrid>
+                        </Box>
+                    </AccordionButton>
+                    </h2>
+                    </AccordionItem>
+                    
+                    <AccordionItem>
+                        <h2>
+                        <AccordionButton style={{
+                            backgroundColor: activeButton === 'button1' ? '#1c2c5b' : 'white',
+                            color: activeButton === 'button1' ? 'white' : 'black',
+                        }}
+                        onClick={() => this.handleButtonClick('button1')}>
+                            
+                            
+                            <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: activeButton === 'button1' ? '#1c2c5b' : 'white' }}>
+                                <SimpleGrid columns={6} spacing={0}>
+                                    <Box>83ec00e3-3b3e-4a56-b7c9</Box>
+                                    <Box>5</Box>
+                                    <Box>Bad</Box>
+                                    <Box>Q3</Box>
+                                    <Box>2022</Box>
+                                    <Box>13/03/2023 21:30:11</Box>
+                                </SimpleGrid>
+                            </Box>
+                        </AccordionButton>
+                        </h2>
+                        <AccordionPanel style={{ backgroundColor: 'white' , padding: '20px', border: '1px solid #E8E8E8' }}>
+                        
+                        <SimpleGrid columns={2} spacing={20}>
+            <Box height='500px'>
+                Service Center
+                <br/><br/>
+                <Select placeholder='5' size='sm'>
+                </Select>
+                <br/><br/><br/>
+                Performance
+                <br/><br/>
+                <Select placeholder='Bad' size='sm'>
+                </Select>
+                <br/><br/><br/>
+                Areas Done Well:
+                <br/><br/>
+                <Textarea placeholder="Completed all task on time" />
+                <br/><br/><br/>
+                Areas of Improve:
+                <br/><br/>
+                <Textarea placeholder="Exceeded Budget" />
+            </Box>
+            <Box height='500px'>
+                
+                <div style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
+
+                <Heading as="h6" size="md" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                Status
+                </Heading>
+                
+                Expenses (Out): $4000
+
+                <br/><br/>
+
+                Donation (In): $800
+
+                <br/><br/>
+
+                Man Hour: 40h
+
+                <br/><br/>
+
+                Progress: 60% - 65%
+
+                </div>
+                
             
-            Expenses (Out): <u>$1 Million</u>
+            </Box>
+        </SimpleGrid>
+                        
+                        </AccordionPanel>
+                    </AccordionItem>
 
-            <br/><br/>
+                    
+                </Accordion>
 
-            Donation (In): <u>$1.5 Million</u>
-
-            <br/><br/>
-
-            Man Hour: <u>33h</u>
-
-            <br/><br/>
-
-            Progress: 40% - 45%
-
-            </div>
-            
-            
-
-            <br/><br/><br/><br/>
-        </Box>
-    </SimpleGrid>
-</AccordionPanel>
-</AccordionItem></Accordion>
+        </DatapageLayoutEmpty>
                 </>
             )
+
             case "2023":
-            return (
-                <>
-                <Text>2023</Text>
-                <br/><br/>
+
+                    return (
+                        <>
+                        <Text>2023</Text>
+                        <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                View All Personal Evaluation Form
+                    <DrawerExample
+                    style={{ position: 'absolute', right: 0 }}
+              selectedOption={this.state.selectedOption}
+              onOptionChange={this.handleOptionChange}
+            />     
+            </Heading>
+
+                <DatapageLayoutEmpty 
+                settings={this.settings}
+                //fieldSettings={this.state.settings.data.FieldSettings} 
+                requestRefresh = {this.requestRefresh}
+                error={this.state.error}
+                permissions={this.props.permissions}
+                handleSearchCallBack={this.searchCallBack}>
+
+
                 <Accordion allowToggle>
-                <AccordionItem>
-<h2>
-  <AccordionButton style={{ backgroundColor: 'lightblue', border: '1px solid grey' }}>
-    <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'lightblue' }}>
-    <span style={{ margin: '50px', marginRight: '250px' }}>
-    Form ID	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Service Center	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Performance	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Quater	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Year	
-    </span>
-    <span style={{ margin: '50px' }}>
-    DateTime Submitted
-    </span>
-    </Box>
-  </AccordionButton>
-</h2>
-</AccordionItem>
-<AccordionItem>
-<h2>
-  <AccordionButton style={{ backgroundColor: 'white', border: '1px solid grey' }}>
-    <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'white' }}>
-    <span style={{ margin: '50px', marginRight: '80px' }}>
-    4e2f413a-7c9b-4609-b789-184d2dfda8af  
-    </span>
-    <span style={{ margin: '50px', marginRight: '120px' }}>
-    2
-    </span>
-    <span style={{ margin: '50px', marginRight: '90px' }}>
-    Good
-    </span>
-    <span style={{ margin: '40px', marginRight: '70px' }}>
-    Q1
-    </span>
-    <span style={{ margin: '50px' }}>
-    2023
-    </span>
-    <span style={{ margin: '50px' }}>
-    13/03/2023 08:45:23
-    </span>
-    </Box>
-    <AccordionIcon />
-  </AccordionButton>
-</h2>
-<AccordionPanel style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
-  
-  
-  <br/><br/><br/>
-    <SimpleGrid columns={2} spacing={20}>
-        <Box height='500px'>
-            Service Center
-            <br/><br/>
-            <Select placeholder='2' size='sm'>
-            </Select>
-            <br/><br/><br/>
-            Performance
-            <br/><br/>
-            <Select placeholder='Good' size='sm'>
-            </Select>
-            <br/><br/><br/>
-            Areas Done Well:
-            <br/><br/>
-            <Textarea placeholder="Completed all tasks on time" />
-            <br/><br/><br/>
-            Areas of Improve:
-            <br/><br/>
-            <Textarea placeholder="Exceeded Budget" />
-        </Box>
-        <Box height='500px'>
+                    <AccordionItem>
+                    <h2>
+                    <AccordionButton style={{ backgroundColor: '#E8E8E8'}}>
+                        <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', textColor: 'black', fontWeight: 'bold' , backgroundColor: '#E8E8E8' }}>
+                            <SimpleGrid columns={6} spacing={0}>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Form ID</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Service Center</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Performance</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Quarter</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Year</Box>
+                                <Box style={{textColor: 'black', fontWeight: 'bold', textTransform: 'uppercase' }}>Datetime submitted</Box>
+                            </SimpleGrid>
+                        </Box>
+                    </AccordionButton>
+                    </h2>
+                    </AccordionItem>
+                    
+                    <AccordionItem>
+                        <h2>
+                        <AccordionButton style={{
+                            backgroundColor: activeButton === 'button1' ? '#1c2c5b' : 'white',
+                            color: activeButton === 'button1' ? 'white' : 'black',
+                        }}
+                        onClick={() => this.handleButtonClick('button1')}>
+                            
+                            
+                            <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: activeButton === 'button1' ? '#1c2c5b' : 'white' }}>
+                                <SimpleGrid columns={6} spacing={0}>
+                                    <Box>83ec00e3-3b3e-4a56-b7c9</Box>
+                                    <Box>2</Box>
+                                    <Box>Good</Box>
+                                    <Box>Q1</Box>
+                                    <Box>2023</Box>
+                                    <Box>13/03/2023 21:30:11</Box>
+                                </SimpleGrid>
+                            </Box>
+                        </AccordionButton>
+                        </h2>
+                        <AccordionPanel style={{ backgroundColor: 'white' , padding: '20px', border: '1px solid #E8E8E8' }}>
+                        
+                        <SimpleGrid columns={2} spacing={20}>
+            <Box height='500px'>
+                Service Center
+                <br/><br/>
+                <Select placeholder='2' size='sm'>
+                </Select>
+                <br/><br/><br/>
+                Performance
+                <br/><br/>
+                <Select placeholder='Good' size='sm'>
+                </Select>
+                <br/><br/><br/>
+                Areas Done Well:
+                <br/><br/>
+                <Textarea placeholder="Completed all task on time" />
+                <br/><br/><br/>
+                Areas of Improve:
+                <br/><br/>
+                <Textarea placeholder="Exceeded Budget" />
+            </Box>
+            <Box height='500px'>
+                
+                <div style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
+
+                <Heading as="h6" size="md" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                Status
+                </Heading>
+                
+                Expenses (Out): $3000
+
+                <br/><br/>
+
+                Donation (In): $500
+
+                <br/><br/>
+
+                Man Hour: 30h
+
+                <br/><br/>
+
+                Progress: 40% - 45%
+
+                </div>
+                
             
-            <div style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
+            </Box>
+        </SimpleGrid>
+                        
+                        </AccordionPanel>
+                    </AccordionItem>
 
-            <Heading as="h6" size="md" style={{ marginTop: '10px', marginBottom: '20px' }}>
-            Status
-            </Heading>
+                    <AccordionItem>
+                        <h2>
+                        <AccordionButton style={{
+                            backgroundColor: activeButton === 'button2' ? '#1c2c5b' : 'white',
+                            color: activeButton === 'button2' ? 'white' : 'black',
+                        }}
+                        onClick={() => this.handleButtonClick('button2')}>
+                            
+                            
+                            <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: activeButton === 'button2' ? '#1c2c5b' : 'white' }}>
+                                <SimpleGrid columns={6} spacing={0}>
+                                    <Box>83ec00e3-3b3e-4a56-b7c9</Box>
+                                    <Box>8</Box>
+                                    <Box>Good</Box>
+                                    <Box>Q4</Box>
+                                    <Box>2023</Box>
+                                    <Box>16/03/2023 21:30:11</Box>
+                                </SimpleGrid>
+                            </Box>
+                        </AccordionButton>
+                        </h2>
+                        <AccordionPanel style={{ backgroundColor: 'white' , padding: '20px', border: '1px solid #E8E8E8' }}>
+                        
+                        <SimpleGrid columns={2} spacing={20}>
+            <Box height='500px'>
+                Service Center
+                <br/><br/>
+                <Select placeholder='8' size='sm'>
+                </Select>
+                <br/><br/><br/>
+                Performance
+                <br/><br/>
+                <Select placeholder='Good' size='sm'>
+                </Select>
+                <br/><br/><br/>
+                Areas Done Well:
+                <br/><br/>
+                <Textarea placeholder="Completed all task on time" />
+                <br/><br/><br/>
+                Areas of Improve:
+                <br/><br/>
+                <Textarea placeholder="Exceeded Budget" />
+            </Box>
+            <Box height='500px'>
+                
+                <div style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
+
+                <Heading as="h6" size="md" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                Status
+                </Heading>
+                
+                Expenses (Out): $4500
+
+                <br/><br/>
+
+                Donation (In): $9200
+
+                <br/><br/>
+
+                Man Hour: 130h
+
+                <br/><br/>
+
+                Progress: 90% - 95%
+
+                </div>
+                
             
-            Expenses (Out): <u>$1 Million</u>
+            </Box>
+        </SimpleGrid>
+                        
+                        </AccordionPanel>
+                    </AccordionItem>
+                    
+                </Accordion>
 
-            <br/><br/>
-
-            Donation (In): <u>$1.5 Million</u>
-
-            <br/><br/>
-
-            Man Hour: <u>33h</u>
-
-            <br/><br/>
-
-            Progress: 40% - 45%
-
-            </div>
-            <br/><br/><br/><br/>
-        </Box>
-    </SimpleGrid>
-</AccordionPanel>
-</AccordionItem>
-<AccordionItem>
-<h2>
-  <AccordionButton style={{ backgroundColor: 'white', border: '1px solid grey' }}>
-    <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'white' }}>
-    <span style={{ margin: '50px', marginRight: '80px' }}>
-    4e2f413a-7c9b-4609-b789-184d2dfda8af  
-    </span>
-    <span style={{ margin: '50px', marginRight: '120px' }}>
-    8
-    </span>
-    <span style={{ margin: '50px', marginRight: '90px' }}>
-    Good
-    </span>
-    <span style={{ margin: '40px', marginRight: '70px' }}>
-    Q4
-    </span>
-    <span style={{ margin: '50px' }}>
-    2023
-    </span>
-    <span style={{ margin: '50px' }}>
-    13/03/2023 08:45:23
-    </span>
-    </Box>
-    <AccordionIcon />
-  </AccordionButton>
-</h2>
-<AccordionPanel style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
-  
-  
-  <br/><br/><br/>
-    <SimpleGrid columns={2} spacing={20}>
-        <Box height='500px'>
-            Service Center
-            <br/><br/>
-            <Select placeholder='8' size='sm'>
-            </Select>
-            <br/><br/><br/>
-            Performance
-            <br/><br/>
-            <Select placeholder='Good' size='sm'>
-            </Select>
-            <br/><br/><br/>
-            Areas Done Well:
-            <br/><br/>
-            <Textarea placeholder="Enter here . . ." />
-            <br/><br/><br/>
-            Areas of Improve:
-            <br/><br/>
-            <Textarea placeholder="Enter here . . ." />
-        </Box>
-        <Box height='500px'>
-            
-            <div style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
-
-            <Heading as="h6" size="md" style={{ marginTop: '10px', marginBottom: '20px' }}>
-            Status
-            </Heading>
-            
-            Expenses (Out): <u>$1 Million</u>
-
-            <br/><br/>
-
-            Donation (In): <u>$1.5 Million</u>
-
-            <br/><br/>
-
-            Man Hour: <u>33h</u>
-
-            <br/><br/>
-
-            Progress: 40% - 45%
-
-            </div>
-            
-            
-
-            <br/><br/><br/><br/>
-        </Box>
-    </SimpleGrid>
-</AccordionPanel>
-</AccordionItem></Accordion>
-                </>
-            )
+        </DatapageLayoutEmpty>
+                        </>
+                    )
+                
 
             default:
-            return (
-                <>
-                <Accordion allowToggle>
+                    return (
+                        <>
+                        
+                        <Text>default</Text>
 
-<AccordionItem>
-<h2>
-  <AccordionButton style={{ backgroundColor: 'lightblue', border: '1px solid grey' }}>
-    <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'lightblue' }}>
-    <span style={{ margin: '50px', marginRight: '250px' }}>
-    Form ID	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Service Center	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Performance	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Quater	
-    </span>
-    <span style={{ margin: '50px' }}>
-    Year	
-    </span>
-    <span style={{ margin: '50px' }}>
-    DateTime Submitted
-    </span>
-    </Box>
-  </AccordionButton>
-</h2>
-</AccordionItem>
+                        <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                                View All Personal Evaluation Form
+                                    <DrawerExample
+                                    style={{ position: 'absolute', right: 0 }}
+                            selectedOption={this.state.selectedOption}
+                            onOptionChange={this.handleOptionChange}
+                            />     
+                            </Heading>
 
-<AccordionItem>
-<h2>
-  <AccordionButton style={{ backgroundColor: 'white', border: '1px solid grey' }}>
-    <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'white' }}>
-    <span style={{ margin: '50px', marginRight: '80px' }}>
-    4e2f413a-7c9b-4609-b789-184d2dfda8af  
-    </span>
-    <span style={{ margin: '50px', marginRight: '120px' }}>
-    2
-    </span>
-    <span style={{ margin: '50px', marginRight: '90px' }}>
-    Good
-    </span>
-    <span style={{ margin: '40px', marginRight: '70px' }}>
-    Q1
-    </span>
-    <span style={{ margin: '50px' }}>
-    2023
-    </span>
-    <span style={{ margin: '50px' }}>
-    13/03/2023 08:45:23
-    </span>
-    </Box>
-    <AccordionIcon />
-  </AccordionButton>
-</h2>
-<AccordionPanel style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
-  
-  
-  <br/><br/><br/>
-    <SimpleGrid columns={2} spacing={20}>
-        <Box height='500px'>
-            Service Center
-            <br/><br/>
-            <Select placeholder='2' size='sm'>
-            </Select>
-            <br/><br/><br/>
-            Performance
-            <br/><br/>
-            <Select placeholder='Good' size='sm'>
-            </Select>
-            <br/><br/><br/>
-            Areas Done Well:
-            <br/><br/>
-            <Textarea placeholder="Completed all tasks on time" />
-            <br/><br/><br/>
-            Areas of Improve:
-            <br/><br/>
-            <Textarea placeholder="Exceeded Budget" />
-        </Box>
-        <Box height='500px'>
-            
-            <div style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
+                        <DatapageLayout 
+                        settings={this.settings}
+                        fieldSettings={fieldSettings} 
+                        headers={columnSettings} 
+                        data={data}
+                        hasFields = {false}
 
-            <Heading as="h6" size="md" style={{ marginTop: '10px', marginBottom: '20px' }}>
-            Status
-            </Heading>
-            
-            Expenses (Out): <u>$1 Million</u>
+                        updateHandle = {this.handleUpdate}
+                        requestRefresh = {this.requestRefresh}
+                        error={this.state.error}
+                        permissions={this.props.permissions}
+                        requestError={this.requestError}
+                        >       
 
-            <br/><br/>
+                
 
-            Donation (In): <u>$1.5 Million</u>
+                        {this.state.content.data.map((item, index) => {
 
-            <br/><br/>
 
-            Man Hour: <u>33h</u>
+                            return(
 
-            <br/><br/>
+                                
 
-            Progress: 40% - 45%
+                                <div className="volunteer-extended">
+                                    
+                                    <SimpleGrid columns={2} spacing={20}>
+                                    <Box height='500px'>
 
-            </div>
-            <br/><br/><br/><br/>
-        </Box>
-    </SimpleGrid>
-</AccordionPanel>
-</AccordionItem>
+                                    
+                                            <b>Service Center:</b>
+                                            <br/><br/>
+                                            <Select placeholder={data[index].ServiceCenter} size='sm'>
+                                            </Select>
+                                            <br/><br/><br/>
+                                            <b>Performance:</b>
+                                            <br/><br/>
+                                            <Select placeholder={data[index].Performance} size='sm'>
+                                            </Select>
+                                            <br/><br/><br/>
+                                            <b>Areas Done Well:</b>
+                                            <br/><br/>
+                                            <Textarea placeholder={data[index].AreaDoneWell} />
+                                            <br/><br/><br/>
+                                            <b>Areas of Improve:</b>
+                                            <br/><br/>
+                                            <Textarea placeholder={data[index].AreaOfImprovement} />
+                                        
+                                    </Box>
+                                    <Box height='500px'>
+                                        
+                                        <div style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
 
-<AccordionItem>
-<h2>
-  <AccordionButton style={{ backgroundColor: 'white', border: '1px solid grey' }}>
-    <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'white' }}>
-    <span style={{ margin: '50px', marginRight: '80px' }}>
-    4e2f413a-7c9b-4609-b789-184d2dfda8af  
-    </span>
-    <span style={{ margin: '50px', marginRight: '120px' }}>
-    3
-    </span>
-    <span style={{ margin: '50px', marginRight: '90px' }}>
-    Fair
-    </span>
-    <span style={{ margin: '40px', marginRight: '70px' }}>
-    Q2
-    </span>
-    <span style={{ margin: '50px' }}>
-    2021
-    </span>
-    <span style={{ margin: '50px' }}>
-    13/03/2023 08:45:23
-    </span>
-    </Box>
-    <AccordionIcon />
-  </AccordionButton>
-</h2>
-<AccordionPanel style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
-  
-  
-  <br/><br/><br/>
-    <SimpleGrid columns={2} spacing={20}>
-        <Box height='500px'>
-            Service Center
-            <br/><br/>
-            <Select placeholder='3' size='sm'>
-            </Select>
-            <br/><br/><br/>
-            Performance
-            <br/><br/>
-            <Select placeholder='Fair' size='sm'>
-            </Select>
-            <br/><br/><br/>
-            Areas Done Well:
-            <br/><br/>
-            <Textarea placeholder="Enter here . . ." />
-            <br/><br/><br/>
-            Areas of Improve:
-            <br/><br/>
-            <Textarea placeholder="Enter here . . ." />
-        </Box>
-        <Box height='500px'>
-            
-            <div style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
+                                        <Heading as="h6" size="md" style={{ marginTop: '10px', marginBottom: '20px' }}>
+                                        Status
+                                        </Heading>
+                                        
+                                        Expenses (Out): {data[index].ExpenseOut}
 
-            <Heading as="h6" size="md" style={{ marginTop: '10px', marginBottom: '20px' }}>
-            Status
-            </Heading>
-            
-            Expenses (Out): <u>$1 Million</u>
+                                        <br/><br/>
 
-            <br/><br/>
+                                        Donation (In): {data[index].DonationIn}
 
-            Donation (In): <u>$1.5 Million</u>
+                                        <br/><br/>
 
-            <br/><br/>
+                                        Man Hour: {data[index].ManHour}
 
-            Man Hour: <u>33h</u>
+                                        <br/><br/>
 
-            <br/><br/>
+                                        Progress: {data[index].Progression}
 
-            Progress: 40% - 45%
+                                        </div>
+                                        <br/><br/><br/><br/>
+                                    </Box>
+                                </SimpleGrid>
 
-            </div>
-            
-            
+                                
+                                </div>
+                            )
+                        })}
 
-            <br/><br/><br/><br/>
-        </Box>
-    </SimpleGrid>
-</AccordionPanel>
-</AccordionItem>
+                        </DatapageLayout>
+                        
+                        </>
+                    )
+                
+                
 
-<AccordionItem>
-<h2>
-  <AccordionButton style={{ backgroundColor: 'white', border: '1px solid grey' }}>
-    <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'white' }}>
-    <span style={{ margin: '50px', marginRight: '80px' }}>
-    4e2f413a-7c9b-4609-b789-184d2dfda8af  
-    </span>
-    <span style={{ margin: '50px', marginRight: '120px' }}>
-    5
-    </span>
-    <span style={{ margin: '50px', marginRight: '90px' }}>
-    Bad
-    </span>
-    <span style={{ margin: '40px', marginRight: '70px' }}>
-    Q3
-    </span>
-    <span style={{ margin: '50px' }}>
-    2022
-    </span>
-    <span style={{ margin: '50px' }}>
-    13/03/2023 08:45:23
-    </span>
-    </Box>
-    <AccordionIcon />
-  </AccordionButton>
-</h2>
-<AccordionPanel style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
-  
-  
-  <br/><br/><br/>
-    <SimpleGrid columns={2} spacing={20}>
-        <Box height='500px'>
-            Service Center
-            <br/><br/>
-            <Select placeholder='5' size='sm'>
-            </Select>
-            <br/><br/><br/>
-            Performance
-            <br/><br/>
-            <Select placeholder='Bad' size='sm'>
-            </Select>
-            <br/><br/><br/>
-            Areas Done Well:
-            <br/><br/>
-            <Textarea placeholder="Enter here . . ." />
-            <br/><br/><br/>
-            Areas of Improve:
-            <br/><br/>
-            <Textarea placeholder="Enter here . . ." />
-        </Box>
-        <Box height='500px'>
-            
-            <div style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
-
-            <Heading as="h6" size="md" style={{ marginTop: '10px', marginBottom: '20px' }}>
-            Status
-            </Heading>
-            
-            Expenses (Out): <u>$1 Million</u>
-
-            <br/><br/>
-
-            Donation (In): <u>$1.5 Million</u>
-
-            <br/><br/>
-
-            Man Hour: <u>33h</u>
-
-            <br/><br/>
-
-            Progress: 40% - 45%
-
-            </div>
-            
-            
-
-            <br/><br/><br/><br/>
-        </Box>
-    </SimpleGrid>
-</AccordionPanel>
-</AccordionItem>
-
-<AccordionItem>
-<h2>
-  <AccordionButton style={{ backgroundColor: 'white', border: '1px solid grey' }}>
-    <Box as="span" flex='1' textAlign='left' style={{ marginTop: '10px', marginBottom: '10px', backgroundColor: 'white' }}>
-    <span style={{ margin: '50px', marginRight: '80px' }}>
-    4e2f413a-7c9b-4609-b789-184d2dfda8af  
-    </span>
-    <span style={{ margin: '50px', marginRight: '120px' }}>
-    8
-    </span>
-    <span style={{ margin: '50px', marginRight: '90px' }}>
-    Good
-    </span>
-    <span style={{ margin: '40px', marginRight: '70px' }}>
-    Q4
-    </span>
-    <span style={{ margin: '50px' }}>
-    2023
-    </span>
-    <span style={{ margin: '50px' }}>
-    13/03/2023 08:45:23
-    </span>
-    </Box>
-    <AccordionIcon />
-  </AccordionButton>
-</h2>
-<AccordionPanel style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
-  
-  
-  <br/><br/><br/>
-    <SimpleGrid columns={2} spacing={20}>
-        <Box height='500px'>
-            Service Center
-            <br/><br/>
-            <Select placeholder='8' size='sm'>
-            </Select>
-            <br/><br/><br/>
-            Performance
-            <br/><br/>
-            <Select placeholder='Good' size='sm'>
-            </Select>
-            <br/><br/><br/>
-            Areas Done Well:
-            <br/><br/>
-            <Textarea placeholder="Enter here . . ." />
-            <br/><br/><br/>
-            Areas of Improve:
-            <br/><br/>
-            <Textarea placeholder="Enter here . . ." />
-        </Box>
-        <Box height='500px'>
-            
-            <div style={{ backgroundColor: 'white' , border: '1px solid grey', padding: '20px' }}>
-
-            <Heading as="h6" size="md" style={{ marginTop: '10px', marginBottom: '20px' }}>
-            Status
-            </Heading>
-            
-            Expenses (Out): <u>$1 Million</u>
-
-            <br/><br/>
-
-            Donation (In): <u>$1.5 Million</u>
-
-            <br/><br/>
-
-            Man Hour: <u>33h</u>
-
-            <br/><br/>
-
-            Progress: 40% - 45%
-
-            </div>
-            
-            
-
-            <br/><br/><br/><br/>
-        </Box>
-    </SimpleGrid>
-</AccordionPanel>
-</AccordionItem>
-
-</Accordion>
-                </>
-            )
-
+            }
         }
+
+        
       };
-    
-    constructor(props) {
-        super(props);
-        this.state = {
-            content: null,
-            myEmployeeList: [],
-            myDonorList: [],
-            myVolunteerList: [],
-            headers: [],
-            loading: true,
-            settings: {},
-            error: ""
-        }
-        this.settings = {
-            title: "ViewFeedback",
-            primaryColor: "#a6192e",
-            accentColor: "#94795d",
-            textColor: "#ffffff",
-            textColorInvert: "#606060",
-            apiEmployee: "/api/Employee/",
-            apiDonor: "/api/Donor/",
-            apiVolunteer: "/api/Volunteer/"
-        }
+
+
+
+    settings ={
+        title:"Feedback",
+        primaryColor: "#a6192e",
+        accentColor: "#94795d",
+        textColor: "#ffffff",
+        textColorInvert: "#606060",
+        api: "/api/Feedback/",
     }
 
+
+
+    // accordian function
+    handleButtonClick(buttonName) {
+        this.setState(prevState => ({
+          activeButton: prevState.activeButton === buttonName ? null : buttonName
+        }));
+      }
 
 
     async componentDidMount(){
@@ -2384,13 +2322,14 @@ export default class ViewFeedback extends React.Component {
             },
         }).then(res => {
             console.log(res);
+            //Res = {success: true, message: "Success", data: Array(3)}
             return res.json();
         });
     }
-    
+
     update = async (data) =>{
         console.log(data);
-        return fetch(this.settings.api + "UpdateAndFetch/" + data.RequestId , {
+        return fetch(this.settings.api + "UpdateAndFetch/" + data.FeedbackId , {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -2402,14 +2341,19 @@ export default class ViewFeedback extends React.Component {
     }
 
     handleUpdate = async (data) =>{
-        var updateData = data;
-        var fileUploadFields = [];
-        const fieldSettings = this.state.settings.data.FieldSettings;
-        for(const field of Object.keys(fieldSettings)){
-            if (fieldSettings[field].type === "file") {
-                fileUploadFields.push(field);
+        await this.update(data).then((content)=>{
+            if(content.success){
+                this.setState({
+                    error:"",
+                })
+                return true;
+            }else{
+                this.setState({
+                    error:content.message,
+                })
+                return false;
             }
-        }
+        })
     }
 
     requestRefresh = async () =>{
@@ -2424,7 +2368,7 @@ export default class ViewFeedback extends React.Component {
             });
         })
     }
-
+    
     requestError = async (error) =>{
         this.setState({
             error:error,
@@ -2432,81 +2376,46 @@ export default class ViewFeedback extends React.Component {
     }
 
 
-
     render() {
-        return (
+
+        const {columnSettings, data, fieldSettings} = this.state
+        if (this.state.loading)
+        {
+            return <loading></loading>
+        }
+        else
+        {
+            console.log(data)
+
+            return (
+
+                <ChakraProvider>
+
+            
+            {/* <StdButton className={"secondary"}>Filter Option</StdButton> */}
+
+            <div style={{ marginTop: '40px', marginBottom: '30px', width: '94%' }}> 
+
             
 
-            <ChakraProvider>
-
-            <div style={{ marginTop: '80px', marginBottom: '30px' }}> 
-
-
-            <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
-                View All Performance Evaluation Form
-            </Heading>
-
-
-
-            <div style={{ marginTop: '40px', marginBottom: '20px'}}>
-        Search: 
-                    <Input placeholder="Enter Something here . . ." size="sm" style={{ marginLeft: '20px', marginRight: '20px', width: '80%'}} />
-                    <Button colorScheme="blue">Search</Button>
-                    <DrawerExample
-              selectedOption={this.state.selectedOption}
-              onOptionChange={this.handleOptionChange}
-            />    
-        </div>
-
-
-        <br/><br/><br/><br/>
+            <br/><br/><br/><br/>
         {this.renderTextbox()}
         <br/><br/><br/><br/>
+
+            </div>
+            </ChakraProvider>
+
+                
+
+            )
+        }
+
+        
+    }
 
 
     
 
 
 
-
-
-            </div>
-            </ChakraProvider>
-
-          
-
-
-            )
-        }
-
-
-
-    // render(){
-    //     if(this.state.loading){
-    //         return <Loading></Loading>
-    //     }else{
-            
-    //     return(
-    //         <DatapageLayout 
-    //             settings={this.settings}
-    //             fieldSettings={this.state.settings.data.FieldSettings} 
-    //             headers={this.state.settings.data.ColumnSettings} 
-    //             data={this.state.content.data}
-    //             updateHandle = {this.handleUpdate}
-    //             requestRefresh = {this.requestRefresh}
-    //             error={this.state.error}
-    //             requestError = {this.requestError}
-    //             permissions={this.props.permissions}
-    //             >
-    //         </DatapageLayout>
-
-    //         )
-    //     }
-    // }
-
-
-
-
 }
-
-
