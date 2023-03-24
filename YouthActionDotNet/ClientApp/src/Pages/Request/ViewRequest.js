@@ -400,7 +400,7 @@ export default class Request extends React.Component {
             </DatapageLayoutEmpty>
                     </>
                 )
-            } else if (selectedOption1 == "option3" && selectedOption2 != "option2_read") {
+            } else if (selectedOption1 == "option3" && selectedOption2 != "option1_pending") {
                 return (
                     <>
                     <Text>Money</Text>
@@ -515,7 +515,7 @@ export default class Request extends React.Component {
             </DatapageLayoutEmpty>
                     </>
                 )
-            } else if (selectedOption1 == "option4" && selectedOption2 != "option1_pending") {
+            } else if (selectedOption1 == "option4" && selectedOption2 != "option2_read") {
                 return (
                     <>
                     <Text>Donor</Text>
@@ -746,7 +746,7 @@ export default class Request extends React.Component {
                 )
                 
                 
-            } else if (selectedOption2 == "option1_pending" && selectedOption1 != "option4" && selectedOption1 != "option5") {
+            } else if (selectedOption2 == "option1_pending" && selectedOption1 != "option3" && selectedOption1 != "option5") {
                 return (
                     <>
                     <Text>Pending</Text>
@@ -992,7 +992,7 @@ export default class Request extends React.Component {
             </DatapageLayoutEmpty>
                     </>
                 )
-            } else if (selectedOption2 == "option2_read" && selectedOption1 != "option1" && selectedOption1 != "option2" && selectedOption1 != "option3") {
+            } else if (selectedOption2 == "option2_read" && selectedOption1 != "option1" && selectedOption1 != "option2" && selectedOption1 != "option4") {
                 return (
                     <>
                     <Text>Read</Text>
