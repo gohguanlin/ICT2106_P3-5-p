@@ -34,7 +34,6 @@ import ViewFeedback from './Pages/Feedback/ViewFeedback';
 
 import QuarterlyReport from './Pages/QuarterlyReport/QuarterlyReport';
 
-import Feedback2 from './Pages/Feedback/Feedback2';
 import Feedback from './Pages/Feedback/Feedback';
 import Permissions from './Pages/Admin/Permissions';
 
@@ -119,7 +118,6 @@ export default function App() {
                 <DrawerItem label="Request" to={"/Request"} logo={userImg} currentActive = {active} setActive={setActive}></DrawerItem>
                 <DrawerItem label="ViewRequest" to={"/ViewRequest"} logo={userImg} currentActive = {active} setActive={setActive}></DrawerItem>
                 <DrawerItem label="Feedback" to={"/Feedback"} logo={userImg} currentActive = {active} setActive={setActive}></DrawerItem>
-                <DrawerItem label="Feedback2" to={"/Feedback2"} logo={userImg} currentActive = {active} setActive={setActive}></DrawerItem>
                 <DrawerItem label="ViewFeedback" to={"/ViewFeedback"} logo={userImg} currentActive = {active} setActive={setActive}></DrawerItem>
                 <DrawerItem label="QuarterlyReport" to={"/QuarterlyReport"} logo={userImg} currentActive = {active} setActive={setActive}></DrawerItem>
 
@@ -183,7 +181,6 @@ export default function App() {
               <Route path="/QuarterlyReport" element={<QuarterlyReport user={token} permissions = {JSON.parse(perms)}/>}/>
               <Route path="/ViewFeedback" element={<ViewFeedback user={token} permissions = {JSON.parse(perms)}/>}/>
               <Route path="/Feedback" element={<Feedback user={token} permissions = {JSON.parse(perms)}/>}/>
-              <Route path="/Feedback2" element={<Feedback2 user={token} permissions = {JSON.parse(perms)}/>}/>
               
 
               <Route path="/Sample" element={<Sample user={token} permissions = {parsedPerms}/>}/>

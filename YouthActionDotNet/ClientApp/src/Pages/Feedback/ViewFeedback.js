@@ -51,7 +51,7 @@ function DrawerExample({ selectedOption1, onOptionChange1, selectedOption2, onOp
   
     return (
       <>
-        <Button ref={btnRef} onClick={onOpen} colorScheme="blue" style={{ marginLeft: '20px'}}>Filter</Button>
+        <Button ref={btnRef} onClick={onOpen} style={{ backgroundColor: '#1c2c5b', color: 'white', marginLeft: '20px' }}>Filter</Button>
         <Drawer
           isOpen={isOpen}
           placement="right"
@@ -121,7 +121,7 @@ function DrawerExample({ selectedOption1, onOptionChange1, selectedOption2, onOp
             <Button variant='outline' mr={3} onClick={onClose}>
                 Close
               </Button>
-              <Button colorScheme="blue" onClick={() => {
+              <Button style={{ backgroundColor: '#1c2c5b', color: 'white' }} onClick={() => {
               onClose();
               reset();
               }}>
@@ -205,7 +205,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "sc2" && selectedOption2 == "" && selectedOption3 == "" && selectedOption4 == "") {
                 return (
                     <>
-                    <Text>SC2</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -331,7 +330,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "" && selectedOption2 == "Good" && selectedOption3 == "" && selectedOption4 == "") {
                 return (
                 <>
-                <Text>Good</Text>
                 <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                 View All Personal Evaluation Form
                     <DrawerExample
@@ -531,7 +529,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "" && selectedOption2 == "" && selectedOption3 == "Q1" && selectedOption4 == "") {
                 return (
                     <>
-                    <Text>Q1</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -657,7 +654,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "" && selectedOption2 == "" && selectedOption3 == "" && selectedOption4 == "2023") {
                 return (
                     <>
-                    <Text>Good</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -859,7 +855,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "sc2" && selectedOption2 == "Good" && selectedOption3 == "" && selectedOption4 == "") {
                 return (
                     <>
-                    <Text>SC2, Good</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -985,7 +980,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "sc2" && selectedOption2 == "" && selectedOption3 == "Q1" && selectedOption4 == "") {
                 return (
                     <>
-                    <Text>Good</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -1185,7 +1179,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "sc2" && selectedOption2 == "" && selectedOption3 == "" && selectedOption4 == "2023") {
                 return (
                     <>
-                    <Text>SC2</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -1311,7 +1304,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "" && selectedOption2 == "Good" && selectedOption3 == "Q1" && selectedOption4 == "") {
                 return (
                     <>
-                    <Text>SC2</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -1437,7 +1429,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "" && selectedOption2 == "Good" && selectedOption3 == "" && selectedOption4 == "2023") {
                 return (
                     <>
-                    <Text>SC2</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -1563,7 +1554,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "" && selectedOption2 == "" && selectedOption3 == "Q1" && selectedOption4 == "2023") {
                 return (
                     <>
-                    <Text>SC2</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -1691,7 +1681,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "sc2" && selectedOption2 == "Good" && selectedOption3 == "Q1" && selectedOption4 == "") {
                 return (
                     <>
-                    <Text>SC2</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -1817,7 +1806,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "sc2" && selectedOption2 == "Good" && selectedOption3 == "" && selectedOption4 == "2023") {
                 return (
                     <>
-                    <Text>SC2</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -1943,7 +1931,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "sc2" && selectedOption2 == "" && selectedOption3 == "Q1" && selectedOption4 == "2023") {
                 return (
                     <>
-                    <Text>SC2</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -2069,7 +2056,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "" && selectedOption2 == "Good" && selectedOption3 == "Q1" && selectedOption4 == "2023") {
                 return (
                     <>
-                    <Text>SC2</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -2197,7 +2183,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "sc2" && selectedOption2 == "Good" && selectedOption3 == "Q1" && selectedOption4 == "2023") {
                 return (
                     <>
-                    <Text>SC2</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -2326,7 +2311,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "sc3" && selectedOption2 == "" && selectedOption3 == "" && selectedOption4 == "") {
                 return (
                     <>
-                    <Text>SC3</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -2453,7 +2437,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "" && selectedOption2 == "Fair" && selectedOption3 == "" && selectedOption4 == "") {
                 return (
                     <>
-                    <Text>SC3</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -2580,7 +2563,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "" && selectedOption2 == "" && selectedOption3 == "Q2" && selectedOption4 == "") {
                 return (
                     <>
-                    <Text>SC3</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -2707,7 +2689,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "" && selectedOption2 == "" && selectedOption3 == "" && selectedOption4 == "2021") {
                 return (
                     <>
-                    <Text>SC3</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -2836,7 +2817,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "sc3" && selectedOption2 == "Fair" && selectedOption3 == "" && selectedOption4 == "") {
                 return (
                     <>
-                    <Text>SC3</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -2963,7 +2943,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "sc3" && selectedOption2 == "" && selectedOption3 == "Q2" && selectedOption4 == "") {
                 return (
                     <>
-                    <Text>SC3</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -3090,7 +3069,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "sc3" && selectedOption2 == "" && selectedOption3 == "" && selectedOption4 == "2021") {
                 return (
                     <>
-                    <Text>SC3</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -3217,7 +3195,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "" && selectedOption2 == "Fair" && selectedOption3 == "Q2" && selectedOption4 == "") {
                 return (
                     <>
-                    <Text>SC3</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -3344,7 +3321,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "" && selectedOption2 == "Fair" && selectedOption3 == "" && selectedOption4 == "2021") {
                 return (
                     <>
-                    <Text>SC3</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -3471,7 +3447,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "" && selectedOption2 == "" && selectedOption3 == "Q2" && selectedOption4 == "2021") {
                 return (
                     <>
-                    <Text>SC3</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -3600,7 +3575,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "sc3" && selectedOption2 == "Fair" && selectedOption3 == "Q2" && selectedOption4 == "") {
                 return (
                     <>
-                    <Text>SC3</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -3727,7 +3701,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "sc3" && selectedOption2 == "Fair" && selectedOption3 == "" && selectedOption4 == "2021") {
                 return (
                     <>
-                    <Text>SC3</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -3854,7 +3827,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "sc3" && selectedOption2 == "" && selectedOption3 == "Q2" && selectedOption4 == "2021") {
                 return (
                     <>
-                    <Text>SC3</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -3981,7 +3953,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "" && selectedOption2 == "Fair" && selectedOption3 == "Q2" && selectedOption4 == "2021") {
                 return (
                     <>
-                    <Text>SC3</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -4110,7 +4081,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "sc3" && selectedOption2 == "Fair" && selectedOption3 == "Q2" && selectedOption4 == "2021") {
                 return (
                     <>
-                    <Text>SC3</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -4240,7 +4210,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "sc5" && selectedOption2 == "" && selectedOption3 == "" && selectedOption4 == "") {
                 return (
                     <>
-                    <Text>SC5</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -4367,7 +4336,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "" && selectedOption2 == "Bad" && selectedOption3 == "" && selectedOption4 == "") {
                 return (
                     <>
-                    <Text>SC5</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -4494,7 +4462,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "" && selectedOption2 == "" && selectedOption3 == "Q3" && selectedOption4 == "") {
                 return (
                     <>
-                    <Text>SC5</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -4621,7 +4588,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "" && selectedOption2 == "" && selectedOption3 == "" && selectedOption4 == "2022") {
                 return (
                     <>
-                    <Text>SC5</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -4750,7 +4716,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "sc5" && selectedOption2 == "Bad" && selectedOption3 == "" && selectedOption4 == "") {
                 return (
                     <>
-                    <Text>SC5</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -4877,7 +4842,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "sc5" && selectedOption2 == "" && selectedOption3 == "Q3" && selectedOption4 == "") {
                 return (
                     <>
-                    <Text>SC5</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -5004,7 +4968,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "sc5" && selectedOption2 == "" && selectedOption3 == "" && selectedOption4 == "2022") {
                 return (
                     <>
-                    <Text>SC5</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -5131,7 +5094,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "" && selectedOption2 == "Bad" && selectedOption3 == "Q3" && selectedOption4 == "") {
                 return (
                     <>
-                    <Text>SC5</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -5258,7 +5220,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "" && selectedOption2 == "Bad" && selectedOption3 == "" && selectedOption4 == "2022") {
                 return (
                     <>
-                    <Text>SC5</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -5385,7 +5346,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "" && selectedOption2 == "" && selectedOption3 == "Q3" && selectedOption4 == "2022") {
                 return (
                     <>
-                    <Text>SC5</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -5514,7 +5474,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "sc5" && selectedOption2 == "Bad" && selectedOption3 == "Q3" && selectedOption4 == "") {
                 return (
                     <>
-                    <Text>SC5</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -5641,7 +5600,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "sc5" && selectedOption2 == "Bad" && selectedOption3 == "" && selectedOption4 == "2022") {
                 return (
                     <>
-                    <Text>SC5</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -5768,7 +5726,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "sc5" && selectedOption2 == "" && selectedOption3 == "Q3" && selectedOption4 == "2022") {
                 return (
                     <>
-                    <Text>SC5</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -5895,7 +5852,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "" && selectedOption2 == "Bad" && selectedOption3 == "Q3" && selectedOption4 == "2022") {
                 return (
                     <>
-                    <Text>SC5</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -6024,7 +5980,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "sc5" && selectedOption2 == "Bad" && selectedOption3 == "Q3" && selectedOption4 == "2022") {
                 return (
                     <>
-                    <Text>SC5</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -6154,7 +6109,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "sc8" && selectedOption2 == "" && selectedOption3 == "" && selectedOption4 == "") {
                 return (
                     <>
-                    <Text>SC8</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -6282,7 +6236,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "" && selectedOption2 == "" && selectedOption3 == "Q4" && selectedOption4 == "") {
                 return (
                     <>
-                    <Text>SC8</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -6412,7 +6365,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "sc8" && selectedOption2 == "Good" && selectedOption3 == "" && selectedOption4 == "") {
                 return (
                     <>
-                    <Text>SC8</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -6538,7 +6490,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "sc8" && selectedOption2 == "" && selectedOption3 == "Q4" && selectedOption4 == "") {
                 return (
                     <>
-                    <Text>SC8</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -6664,7 +6615,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "sc8" && selectedOption2 == "" && selectedOption3 == "" && selectedOption4 == "2023") {
                 return (
                     <>
-                    <Text>SC8</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -6790,7 +6740,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "" && selectedOption2 == "Good" && selectedOption3 == "Q4" && selectedOption4 == "") {
                 return (
                     <>
-                    <Text>SC8</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -6918,7 +6867,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "" && selectedOption2 == "" && selectedOption3 == "Q4" && selectedOption4 == "2023") {
                 return (
                     <>
-                    <Text>SC8</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -7046,7 +6994,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "sc8" && selectedOption2 == "Good" && selectedOption3 == "Q4" && selectedOption4 == "") {
                 return (
                     <>
-                    <Text>SC8</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -7172,7 +7119,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "sc8" && selectedOption2 == "Good" && selectedOption3 == "" && selectedOption4 == "2023") {
                 return (
                     <>
-                    <Text>SC8</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -7298,7 +7244,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "sc8" && selectedOption2 == "" && selectedOption3 == "Q4" && selectedOption4 == "2023") {
                 return (
                     <>
-                    <Text>SC8</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -7424,7 +7369,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "" && selectedOption2 == "Good" && selectedOption3 == "Q4" && selectedOption4 == "2023") {
                 return (
                     <>
-                    <Text>SC8</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -7552,7 +7496,6 @@ export default class ViewFeedback extends React.Component {
             if (selectedOption1 == "sc8" && selectedOption2 == "Good" && selectedOption3 == "Q4" && selectedOption4 == "2023") {
                 return (
                     <>
-                    <Text>SC8</Text>
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                     View All Personal Evaluation Form
                         <DrawerExample
@@ -7680,7 +7623,6 @@ export default class ViewFeedback extends React.Component {
                 return (
                     <>
                     
-                    <Text>default</Text>
 
                     <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                             View All Personal Evaluation Form
@@ -7785,7 +7727,6 @@ export default class ViewFeedback extends React.Component {
                 if (selectedOption1 == "sc1" && selectedOption2 == "") {
                     return (
                         <>
-                        <Text>SC1: Nothing</Text>
                         <br/><br/>
                         <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                         View All Personal Evaluation Form
@@ -7803,17 +7744,16 @@ export default class ViewFeedback extends React.Component {
                     </Heading>
         
                     <br/><br/>
-                    <Text>You have not filled out any Performance Evaluation Form for Service Center 1, please click the button below to fill in the form.</Text>
+                    <Text>You have not filled out any Performance Evaluation Form yet, please click the button below to fill in the form.</Text>
                     <br/><br/>
                         <Link to="/Feedback">
-                            <Button colorScheme="blue">Click Here</Button>
+                            <Button style={{ backgroundColor: '#1c2c5b', color: 'white' }}>Click Here</Button>
                         </Link>
                         </>
                     )
                 } else if (selectedOption1 == "sc4" && selectedOption2 == "") {
                     return (
                         <>
-                        <Text>SC4: Nothing</Text>
                         <br/><br/>
                         <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                         View All Personal Evaluation Form
@@ -7831,17 +7771,16 @@ export default class ViewFeedback extends React.Component {
                     </Heading>
         
                     <br/><br/>
-                    <Text>You have not filled out any Performance Evaluation Form for Service Center 1, please click the button below to fill in the form.</Text>
+                    <Text>You have not filled out any Performance Evaluation Form yet, please click the button below to fill in the form.</Text>
                     <br/><br/>
                         <Link to="/Feedback">
-                            <Button colorScheme="blue">Click Here</Button>
+                            <Button style={{ backgroundColor: '#1c2c5b', color: 'white' }}>Click Here</Button>
                         </Link>
                         </>
                     )
                 } else if (selectedOption1 == "sc6" && selectedOption2 == "") {
                     return (
                         <>
-                        <Text>SC6: Nothing</Text>
                         <br/><br/>
                         <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                         View All Personal Evaluation Form
@@ -7859,17 +7798,16 @@ export default class ViewFeedback extends React.Component {
                     </Heading>
         
                     <br/><br/>
-                    <Text>You have not filled out any Performance Evaluation Form for Service Center 1, please click the button below to fill in the form.</Text>
+                    <Text>You have not filled out any Performance Evaluation Form yet, please click the button below to fill in the form.</Text>
                     <br/><br/>
                         <Link to="/Feedback">
-                            <Button colorScheme="blue">Click Here</Button>
+                            <Button style={{ backgroundColor: '#1c2c5b', color: 'white' }}>Click Here</Button>
                         </Link>
                         </>
                     )
                 } else if (selectedOption1 == "sc7" && selectedOption2 == "") {
                     return (
                         <>
-                        <Text>SC7: Nothing</Text>
                         <br/><br/>
                         <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                         View All Personal Evaluation Form
@@ -7887,7 +7825,7 @@ export default class ViewFeedback extends React.Component {
                     </Heading>
         
                     <br/><br/>
-                    <Text>You have not filled out any Performance Evaluation Form for Service Center 1, please click the button below to fill in the form.</Text>
+                    <Text>You have not filled out any Performance Evaluation Form yet, please click the button below to fill in the form.</Text>
                     <br/><br/>
                         <Link to="/ViewFeedback">
                             <Button colorScheme="blue">Click Here</Button>
@@ -7897,7 +7835,6 @@ export default class ViewFeedback extends React.Component {
                 } else if (selectedOption1 == "" && selectedOption2 == "Excellent") {
                     return (
                         <>
-                        <Text>Excellent: Nothing</Text>
                         <br/><br/>
                         <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                         View All Personal Evaluation Form
@@ -7922,7 +7859,6 @@ export default class ViewFeedback extends React.Component {
                 } else if (selectedOption1 == "" && selectedOption2 == "Poor") {
                     return (
                         <>
-                        <Text>Poor: Nothing</Text>
                         <br/><br/>
                         <Text>Excellent: Nothing</Text>
                         <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
@@ -7947,7 +7883,6 @@ export default class ViewFeedback extends React.Component {
                 } else if (selectedOption1 == "sc1" && selectedOption2 == "Excellent") {
                     return (
                         <>
-                        <Text>SC1: Nothing</Text>
                         <br/><br/>
                         <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                         View All Personal Evaluation Form
@@ -7967,17 +7902,16 @@ export default class ViewFeedback extends React.Component {
                     <br/><br/>
                     <Text>There is no Excellent Performance Level for any Service Center yet.</Text>
                     <br/><br/>
-                    <Text>You have not filled out any Performance Evaluation Form for Service Center 1, please click the button below to fill in the form.</Text>
+                    <Text>You have not filled out any Performance Evaluation Form yet, please click the button below to fill in the form.</Text>
                     <br/><br/>
                         <Link to="/Feedback">
-                            <Button colorScheme="blue">Click Here</Button>
+                            <Button style={{ backgroundColor: '#1c2c5b', color: 'white' }}>Click Here</Button>
                         </Link>
                         </>
                     )
                 } else if (selectedOption1 == "sc4" && selectedOption2 == "Excellent") {
                     return (
                         <>
-                        <Text>SC1: Nothing</Text>
                         <br/><br/>
                         <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                         View All Personal Evaluation Form
@@ -7997,17 +7931,16 @@ export default class ViewFeedback extends React.Component {
                     <br/><br/>
                     <Text>There is no Excellent Performance Level for any Service Center yet.</Text>
                     <br/><br/>
-                    <Text>You have not filled out any Performance Evaluation Form for Service Center 1, please click the button below to fill in the form.</Text>
+                    <Text>You have not filled out any Performance Evaluation Form yet, please click the button below to fill in the form.</Text>
                     <br/><br/>
                         <Link to="/Feedback">
-                            <Button colorScheme="blue">Click Here</Button>
+                            <Button style={{ backgroundColor: '#1c2c5b', color: 'white' }}>Click Here</Button>
                         </Link>
                         </>
                     )
                 } else if (selectedOption1 == "sc6" && selectedOption2 == "Excellent") {
                     return (
                         <>
-                        <Text>SC1: Nothing</Text>
                         <br/><br/>
                         <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                         View All Personal Evaluation Form
@@ -8027,17 +7960,16 @@ export default class ViewFeedback extends React.Component {
                     <br/><br/>
                     <Text>There is no Excellent Performance Level for any Service Center yet.</Text>
                     <br/><br/>
-                    <Text>You have not filled out any Performance Evaluation Form for Service Center 1, please click the button below to fill in the form.</Text>
+                    <Text>You have not filled out any Performance Evaluation Form yet, please click the button below to fill in the form.</Text>
                     <br/><br/>
                         <Link to="/Feedback">
-                            <Button colorScheme="blue">Click Here</Button>
+                            <Button style={{ backgroundColor: '#1c2c5b', color: 'white' }}>Click Here</Button>
                         </Link>
                         </>
                     )
                 } else if (selectedOption1 == "sc7" && selectedOption2 == "Excellent") {
                     return (
                         <>
-                        <Text>SC1: Nothing</Text>
                         <br/><br/>
                         <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                         View All Personal Evaluation Form
@@ -8057,17 +7989,16 @@ export default class ViewFeedback extends React.Component {
                     <br/><br/>
                     <Text>There is no Excellent Performance Level for any Service Center yet.</Text>
                     <br/><br/>
-                    <Text>You have not filled out any Performance Evaluation Form for Service Center 1, please click the button below to fill in the form.</Text>
+                    <Text>You have not filled out any Performance Evaluation Form yet, please click the button below to fill in the form.</Text>
                     <br/><br/>
                         <Link to="/Feedback">
-                            <Button colorScheme="blue">Click Here</Button>
+                            <Button style={{ backgroundColor: '#1c2c5b', color: 'white' }}>Click Here</Button>
                         </Link>
                         </>
                     )
                 } else if (selectedOption1 == "sc1" && selectedOption2 == "Poor") {
                     return (
                         <>
-                        <Text>SC1: Nothing</Text>
                         <br/><br/>
                         <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                         View All Personal Evaluation Form
@@ -8087,17 +8018,16 @@ export default class ViewFeedback extends React.Component {
                     <br/><br/>
                     <Text>There is no Poor Performance Level for any Service Center yet.</Text>
                     <br/><br/>
-                    <Text>You have not filled out any Performance Evaluation Form for Service Center 1, please click the button below to fill in the form.</Text>
+                    <Text>You have not filled out any Performance Evaluation Form yet, please click the button below to fill in the form.</Text>
                     <br/><br/>
                         <Link to="/Feedback">
-                            <Button colorScheme="blue">Click Here</Button>
+                            <Button style={{ backgroundColor: '#1c2c5b', color: 'white' }}>Click Here</Button>
                         </Link>
                         </>
                     )
                 } else if (selectedOption1 == "sc4" && selectedOption2 == "Poor") {
                     return (
                         <>
-                        <Text>SC1: Nothing</Text>
                         <br/><br/>
                         <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                         View All Personal Evaluation Form
@@ -8117,17 +8047,16 @@ export default class ViewFeedback extends React.Component {
                     <br/><br/>
                     <Text>There is no Poor Performance Level for any Service Center yet.</Text>
                     <br/><br/>
-                    <Text>You have not filled out any Performance Evaluation Form for Service Center 1, please click the button below to fill in the form.</Text>
+                    <Text>You have not filled out any Performance Evaluation Form yet, please click the button below to fill in the form.</Text>
                     <br/><br/>
                         <Link to="/Feedback">
-                            <Button colorScheme="blue">Click Here</Button>
+                            <Button style={{ backgroundColor: '#1c2c5b', color: 'white' }}>Click Here</Button>
                         </Link>
                         </>
                     )
                 } else if (selectedOption1 == "sc6" && selectedOption2 == "Poor") {
                     return (
                         <>
-                        <Text>SC1: Nothing</Text>
                         <br/><br/>
                         <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                         View All Personal Evaluation Form
@@ -8147,17 +8076,16 @@ export default class ViewFeedback extends React.Component {
                     <br/><br/>
                     <Text>There is no Poor Performance Level for any Service Center yet.</Text>
                     <br/><br/>
-                    <Text>You have not filled out any Performance Evaluation Form for Service Center 1, please click the button below to fill in the form.</Text>
+                    <Text>You have not filled out any Performance Evaluation Form yet, please click the button below to fill in the form.</Text>
                     <br/><br/>
                         <Link to="/Feedback">
-                            <Button colorScheme="blue">Click Here</Button>
+                            <Button style={{ backgroundColor: '#1c2c5b', color: 'white' }}>Click Here</Button>
                         </Link>
                         </>
                     )
                 } else if (selectedOption1 == "sc7" && selectedOption2 == "Poor") {
                     return (
                         <>
-                        <Text>SC1: Nothing</Text>
                         <br/><br/>
                         <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                         View All Personal Evaluation Form
@@ -8177,17 +8105,16 @@ export default class ViewFeedback extends React.Component {
                     <br/><br/>
                     <Text>There is no Poor Performance Level for any Service Center yet.</Text>
                     <br/><br/>
-                    <Text>You have not filled out any Performance Evaluation Form for Service Center 1, please click the button below to fill in the form.</Text>
+                    <Text>You have not filled out any Performance Evaluation Form yet, please click the button below to fill in the form.</Text>
                     <br/><br/>
                         <Link to="/Feedback">
-                            <Button colorScheme="blue">Click Here</Button>
+                            <Button style={{ backgroundColor: '#1c2c5b', color: 'white' }}>Click Here</Button>
                         </Link>
                         </>
                     )
                 } else {
                     return (
                         <>
-                        <Text>???: Nothing</Text>
                         <br/><br/>
                         <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                         View All Personal Evaluation Form
