@@ -26,9 +26,39 @@ namespace YouthActionDotNet.Models
             {
                 foreach (Request request in requests)
                 {
-                    if (request.RequestResourceType.Equals(choice, StringComparison.OrdinalIgnoreCase))
+                    // use the query to determine the attribute to match
+                    switch (choice)
                     {
-                        resourceResults.Add(request);
+                        case ("Time"):
+                            if (!request.RequestResourceTypeTime.Equals(""))
+                            {
+                                resourceResults.Add(request);
+                            }
+                            break;
+                        case ("Space"):
+                            if (!request.RequestResourceTypeSpace.Equals(""))
+                            {
+                                resourceResults.Add(request);
+                            }
+                            break;
+                        case ("Donor"):
+                            if (!request.RequestResourceTypeDonor.Equals(""))
+                            {
+                                resourceResults.Add(request);
+                            }
+                            break;
+                        case ("Money"):
+                            if (!request.RequestResourceTypeMoney.Equals(""))
+                            {
+                                resourceResults.Add(request);
+                            }
+                            break;
+                        case ("Volunteer"):
+                            if (!request.RequestResourceTypeVolunteer.Equals(""))
+                            {
+                                resourceResults.Add(request);
+                            }
+                            break;
                     }
                 }
             }
