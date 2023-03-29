@@ -167,6 +167,13 @@ export default class DatapageLayoutEmpty extends React.Component {
     }
 
     render() {
+        if(this.state.content === ""){
+            return <div></div>
+        }
+        const indexOfLastItem = this.state.currentPage * this.state.itemsPerPage;
+        const indexOfFirstItem = indexOfLastItem - this.state.itemsPerPage;
+        const currentItems = this.state.data.slice(indexOfFirstItem, indexOfLastItem);
+
         return (
 
             
@@ -205,9 +212,76 @@ export default class DatapageLayoutEmpty extends React.Component {
                     ></TableHeader>
                     <TableFooter settings={this.props.settings} toggle={this.drawerToggleClickHandler} showBottomMenu={this.state.showBottomMenu}></TableFooter>
                     <DivSpacing spacing={1}></DivSpacing>
-                    
+
+                    <div className="d-flex justify-content-center align-items-start flex-fill">
+                    <form onSubmit={this.handleSubmit}>
+                        <label>
+                            Service Centre:
+                            <select value={this.state.value} onChange={this.handleChange}>
+                                <option value="S1">S1</option>
+                                <option value="S2">S2</option>
+                                <option value="S3">S3</option>
+                                <option value="S4">S4</option>
+                            </select>
+                        </label>
+                        <label>
+                            Quarter:
+                            <select value={this.state.value} onChange={this.handleChange}>
+                                <option value="Q1">Q1</option>
+                                <option value="Q2">Q2</option>
+                                <option value="Q3">Q3</option>
+                                <option value="Q4">Q4</option>
+                            </select>
+                        </label>
+                        <label>
+                            Year:
+                            <select value={this.state.value} onChange={this.handleChange}>
+                                <option value="2023">2023</option>
+                                <option value="2022">2022</option>
+                                <option value="2021">2021</option>
+                                <option value="2020">2020</option>
+                            </select>
+                        </label>
+                        <StdButton type={"submit"}>Generate</StdButton>
+
+                    </form>
+                    </div>
+
+                    <div className="d-flex justify-content-center align-items-start flex-fill">
+                        <ListTable settings={this.settings}>
+                            <HeaderRow>
+                                {Object.keys(this.props.headers).map((key, index) => {
+                                    return <Cell width={"100%"} key={index}>{this.props.headers[key].displayHeader}</Cell>
+                                })}
+                            </HeaderRow>
+                            {this.state.data && 
+                            
+                            currentItems.map((row, index) => {      
+                                return <ExpandableRow 
+                                updateHandle={this.props.updateHandle} 
+                                values={row} 
+                                fieldSettings={this.props.fieldSettings} 
+                                key={index} 
+                                settings={settings} 
+                                headers={this.props.headers} 
+                                setExpansionContent={this.setExpansionContent} 
+                                handleSeeMore={this.handleSeeMore} 
+                                handleClose={this.handleClose} 
+                                hasFields={this.props.hasFields}
+                                popUpContent={this.state.popUpContent}
+                                perms={this.state.perms}>
+                                    {this.props.children? 
+                                    this.props.children[index + ((this.state.currentPage - 1) * this.state.itemsPerPage)]: 
+                                    ""}
+                                </ExpandableRow>
+                            })}
+                        </ListTable>
+                        
+                    </div>
+
                     {this.props.children}
                 </div>
+
                 <BottomMenu actions={
                         this.state.tableHeaderActions
                 } settings={this.settings} show={this.state.drawerOpen} showBottomMenu={this.state.showBottomMenu} handles={this.setExpansionContent}></BottomMenu>

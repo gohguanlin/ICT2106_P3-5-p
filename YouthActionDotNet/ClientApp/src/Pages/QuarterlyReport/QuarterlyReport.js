@@ -1,6 +1,8 @@
-import React from "react";
-import { Loading } from "../../Components/appCommon";
-import DatapageLayout from "../PageLayout";
+import React from "react"
+import { Loading } from "../../Components/appCommon"
+import DatapageLayout from "../PageLayout"
+import DatapageLayoutEmpty from "../PageLayoutEmpty"
+
 import { Box } from "@chakra-ui/react";
 import { Checkbox, CheckboxGroup } from "@chakra-ui/react";
 import { Input } from "@chakra-ui/react";
@@ -14,7 +16,6 @@ import { Pie } from "react-chartjs-2";
 import { Bar } from "react-chartjs-2";
 import Chart from "chart.js/auto";
 import html2pdf from "html2pdf.js";
-import DatapageLayoutEmpty from "../PageLayoutEmpty";
 import { useState } from "react";
 import { Collapse } from "@chakra-ui/react";
 
@@ -145,183 +146,225 @@ function downloadPDF() {
   html2pdf().from(element).save("quarterly-report.pdf");
 }
 
-export default class QuarterlyReport extends React.Component {
-  state = {
-    content: null,
-    headers: [],
-    loading: true,
-    settings: {},
-    error: "",
-  };
 
-  settings = {
-    title: "Request",
-    primaryColor: "#a6192e",
-    accentColor: "#94795d",
-    textColor: "#ffffff",
-    textColorInvert: "#606060",
-    api: "/api/Request/",
-  };
-
-  async componentDidMount() {
-    await this.getContent().then((content) => {
-      console.log(content);
-      this.setState({
-        content: content,
-      });
-    });
-
-    await this.getSettings().then((settings) => {
-      console.log(settings);
-      this.setState({
-        settings: settings,
-      });
-    });
-
-    this.setState({
-      loading: false,
-    });
-  }
-
-  getSettings = async () => {
-    // fetches http://...:5001/api/User/Settings
-    return fetch(this.settings.api + "Settings", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((res) => {
-      console.log(res);
-      return res.json();
-    });
-  };
-
-  getContent = async () => {
-    return fetch(this.settings.api + "All", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((res) => {
-      console.log(res);
-      //Res = {success: true, message: "Success", data: Array(3)}
-      return res.json();
-    });
-  };
-
-  update = async (data) => {
-    console.log(data);
-    return fetch(this.settings.api + "UpdateAndFetch/" + data.RequestId, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    }).then(async (res) => {
-      return res.json();
-    });
-  };
-
-  handleUpdate = async (data) => {
-    var updateData = data;
-    var fileUploadFields = [];
-    const fieldSettings = this.state.settings.data.FieldSettings;
-    for (const field of Object.keys(fieldSettings)) {
-      if (fieldSettings[field].type === "file") {
-        fileUploadFields.push(field);
-      }
+export default class QuarterlyReport extends React.Component{
+    state={
+        content:null,
+        headers:[],
+        loading:true,
+        settings: {},
+        error: "",
     }
-  };
 
-  requestRefresh = async () => {
-    this.setState({
-      loading: true,
-    });
-    await this.getContent().then((content) => {
-      console.log(content);
-      this.setState({
-        content: content,
-        loading: false,
-      });
-    });
-  };
+    settings ={
+        title:"QuarterlyReport",
+        primaryColor: "#a6192e",
+        accentColor: "#94795d",
+        textColor: "#ffffff",
+        textColorInvert: "#606060",
+        api: "/api/QuarterlyReport/",
+    }
+    async componentDidMount(){
+        await this.getContent().then((content)=>{
+            console.log(content);
+            this.setState({
+                content:content,
+            });
+        })
 
-  requestError = async (error) => {
-    this.setState({
-      error: error,
-    });
-  };
+        await this.getSettings().then((settings)=>{
+            console.log(settings);
+            this.setState({
+                settings:settings,
+            });
+        })
 
-  render() {
-    return (
-      <ChakraProvider>
-        <div
-          id="report-container"
-          style={{
-            marginTop: "40px",
-            marginBottom: "150px",
-            marginLeft: "50px",
-            marginRight: "50px",
-            width: "90%",
-          }}
-        >
-          <DatapageLayoutEmpty
-            settings={this.settings}
-            //fieldSettings={this.state.settings.data.FieldSettings}
-            requestRefresh={this.requestRefresh}
-            error={this.state.error}
-            permissions={this.props.permissions}
-            handleSearchCallBack={this.searchCallBack}
-          >
-            <Heading
-              as="h3"
-              size="lg"
-              style={{ marginTop: "10px", marginBottom: "40px" }}
+        this.setState({
+            loading:false,
+        })
+    }
+
+    getSettings = async () => {
+        // fetches http://...:5001/api/User/Settings
+        return fetch(this.settings.api + "Settings" , {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }).then(res => {
+            console.log(res);
+            return res.json();
+        })
+    }
+
+    getContent = async () =>{
+        return fetch( this.settings.api + "All" , {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }).then(res => {
+            console.log(res);
+            //Res = {success: true, message: "Success", data: Array(3)}
+            return res.json();
+        });
+    }
+
+    update = async (data) =>{
+        console.log(data);
+        return fetch(this.settings.api + "UpdateAndFetch/" + data.QuarterlyReportId , {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data)
+        }).then(async res => {
+            return res.json();
+        });
+    }
+
+    handleUpdate = async (data) =>{
+        await this.update(data).then((content)=>{
+            if(content.success){
+                this.setState({
+                    error:"",
+                })
+                return true;
+            }else{
+                this.setState({
+                    error:content.message,
+                })
+                return false;
+            }
+        })
+    }
+
+    requestRefresh = async () =>{
+        this.setState({
+            loading:true,
+        })
+        await this.getContent().then((content)=>{
+            console.log(content);
+            this.setState({
+                content:content,
+                loading:false,
+            });
+        })
+    }
+    
+    requestError = async (error) =>{
+        this.setState({
+            error:error,
+        })
+    }
+
+
+    render(){
+        if(this.state.loading){
+            return <Loading></Loading>
+        }else{
+            
+        // return(
+        //     <DatapageLayoutEmpty
+        //         settings={this.settings}
+        //         fieldSettings={this.state.settings.data.FieldSettings}
+        //         headers={this.state.settings.data.ColumnSettings}
+        //         data={this.state.content.data}
+        //         updateHandle = {this.handleUpdate}
+        //         requestRefresh = {this.requestRefresh}
+        //         error={this.state.error}
+        //         permissions={this.props.permissions}
+        //         requestError={this.requestError}
+        //         >
+        //     </DatapageLayoutEmpty>
+        //     // <DatapageLayout 
+        //     //     settings={this.settings}
+        //     //     fieldSettings={this.state.settings.data.FieldSettings} 
+        //     //     headers={this.state.settings.data.ColumnSettings} 
+        //     //     data={this.state.content.data}
+        //     //     updateHandle = {this.handleUpdate}
+        //     //     requestRefresh = {this.requestRefresh}
+        //     //     error={this.state.error}
+        //     //     permissions={this.props.permissions}
+        //     //     requestError={this.requestError}
+        //     //     >
+        //     // </DatapageLayout>
+        //     // <label>Feedback</label>
+        //     )
+
+
+        return (
+          <ChakraProvider>
+            <div
+              id="report-container"
+              style={{
+                marginTop: "40px",
+                marginBottom: "150px",
+                marginLeft: "50px",
+                marginRight: "50px",
+                width: "90%",
+              }}
             >
-              Quarterly Report
-            </Heading>
-            Service Center
-            <br />
-            <br />
-            <Select placeholder="- Select a Service Center -" size="sm">
-              <option value="option1">1</option>
-              <option value="option2">2</option>
-              <option value="option3">3</option>
-              <option value="option4">4</option>
-              <option value="option5">5</option>
-              <option value="option6">6</option>
-              <option value="option7">7</option>
-              <option value="option8">8</option>
-            </Select>
-            <br />
-            <br />
-            Quater
-            <br />
-            <br />
-            <Select placeholder="- Select a Quater -" size="sm">
-              <option value="Q1">Q1</option>
-              <option value="Q2">Q2</option>
-              <option value="Q3">Q3</option>
-              <option value="Q4">Q4</option>
-            </Select>
-            <br />
-            <br />
-            Year
-            <br />
-            <br />
-            <Select placeholder="- Select a Year -" size="sm">
-              <option value="2021">2021</option>
-              <option value="2022">2022</option>
-              <option value="2023">2023</option>
-            </Select>
-            <br />
-            <br />
-            <div className="App">
-              <MyComponent />
+              <DatapageLayoutEmpty
+                settings={this.settings}
+                //fieldSettings={this.state.settings.data.FieldSettings}
+                requestRefresh={this.requestRefresh}
+                error={this.state.error}
+                permissions={this.props.permissions}
+                handleSearchCallBack={this.searchCallBack}
+              >
+                <Heading
+                  as="h3"
+                  size="lg"
+                  style={{ marginTop: "10px", marginBottom: "40px" }}
+                >
+                  Quarterly Report
+                </Heading>
+                Service Center
+                <br />
+                <br />
+                <Select placeholder="- Select a Service Center -" size="sm">
+                  <option value="option1">1</option>
+                  <option value="option2">2</option>
+                  <option value="option3">3</option>
+                  <option value="option4">4</option>
+                  <option value="option5">5</option>
+                  <option value="option6">6</option>
+                  <option value="option7">7</option>
+                  <option value="option8">8</option>
+                </Select>
+                <br />
+                <br />
+                Quater
+                <br />
+                <br />
+                <Select placeholder="- Select a Quater -" size="sm">
+                  <option value="Q1">Q1</option>
+                  <option value="Q2">Q2</option>
+                  <option value="Q3">Q3</option>
+                  <option value="Q4">Q4</option>
+                </Select>
+                <br />
+                <br />
+                Year
+                <br />
+                <br />
+                <Select placeholder="- Select a Year -" size="sm">
+                  <option value="2021">2021</option>
+                  <option value="2022">2022</option>
+                  <option value="2023">2023</option>
+                </Select>
+                <br />
+                <br />
+                <div className="App">
+                  <MyComponent />
+                </div>
+              </DatapageLayoutEmpty>
             </div>
-          </DatapageLayoutEmpty>
-        </div>
-      </ChakraProvider>
-    );
-  }
+          </ChakraProvider>
+        );
+
+
+        }
+    }
 }
