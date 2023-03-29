@@ -179,11 +179,11 @@ export default function App() {
 
               <Route path="/Request" element={<Request user={token} permissions = {JSON.parse(perms)}/>}/>
               <Route path="/ViewRequest" element={<ViewRequest user={token} permissions = {JSON.parse(perms)}/>}/>
-              <Route path="/QuarterlyReport" element={<QuarterlyReport user={token} permissions = {JSON.parse(perms)}/>}/>
+              {/* <Route path="/QuarterlyReport" element={<QuarterlyReport user={token} permissions = {JSON.parse(perms)}/>}/> */}
               <Route path="/ViewFeedback" element={<ViewFeedback user={token} permissions = {JSON.parse(perms)}/>}/>
               <Route path="/Feedback" element={<Feedback user={token} permissions = {JSON.parse(perms)}/>}/>
               
-
+              <Route path="/QuarterlyReport" element={<QuarterlyReport user={token} permissions = {JSON.parse(perms)}/>}/>
               <Route path="/Sample" element={<Sample user={token} permissions = {parsedPerms}/>}/>
               <Route path="/Logout" element={<Logout logout={logout} clearPerms={clearPerms}></Logout>}/>
 

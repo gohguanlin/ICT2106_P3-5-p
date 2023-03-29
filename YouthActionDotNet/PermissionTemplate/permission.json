@@ -91,7 +91,7 @@
     "Delete": true
   },
   {
-    "Module": "ViewRequest",
+    "Module": "QuarterlyReport",
     "Create": true,
     "Read": true,
     "Update": true,
