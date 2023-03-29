@@ -11,6 +11,7 @@ namespace YouthActionDotNet.Models
             this.RequestId = Guid.NewGuid().ToString();
         }
         public string RequestId { get; set; }
+        // public string ProjectName { get; set; }
         public string RequestResourceType { get; set; }        
 
         // used to be RequestReason

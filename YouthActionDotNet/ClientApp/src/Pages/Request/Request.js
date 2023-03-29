@@ -184,15 +184,36 @@ export default class Request extends React.Component {
         })
     }
 
-    
-
-
+  
     render() {
+
+       
+
+        const handleButtonClick = () => {
+            const confirmed = window.confirm("Are you sure you want to submit?");
+            if (confirmed) {
+              // navigate to the viewRequest URL
+            //   window.location.href = "/viewRequest";
+            const submitted = window.confirm("Request form Submitted Successfully!");
+            if (submitted) {
+                document.querySelector('select').value = '';
+                
+                document.querySelector('input[name="timeTextbox"]').value = "";
+                document.querySelector('input[name="spaceTextbox"]').value = "";
+                document.querySelector('input[name="moneyTextbox"]').value = "";
+                document.querySelector('input[name="donorTextbox"]').value = "";
+                document.querySelector('input[name="volunteerTextbox"]').value = "";
+
+                document.querySelector('textarea').value = '';
+            }
+            }
+        }
+
 
 
         return (
         
-
+          
             
 
             <ChakraProvider>
@@ -214,44 +235,64 @@ export default class Request extends React.Component {
             <Heading as="h3" size="lg" style={{ marginTop: '10px', marginBottom: '20px' }}>
                 Request Form
             </Heading>
-
-
+            
+           
             <SimpleGrid columns={2} spacing={20}>
+    
             <Box height='200px'>
-                <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+            <Heading size="md" fontWeight="normal">Project name:</Heading>
+                <br/>
+                <Select placeholder='- Select the project name -' size='sm'>
+                          <option value='option1'>Lion City Leap</option>
+                          <option value='option2'>Garden State Growth</option>
+                          <option value='option3'>Marina Milestone</option>
+                          <option value='option4'>Island Innovation</option>
+                          <option value='option5'>Merlion Momentum</option>
+                      </Select>
+                      <br/><br/>
+
+                <Heading size="md" fontWeight="normal">Resource Type:</Heading>
+                <br/>
+                <Checkbox colorScheme="green" name = "timeCheckbox" defaultIsChecked style={{ marginTop: '5px' }}>
                     Time
                 </Checkbox>
-                <Input placeholder="Enter a Time" size="sm" style={{ marginLeft: '20px', width: '80%'}} />
+                <Input placeholder="Enter a Time" name="timeTextbox" size="sm" style={{ marginLeft: '20px', width: '80%'}} />
                 <br/><br/>
-                <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                <Checkbox colorScheme="green" name="spaceCheckbox" defaultIsChecked style={{ marginTop: '5px' }}>
                     Space
                 </Checkbox>
-                <Input placeholder="Enter a Space" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                <Input placeholder="Enter a Space" name="spaceTextbox" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
                 <br/><br/>
-                <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                <Checkbox colorScheme="green" name="moneyCheckbox" defaultIsChecked style={{ marginTop: '5px' }}>
                     Money
                 </Checkbox>
-                <Input placeholder="Enter an Amount (Money)" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                <Input placeholder="Enter an Amount (Money)" name="moneyTextbox" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
                 <br/><br/>
-                <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                <Checkbox colorScheme="green" name="donorCheckbox" defaultIsChecked style={{ marginTop: '5px' }}>
                     Donor
                 </Checkbox>
-                <Input placeholder="Enter an Amount (Donor)" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                <Input placeholder="Enter an Amount (Donor)" name="donorTextbox" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
                 <br/><br/>
-                <Checkbox colorScheme="green" defaultIsChecked style={{ marginTop: '5px' }}>
+                <Checkbox colorScheme="green" name="volunteerCheckbox" defaultIsChecked style={{ marginTop: '5px' }}>
                     Volunteer
                 </Checkbox>
-                <Input placeholder="Enter an Amount (Volunteer)" size="sm" style={{ marginLeft: '20px', width: '80%' }} />
+                {/* <Input placeholder="Enter an Amount (Volunteer)" size="sm" style={{ marginLeft: '20px', width: '80%' }} /> */}
+                <Input placeholder="Enter an Amount (Volunteer)" name="volunteerTextbox" size="sm" style={{ marginLeft: '20px', width: '75%' }} />
                 <br/><br/><br/>
             </Box>
             <Box height='200px'>
-                Description:
-                <br/><br/>
+            <Heading size="md" fontWeight="normal">Description:</Heading>
+                <br/>
                 <Textarea placeholder="Enter your reason here . . ." />
                 <br/><br/><br/><br/>
-                <Link to="/ViewRequest">
+                {/* <Link to="/ViewRequest">
                     <Button colorScheme="blue">Submit</Button>
-                </Link>
+                </Link> */}
+                  <Button colorScheme="blue" onClick={handleButtonClick}>
+                   Submit
+                  </Button>
+
+
             </Box>
         </SimpleGrid>
 
@@ -269,5 +310,5 @@ export default class Request extends React.Component {
         }
 
         
-
+   
 }

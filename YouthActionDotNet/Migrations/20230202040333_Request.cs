@@ -16,6 +16,7 @@ namespace YouthActionDotNet.Migrations
                 columns: table => new
                 {
                     RequestId = table.Column<string>(type: "TEXT", nullable: false),
+                    // ProjectName = table.Column<string>(name: "ProjectName", type: "TEXT", nullable: true),
                     RRFDateTime = table.Column<DateTime>(name: "RRF_DateTime", type: "TEXT", nullable: false),
                     RRFresourceType = table.Column<string>(name: "RRF_resourceType", type: "TEXT", nullable: true),
                     RRFreason = table.Column<string>(name: "RRF_reason", type: "TEXT", nullable: true),
