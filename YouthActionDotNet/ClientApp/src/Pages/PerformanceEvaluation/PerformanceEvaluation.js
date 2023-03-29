@@ -227,13 +227,13 @@ export default class PerformanceEvaluation extends React.Component {
                   >
                     Status
                   </Heading>
-                  Expenses (Out): <u>$1 Million</u>
+                  Expenses (Out): <u>$3000</u>
                   <br />
                   <br />
-                  Donation (In): <u>$1.5 Million</u>
+                  Donation (In): <u>$500</u>
                   <br />
                   <br />
-                  Man Hour: <u>33h</u>
+                  Man Hour: <u>30h</u>
                   <br />
                   <br />
                   Progress: 40% - 45%
