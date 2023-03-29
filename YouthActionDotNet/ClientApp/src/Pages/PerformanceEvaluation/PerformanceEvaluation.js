@@ -15,7 +15,7 @@ import { useState } from "react";
 import { Collapse } from "@chakra-ui/react";
 import DatapageLayoutEmpty from "../PageLayoutEmpty";
 
-export default class Feedback extends React.Component {
+export default class PerformanceEvaluation extends React.Component {
   // manually added the table
   state = {
     content: null,
@@ -47,7 +47,7 @@ export default class Feedback extends React.Component {
   };
 
   settings = {
-    title: "Feedback",
+    title: "Performance Evaluation Form",
     primaryColor: "#a6192e",
     accentColor: "#94795d",
     textColor: "#ffffff",
@@ -166,7 +166,7 @@ export default class Feedback extends React.Component {
               size="lg"
               style={{ marginTop: "10px", marginBottom: "20px" }}
             >
-              Performance Evaluation Form
+              
             </Heading>
 
             <SimpleGrid columns={2} spacing={20}>
