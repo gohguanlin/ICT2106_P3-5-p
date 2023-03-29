@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 
-namespace YouthActionDotNet.Models
+namespace YouthActionDotNet.Controllers
 {
     public abstract class AbstractForm
     {
@@ -22,12 +22,12 @@ namespace YouthActionDotNet.Models
 
         private int GetformSenderID()
         {
-            return formSenderID;
+            return FormSenderID;
         }
 
         private void SetformSenderID(int fsid)
         {
-            formSenderID = fsid;
+            FormSenderID = fsid;
         }
 
         private DateTime getFormDateTime()

@@ -30,11 +30,11 @@ import Expense from './Pages/Expense/Expense';
 import Request from './Pages/Request/Request';
 
 import ViewRequest from './Pages/Request/ViewRequest';
-import ViewFeedback from './Pages/Feedback/ViewFeedback';
+import ViewPerformanceEvaluation from './Pages/PerformanceEvaluation/ViewPerformanceEvaluation';
 
 import QuarterlyReport from './Pages/QuarterlyReport/QuarterlyReport';
 
-import Feedback from './Pages/Feedback/Feedback';
+import PerformanceEvaluation from './Pages/PerformanceEvaluation/PerformanceEvaluation';
 import Permissions from './Pages/Admin/Permissions';
 
 import Home  from "./Pages/Home"
@@ -117,8 +117,8 @@ export default function App() {
 
                 <DrawerItem label="Request" to={"/Request"} logo={userImg} currentActive = {active} setActive={setActive}></DrawerItem>
                 <DrawerItem label="ViewRequest" to={"/ViewRequest"} logo={userImg} currentActive = {active} setActive={setActive}></DrawerItem>
-                <DrawerItem label="Feedback" to={"/Feedback"} logo={userImg} currentActive = {active} setActive={setActive}></DrawerItem>
-                <DrawerItem label="ViewFeedback" to={"/ViewFeedback"} logo={userImg} currentActive = {active} setActive={setActive}></DrawerItem>
+                <DrawerItem label="PerformanceEvaluation" to={"/PerformanceEvaluation"} logo={userImg} currentActive = {active} setActive={setActive}></DrawerItem>
+                <DrawerItem label="ViewPerformanceEvaluation" to={"/ViewPerformanceEvaluation"} logo={userImg} currentActive = {active} setActive={setActive}></DrawerItem>
                 <DrawerItem label="QuarterlyReport" to={"/QuarterlyReport"} logo={userImg} currentActive = {active} setActive={setActive}></DrawerItem>
 
 
@@ -179,8 +179,8 @@ export default function App() {
               <Route path="/Request" element={<Request user={token} permissions = {JSON.parse(perms)}/>}/>
               <Route path="/ViewRequest" element={<ViewRequest user={token} permissions = {JSON.parse(perms)}/>}/>
               <Route path="/QuarterlyReport" element={<QuarterlyReport user={token} permissions = {JSON.parse(perms)}/>}/>
-              <Route path="/ViewFeedback" element={<ViewFeedback user={token} permissions = {JSON.parse(perms)}/>}/>
-              <Route path="/Feedback" element={<Feedback user={token} permissions = {JSON.parse(perms)}/>}/>
+              <Route path="/ViewPerformanceEvaluation" element={<ViewPerformanceEvaluation user={token} permissions = {JSON.parse(perms)}/>}/>
+              <Route path="/PerformanceEvaluation" element={<PerformanceEvaluation user={token} permissions = {JSON.parse(perms)}/>}/>
               
 
               <Route path="/Sample" element={<Sample user={token} permissions = {parsedPerms}/>}/>

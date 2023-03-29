@@ -85,6 +85,10 @@ namespace YouthActionDotNet.Data
                 .HasOne(e => e.servicecenter)
                 .WithMany()
                 .HasForeignKey(e => e.ServiceCenterId);
+            modelBuilder.Entity<PerformanceEvaluation>().ToTable("PerformanceEvalutaion")
+            .HasOne(e => e.servicecenter)
+            .WithMany()
+            .HasForeignKey(e => e.ServiceCenterId);
         }
 
 

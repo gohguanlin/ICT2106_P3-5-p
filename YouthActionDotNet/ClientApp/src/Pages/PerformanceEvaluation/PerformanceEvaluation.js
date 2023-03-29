@@ -15,7 +15,7 @@ import { useState } from "react";
 import { Collapse } from "@chakra-ui/react";
 import DatapageLayoutEmpty from "../PageLayoutEmpty";
 
-export default class Feedback extends React.Component {
+export default class PerformanceEvaluation extends React.Component {
   // manually added the table
   state = {
     content: null,
@@ -47,12 +47,12 @@ export default class Feedback extends React.Component {
   };
 
   settings = {
-    title: "Feedback",
+    title: "Performance Evaluation",
     primaryColor: "#a6192e",
     accentColor: "#94795d",
     textColor: "#ffffff",
     textColorInvert: "#606060",
-    api: "/api/Feedback/",
+    api: "/api/PerformanceEvaluation/",
   };
 
   async componentDidMount() {
@@ -103,7 +103,7 @@ export default class Feedback extends React.Component {
 
   update = async (data) => {
     console.log(data);
-    return fetch(this.settings.api + "UpdateAndFetch/" + data.FeedbackId, {
+    return fetch(this.settings.api + "UpdateAndFetch/" + data.PerformanceEvaluationId, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -166,7 +166,7 @@ export default class Feedback extends React.Component {
               size="lg"
               style={{ marginTop: "10px", marginBottom: "20px" }}
             >
-              Performance Evaluation Form
+              Performance Evaluation Form 
             </Heading>
 
             <SimpleGrid columns={2} spacing={20}>
@@ -243,7 +243,7 @@ export default class Feedback extends React.Component {
                 <br />
                 <br />
                 <br />
-                <Link to="/ViewFeedback">
+                <Link to="/ViewPerformanceEvaluation">
                   <Button
                     style={{ backgroundColor: "#1c2c5b", color: "white" }}
                   >

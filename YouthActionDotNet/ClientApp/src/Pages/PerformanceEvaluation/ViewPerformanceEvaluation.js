@@ -135,7 +135,7 @@ function DrawerExample({ selectedOption1, onOptionChange1, selectedOption2, onOp
   }
 
 
-export default class ViewFeedback extends React.Component {
+export default class ViewPerformanceEvaluation extends React.Component {
 
     
     // manually added the table
@@ -7746,7 +7746,7 @@ export default class ViewFeedback extends React.Component {
                     <br/><br/>
                     <Text>You have not filled out any Performance Evaluation Form yet, please click the button below to fill in the form.</Text>
                     <br/><br/>
-                        <Link to="/Feedback">
+                        <Link to="/PerformanceEvaluation">
                             <Button style={{ backgroundColor: '#1c2c5b', color: 'white' }}>Click Here</Button>
                         </Link>
                         </>
@@ -7773,7 +7773,7 @@ export default class ViewFeedback extends React.Component {
                     <br/><br/>
                     <Text>You have not filled out any Performance Evaluation Form yet, please click the button below to fill in the form.</Text>
                     <br/><br/>
-                        <Link to="/Feedback">
+                        <Link to="/PerformanceEvaluation">
                             <Button style={{ backgroundColor: '#1c2c5b', color: 'white' }}>Click Here</Button>
                         </Link>
                         </>
@@ -7800,7 +7800,7 @@ export default class ViewFeedback extends React.Component {
                     <br/><br/>
                     <Text>You have not filled out any Performance Evaluation Form yet, please click the button below to fill in the form.</Text>
                     <br/><br/>
-                        <Link to="/Feedback">
+                        <Link to="/PerformanceEvaluation">
                             <Button style={{ backgroundColor: '#1c2c5b', color: 'white' }}>Click Here</Button>
                         </Link>
                         </>
@@ -7827,7 +7827,7 @@ export default class ViewFeedback extends React.Component {
                     <br/><br/>
                     <Text>You have not filled out any Performance Evaluation Form yet, please click the button below to fill in the form.</Text>
                     <br/><br/>
-                        <Link to="/ViewFeedback">
+                        <Link to="/ViewPerformanceEvaluation">
                             <Button colorScheme="blue">Click Here</Button>
                         </Link>
                         </>
@@ -7904,7 +7904,7 @@ export default class ViewFeedback extends React.Component {
                     <br/><br/>
                     <Text>You have not filled out any Performance Evaluation Form yet, please click the button below to fill in the form.</Text>
                     <br/><br/>
-                        <Link to="/Feedback">
+                        <Link to="/PerformanceEvaluation">
                             <Button style={{ backgroundColor: '#1c2c5b', color: 'white' }}>Click Here</Button>
                         </Link>
                         </>
@@ -7933,7 +7933,7 @@ export default class ViewFeedback extends React.Component {
                     <br/><br/>
                     <Text>You have not filled out any Performance Evaluation Form yet, please click the button below to fill in the form.</Text>
                     <br/><br/>
-                        <Link to="/Feedback">
+                        <Link to="/PerformanceEvaluation">
                             <Button style={{ backgroundColor: '#1c2c5b', color: 'white' }}>Click Here</Button>
                         </Link>
                         </>
@@ -7962,7 +7962,7 @@ export default class ViewFeedback extends React.Component {
                     <br/><br/>
                     <Text>You have not filled out any Performance Evaluation Form yet, please click the button below to fill in the form.</Text>
                     <br/><br/>
-                        <Link to="/Feedback">
+                        <Link to="/PerformanceEvaluation">
                             <Button style={{ backgroundColor: '#1c2c5b', color: 'white' }}>Click Here</Button>
                         </Link>
                         </>
@@ -7991,7 +7991,7 @@ export default class ViewFeedback extends React.Component {
                     <br/><br/>
                     <Text>You have not filled out any Performance Evaluation Form yet, please click the button below to fill in the form.</Text>
                     <br/><br/>
-                        <Link to="/Feedback">
+                        <Link to="/PerformanceEvaluation">
                             <Button style={{ backgroundColor: '#1c2c5b', color: 'white' }}>Click Here</Button>
                         </Link>
                         </>
@@ -8020,7 +8020,7 @@ export default class ViewFeedback extends React.Component {
                     <br/><br/>
                     <Text>You have not filled out any Performance Evaluation Form yet, please click the button below to fill in the form.</Text>
                     <br/><br/>
-                        <Link to="/Feedback">
+                        <Link to="/PerformanceEvaluation">
                             <Button style={{ backgroundColor: '#1c2c5b', color: 'white' }}>Click Here</Button>
                         </Link>
                         </>
@@ -8049,7 +8049,7 @@ export default class ViewFeedback extends React.Component {
                     <br/><br/>
                     <Text>You have not filled out any Performance Evaluation Form yet, please click the button below to fill in the form.</Text>
                     <br/><br/>
-                        <Link to="/Feedback">
+                        <Link to="/PerformanceEvaluation">
                             <Button style={{ backgroundColor: '#1c2c5b', color: 'white' }}>Click Here</Button>
                         </Link>
                         </>
@@ -8078,7 +8078,7 @@ export default class ViewFeedback extends React.Component {
                     <br/><br/>
                     <Text>You have not filled out any Performance Evaluation Form yet, please click the button below to fill in the form.</Text>
                     <br/><br/>
-                        <Link to="/Feedback">
+                        <Link to="/PerformanceEvaluation">
                             <Button style={{ backgroundColor: '#1c2c5b', color: 'white' }}>Click Here</Button>
                         </Link>
                         </>
@@ -8107,7 +8107,7 @@ export default class ViewFeedback extends React.Component {
                     <br/><br/>
                     <Text>You have not filled out any Performance Evaluation Form yet, please click the button below to fill in the form.</Text>
                     <br/><br/>
-                        <Link to="/Feedback">
+                        <Link to="/PerformanceEvaluation">
                             <Button style={{ backgroundColor: '#1c2c5b', color: 'white' }}>Click Here</Button>
                         </Link>
                         </>
@@ -8152,7 +8152,7 @@ export default class ViewFeedback extends React.Component {
         accentColor: "#94795d",
         textColor: "#ffffff",
         textColorInvert: "#606060",
-        api: "/api/Feedback/",
+        api: "/api/PerformanceEvaluation/",
     }
 
 
@@ -8213,7 +8213,7 @@ export default class ViewFeedback extends React.Component {
 
     update = async (data) =>{
         console.log(data);
-        return fetch(this.settings.api + "UpdateAndFetch/" + data.FeedbackId , {
+        return fetch(this.settings.api + "UpdateAndFetch/" + data.PerformanceEvaluationId , {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",

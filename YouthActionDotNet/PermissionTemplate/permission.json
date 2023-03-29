@@ -96,5 +96,12 @@
     "Read": true,
     "Update": true,
     "Delete": true
+  },
+  {
+    "Module": "Performance Evaluation",
+    "Create": true,
+    "Read": true,
+    "Update": true,
+    "Delete": true
   }
 ]
