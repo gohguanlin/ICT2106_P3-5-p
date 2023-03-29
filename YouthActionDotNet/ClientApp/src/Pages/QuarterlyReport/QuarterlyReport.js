@@ -295,10 +295,10 @@ export default class QuarterlyReport extends React.Component {
             </Select>
             <br />
             <br />
-            Quater
+            Quarter
             <br />
             <br />
-            <Select placeholder="- Select a Quater -" size="sm">
+            <Select placeholder="- Select a Quarter -" size="sm">
               <option value="Q1">Q1</option>
               <option value="Q2">Q2</option>
               <option value="Q3">Q3</option>
