@@ -75,5 +75,17 @@ namespace YouthActionDotNet.Controllers
             return await quarterlyReportControl.UpdateAndFetchAll(id, template);
         }
 
+        [HttpGet("Report")]
+        public async Task<ActionResult<string>> Search(string Query)
+        {
+            return await quarterlyReportControl.Search(Query);
+        }
+
+        [HttpGet("Generate")]
+        public async Task<ActionResult<string>> Filter([FromQuery] List<string> filterQuery)
+        {
+            return await quarterlyReportControl.Filter(filterQuery);
+        }
+
     }
 }
