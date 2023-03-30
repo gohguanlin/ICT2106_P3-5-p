@@ -1,5 +1,0 @@
-@startuml
-class createdVolunteerWork <<partial>> {
-    # <<override>> BuildTargetModel(modelBuilder:ModelBuilder) : void
-}
-@enduml

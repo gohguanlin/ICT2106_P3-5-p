@@ -1,7 +1,0 @@
-@startuml
-class updateFileModel2 <<partial>> {
-    # <<override>> Up(migrationBuilder:MigrationBuilder) : void
-    # <<override>> Down(migrationBuilder:MigrationBuilder) : void
-}
-Migration <|-- updateFileModel2
-@enduml

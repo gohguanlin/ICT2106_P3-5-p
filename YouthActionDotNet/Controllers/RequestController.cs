@@ -80,5 +80,18 @@ namespace YouthActionDotNet.Controllers
         {
             return requestControl.Settings();
         }
+
+        [HttpGet("Search")]
+        public async Task<ActionResult<string>> Search(string Query)
+        {
+            return await requestControl.Search(Query);
+        }
+
+        [HttpGet("Filter")]
+        public async Task<ActionResult<string>> Filter([FromQuery] List<string> filterQuery)
+        {
+            return await requestControl.Filter(filterQuery);
+        }
+
     }
 }

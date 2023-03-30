@@ -1,5 +1,0 @@
-@startuml
-class restructurev1 <<partial>> {
-    # <<override>> BuildTargetModel(modelBuilder:ModelBuilder) : void
-}
-@enduml

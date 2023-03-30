@@ -1,5 +1,0 @@
-@startuml
-class createdDonorType <<partial>> {
-    # <<override>> BuildTargetModel(modelBuilder:ModelBuilder) : void
-}
-@enduml

@@ -73,6 +73,9 @@ namespace YouthActionDotNet.Data
                 .HasOne(e => e.project)
                 .WithMany()
                 .HasForeignKey(e => e.ProjectId);
+
+            // Module 3 Team 5 part
+
             modelBuilder.Entity<Request>().ToTable("Request")
                 .HasOne(e => e.project)
                 .WithMany()
@@ -80,14 +83,26 @@ namespace YouthActionDotNet.Data
             modelBuilder.Entity<Request>().ToTable("Request")
                 .HasOne(e => e.user)
                 .WithMany()
+<<<<<<< Updated upstream
                 .HasForeignKey(e => e.RequesterId);
             modelBuilder.Entity<Feedback>().ToTable("Feedback")
+=======
+                .HasForeignKey(e => e.FormSenderID);
+            modelBuilder.Entity<PerformanceEvaluation>().ToTable("PerformanceEvaluation")
+                .HasOne(e => e.servicecenter)
+                .WithMany()
+                .HasForeignKey(e => e.ServiceCenterId);
+            modelBuilder.Entity<QuarterlyReport>().ToTable("QuarterlyReport")
+>>>>>>> Stashed changes
                 .HasOne(e => e.servicecenter)
                 .WithMany()
                 .HasForeignKey(e => e.ServiceCenterId);
         }
 
+<<<<<<< Updated upstream
 
 
+=======
+>>>>>>> Stashed changes
     }
 }

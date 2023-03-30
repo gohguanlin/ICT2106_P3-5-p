@@ -1,5 +1,0 @@
-@startuml
-class Expense <<partial>> {
-    # <<override>> BuildTargetModel(modelBuilder:ModelBuilder) : void
-}
-@enduml

@@ -203,6 +203,46 @@ namespace YouthActionDotNet.Control
 
             return JsonConvert.SerializeObject(new { success = true, data = settings, message = "Settings Successfully Fetched" });
 
+<<<<<<< Updated upstream
         }
     }
+=======
+    }
+
+    public async Task<ActionResult<string>> Search(search Query)
+    {
+
+    }
+
+    public async Task<ActionResult<string>> Filter(List<string> filterQuery)
+    {
+        try
+        {
+            var queryableRequests = await RequestRepositoryOut.GetAllAsync();
+            var requests = queryableRequests.ToList();
+
+            var filterSystem = new RequestFilterSystem();
+            var filteredRequests = filterSystem.filterCriteria(requests, filterQuery);
+
+            return JsonConvert.SerializeObject(new { success = true, data = filteredRequests, message = "Requests Successfully Filtered" }, settings);
+        }
+        catch (Exception e)
+        {
+            return JsonConvert.SerializeObject(new { success = false, message = e.Message }, settings);
+        }
+    }
+
+    public string getRequestFormDetails(string RFF_id)
+    {
+        return RFF_id;
+    }
+
+    public void updateRequestFormDetails(string RFF_id)
+    {
+
+    }
+
+}
+
+>>>>>>> Stashed changes
 }
