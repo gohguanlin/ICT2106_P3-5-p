@@ -105,15 +105,7 @@ export default function App() {
               
               <DrawerSection label={"Modules"}>
                 <DrawerItem label="Users" to={"/"} logo={userImg} currentActive = {active} setActive={setActive}></DrawerItem>
-                <DrawerItem label="Employees" to={"/Employees"} logo={userImg} currentActive = {active} setActive={setActive}></DrawerItem>
-                <DrawerItem label="Volunteers" to={"/Volunteers"} logo={userImg} currentActive = {active} setActive={setActive}></DrawerItem>
-                <DrawerItem label="Volunteer Work" to={"/VolunteerWork"} logo={userImg} currentActive = {active} setActive={setActive}></DrawerItem>
-                <DrawerItem label="Donors" to={"/Donors"} logo={userImg} currentActive = {active} setActive={setActive}></DrawerItem>
-                <DrawerItem label="Donations" to={"/Donations"} logo={userImg} currentActive = {active} setActive={setActive}></DrawerItem>
-                <DrawerItem label="Service Center" to={"/ServiceCenters"} logo={userImg} currentActive = {active} setActive={setActive}></DrawerItem>
-                <DrawerItem label="Project" to={"/Project"} logo={userImg} currentActive = {active} setActive={setActive}></DrawerItem>
-                <DrawerItem label="Expense" to={"/Expense"} logo={userImg} currentActive = {active} setActive={setActive}></DrawerItem>
-                <DrawerItem label="Permissions" to={"/Permissions"} logo={userImg} currentActive = {active} setActive={setActive}></DrawerItem>
+                
                 
 
                 <DrawerItem label="Request" to={"/Request"} logo={userImg} currentActive = {active} setActive={setActive}></DrawerItem>
