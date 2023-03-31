@@ -1,0 +1,10 @@
+using System.Collections.Generic;
+
+namespace YouthActionDotNet.Controllers
+{
+    public interface IQuarterlyReport
+    {
+        void getQuarterlyReport(string reportId);
+        void generatePDF(string reportId);
+    }
+}

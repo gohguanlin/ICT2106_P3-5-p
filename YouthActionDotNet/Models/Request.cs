@@ -4,8 +4,7 @@ using Newtonsoft.Json;
 
 namespace YouthActionDotNet.Models
 {
-    // public class Request: AbstractForm
-    public class Request
+    public class Request : AbstractForm
     {
         public Request()
         {

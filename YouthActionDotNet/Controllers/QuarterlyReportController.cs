@@ -76,15 +76,15 @@ namespace YouthActionDotNet.Controllers
         }
 
         [HttpGet("Report")]
-        public async Task<ActionResult<string>> Search(string Query)
+        public async Task<ActionResult<string>> getQuarterlyReport(string Query)
         {
-            return await quarterlyReportControl.Search(Query);
+            return await quarterlyReportControl.getQuarterlyReport(Query);
         }
 
         [HttpGet("Generate")]
-        public async Task<ActionResult<string>> Filter([FromQuery] List<string> filterQuery)
+        public async Task<ActionResult<string>> Generate([FromQuery] List<string> filterQuery)
         {
-            return await quarterlyReportControl.Filter(filterQuery);
+            return await quarterlyReportControl.generatePDF(filterQuery);
         }
 
     }
