@@ -11,10 +11,11 @@ using Newtonsoft.Json;
 using System.Security.Cryptography;
 using YouthActionDotNet.DAL;
 using YouthActionDotNet.Controllers;
+using YouthActionDotNet.Interfaces;
 
 namespace YouthActionDotNet.Control
 {
-    public class PerformanceEvaluationControl : IUserInterfaceCRUD<PerformanceEvaluation>
+    public class PerformanceEvaluationControl : IUserInterfaceCRUD<PerformanceEvaluation>, IPerformanceEvaluation
     {
         private GenericRepositoryIn<PerformanceEvaluation> PerformanceEvaluationRepositoryIn;
         private GenericRepositoryOut<PerformanceEvaluation> PerformanceEvaluationRepositoryOut;

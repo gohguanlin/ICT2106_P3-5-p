@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace YouthActionDotNet.Controllers
+namespace YouthActionDotNet.Interfaces
 {
     public interface ISearchSystem
     {

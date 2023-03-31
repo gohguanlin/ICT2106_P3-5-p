@@ -14,7 +14,7 @@ using YouthActionDotNet.Controllers;
 
 namespace YouthActionDotNet.Control
 {
-    public class QuarterlyReportControl : IUserInterfaceCRUD<QuarterlyReport>
+    public class QuarterlyReportControl : IUserInterfaceCRUD<QuarterlyReport>, IQuarterlyReport
     {
         private GenericRepositoryIn<QuarterlyReport> QuarterlyReportRepositoryIn;
         private GenericRepositoryOut<QuarterlyReport> QuarterlyReportRepositoryOut;
