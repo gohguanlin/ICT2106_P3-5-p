@@ -19,6 +19,7 @@ namespace YouthActionDotNet.Control
         private GenericRepositoryIn<QuarterlyReport> QuarterlyReportRepositoryIn;
         private GenericRepositoryOut<QuarterlyReport> QuarterlyReportRepositoryOut;
         private GenericRepositoryOut<ServiceCenter> ServiceCenterRepositoryOut;
+        private ReportGenerator reportGenerator;
 
         JsonSerializerSettings settings = new JsonSerializerSettings
         {
@@ -128,10 +129,11 @@ namespace YouthActionDotNet.Control
 
         public void getQuarterlyReport(string reportId)
         {
-
+            reportGenerator.generateReport();
         }
         public void generatePDF(string reportId)
         {
+            reportGenerator.exportReport();
 
         }
 
