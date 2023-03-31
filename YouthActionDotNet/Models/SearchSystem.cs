@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using YouthActionDotNet.Interfaces;
 
 namespace YouthActionDotNet.Models
 {

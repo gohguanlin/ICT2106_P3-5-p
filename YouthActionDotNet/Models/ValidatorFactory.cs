@@ -1,25 +1,28 @@
 using System.Collections.Generic;
 using YouthActionDotNet.Interfaces;
 
-public class ValidatorFactory
+namespace YouthActionDotNet.Models
 {
-    public Validator createValidator(string input)
+    public class ValidatorFactory
     {
-        Validator validator = null;
-        switch (inputType)
+        public IValidator createValidator(string input)
         {
-            case "text":
-                validator = new TextValidator();
-                break;
-            case "number":
-                validator = new NumberValidator();
-                break;
-            case "date":
-                validator = new DateValidator();
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid input type: " + input);
+            IValidator validator = null;
+            switch (input)
+            {
+                case "text":
+                    validator = new TextValidator();
+                    break;
+                case "number":
+                    validator = new CheckboxValidator();
+                    break;
+                case "date":
+                    validator = new DropDownListValidator();
+                    break;
+                default:
+                    throw new IllegalArgumentException("Invalid input type: " + input);
+            }
+            return validator;
         }
-        return validator;
     }
 }
