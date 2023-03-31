@@ -1,5 +1,6 @@
 using System;
 using Newtonsoft.Json;
+using YouthActionDotNet.Interfaces;
 
 namespace YouthActionDotNet.Models
 {

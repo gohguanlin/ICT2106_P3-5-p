@@ -5,7 +5,7 @@ namespace YouthActionDotNet.Interfaces
 {
     public interface IValidator
     {
-        boolean validate(string input);
+        bool validate(string input);
     }
 
 }

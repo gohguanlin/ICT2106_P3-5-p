@@ -1,10 +1,11 @@
 using System.Collections.Generic;
+using YouthActionDotNet.Interfaces;
 
 namespace YouthActionDotNet.Models
 {
     public class DropDownListValidator : IValidator
     {
-        public boolean validate(string input)
+        public bool validate(string input)
         {
             return true;
         }
