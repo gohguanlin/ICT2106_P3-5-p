@@ -14,7 +14,7 @@ namespace YouthActionDotNet.Models
             this.dataAnalysis = dataAnalysis;
         }
 
-        public void generateReport(string compiledProgress, DataAnalysis dataAnalysis)
+        public void exportReport()
         {
             // Generate PDF report
             // ...

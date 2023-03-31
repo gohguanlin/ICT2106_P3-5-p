@@ -4,7 +4,7 @@ namespace YouthActionDotNet.Interfaces
 {
     public interface IReportFormat
     {
-        void exportReport();
+        protected void exportReport();
 
     }
 }

@@ -4,6 +4,6 @@ namespace YouthActionDotNet.Interfaces
 {
     public interface IAnalysisAlgorithm
     {
-        string analyzeData();
+        protected string analyzeData();
     }
 }

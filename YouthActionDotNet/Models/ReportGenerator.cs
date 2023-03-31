@@ -20,10 +20,15 @@ namespace YouthActionDotNet.Models
             this.dataAnalysis = dataAnalysis;
         }
 
-        public void generateReport(string compiledProgress, DataAnalysis dataAnalysis)
+        public string generateReport(string compiledProgress, DataAnalysis dataAnalysis)
+        {
+            return outputReport;
+        }
+
+        public void exportReport()
         {
             // Delegate report generation to selected report format
-            return reportFormat.generateReport(compiledProgress, dataAnalysis);
+            return reportFormat.exportReport();
         }
     }
 }
